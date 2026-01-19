@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tachpae Planner
 
-## Getting Started
+A robust, multi-tenant Event Planning Platform built for Valentine's Day 2026 and scalable for future events.
 
-First, run the development server:
+## Tech Stack
+- **Framework**: Next.js 16 (App Router)
+- **Database**: MongoDB (Mongoose)
+- **Styling**: Tailwind CSS + Shadcn/UI
+- **Storage**: AWS S3
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## getting Started
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Environment Setup**
+   Create a `.env.local` file in the root:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/tachpae-planner
+   AWS_REGION=us-east-1
+   AWS_ACCESS_KEY_ID=your_key
+   AWS_SECRET_ACCESS_KEY=your_secret
+   AWS_BUCKET_NAME=your_bucket
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Seed Database**
+   Run the development server and trigger the seeder:
+   ```bash
+   npm run dev
+   # Open browser or Postman to: POST http://localhost:3000/api/seed
+   ```
+   This will create:
+   - Event: "Valentine 2026"
+   - Cities: Lagos, Ibadan, PH, Abeokuta
+   - Categories: Money Bouquets, Teddy Bears
+   - Products: Digital Moving Frame (Complex Config)
+   - Services: Candlelight Dinner at Eko Hotel (Direct Booking)
 
-## Learn More
+4. **Explore the App**
+   - Visit `http://localhost:3000`
+   - Select a City (e.g., Lagos)
+   - Browse Gifts and Experiences
+   - Try the "Specials" -> "Surprise Yourself" or "Be My Val"
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
+- **Polymorphic Events**: The system fetches `theme_config` from the active Event.
+- **Complex Products**: Supported via `ProductConfigurator` which handles Variants (Color/Size) and Wizard Steps (File Uploads/Text).
+- **Viral Proposals**: Logic handles User A -> User B -> Video Reaction (S3).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Testing
+Import `postman_collection.json` into Postman to test APIs including Order Creation and S3 Uploads.

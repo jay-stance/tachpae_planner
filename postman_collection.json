@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "tachpae-planner-id",
+		"name": "Tachpae Planner API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Seed Database",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/seed",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"seed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proposals",
+			"item": [
+				{
+					"name": "Get Upload URL (S3)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/proposal/upload-url",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"proposal",
+								"upload-url"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventId\": \"EVENT_ID_FROM_SEED\",\n    \"customer\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"phone\": \"08012345678\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"PRODUCT_ID\",\n            \"quantity\": 1,\n            \"variantSelection\": {\n                \"Frame Color\": \"Black\"\n            },\n            \"customizationData\": {\n                \"video_file\": \"https://s3-url.com/video.mp4\"\n            }\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}

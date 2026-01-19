@@ -1,0 +1,65 @@
+import mongoose, { Schema, Document, Model } from 'mongoose';
+
+export interface IProduct extends Document {
+  name: string;
+  description: string;
+  basePrice: number;
+  event: mongoose.Types.ObjectId;
+  category: mongoose.Types.ObjectId;
+  mediaGallery: string[]; // URLs of images/videos
+  
+  // Dynamic Configuration for SKUs
+  variantsConfig: {
+    options: {
+      name: string; // e.g. "Color"
+      values: {
+        label: string; // e.g. "Red"
+        value: string; // e.g. "#ff0000" or "red"
+        image?: string; // Visual swatch
+        priceModifier?: number; // Added to base price
+      }[];
+    }[];
+  };
+
+  // User input required (Wizard steps)
+  customizationSchema: {
+    steps: {
+      title: string;
+      fields: {
+        name: string; // Field key
+        label: string;
+        type: 'text' | 'textarea' | 'select' | 'file' | 'date';
+        required: boolean;
+        options?: string[]; // For select
+        accept?: string; // For file (e.g., "video/*")
+      }[];
+    }[];
+  };
+
+  isActive: boolean;
+  
+  // Video upload constraints (optional)
+  videoConfig?: {
+    maxDuration: number; // seconds
+    maxSize: number;     // MB
+  };
+}
+
+const ProductSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  description: { type: String },
+  basePrice: { type: Number, required: true },
+  event: { type: Schema.Types.ObjectId, ref: 'Event', required: true },
+  category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+  mediaGallery: [{ type: String }],
+  
+  variantsConfig: { type: Schema.Types.Mixed, default: { options: [] } },
+  customizationSchema: { type: Schema.Types.Mixed, default: { steps: [] } },
+  videoConfig: { type: Schema.Types.Mixed, default: null },
+  
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+const Product: Model<IProduct> = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
+
+export default Product;
