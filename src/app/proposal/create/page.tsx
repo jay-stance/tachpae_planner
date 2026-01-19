@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Heart, Copy, ArrowRight, Check, History, ExternalLink, Mail, User } from 'lucide-react';
+import { Heart, Copy, ArrowRight, Check, History, ExternalLink, Mail, User, XCircle, Sparkles, Video } from 'lucide-react';
 import { createProposal, getProposalsByDeviceId } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -262,45 +262,125 @@ export default function CreateProposal() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                       >
-                        <Card className="border-0 shadow-lg bg-white/80 overflow-hidden group">
-                          <div className="p-4 flex items-center justify-between">
-                            <div className="flex flex-col">
-                              <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter">To: {prop.partnerName}</span>
-                              <span className="text-sm font-semibold text-gray-800 line-clamp-1">{prop.message}</span>
-                              <div className="flex items-center gap-2 mt-1">
-                                <span className={cn(
-                                  "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full",
-                                  prop.status === 'PENDING' ? "bg-amber-100 text-amber-700" :
-                                  prop.status === 'ACCEPTED' ? "bg-green-100 text-green-700" :
-                                  "bg-gray-100 text-gray-700"
+                        <Card className={cn(
+                          "border-0 shadow-lg overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:-translate-y-1",
+                          prop.status === 'ACCEPTED' ? "bg-gradient-to-br from-rose-50 to-pink-100 border-l-4 border-rose-500" :
+                          prop.status === 'REJECTED' ? "bg-gradient-to-br from-slate-50 to-gray-200 border-l-4 border-slate-400" :
+                          "bg-white border-l-4 border-amber-400"
+                        )}>
+                          <div className="p-5 flex items-start justify-between relative overflow-hidden">
+                            {/* Ambient background icons */}
+                            <div className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+                              {prop.status === 'ACCEPTED' ? <Heart className="w-32 h-32 fill-rose-500" /> : 
+                               prop.status === 'REJECTED' ? <XCircle className="w-32 h-32 fill-slate-500" /> : 
+                               <Mail className="w-32 h-32 fill-amber-500" />}
+                            </div>
+
+                            <div className="flex flex-col relative z-10 grow mr-4">
+                              <div className="flex items-center gap-2 mb-1">
+                                {prop.status === 'ACCEPTED' ? (
+                                  <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
+                                ) : prop.status === 'REJECTED' ? (
+                                  <XCircle className="w-3 h-3 text-slate-400" />
+                                ) : (
+                                  <Sparkles className="w-3 h-3 text-amber-500" />
+                                )}
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                  {prop.status === 'ACCEPTED' ? "A Romantic Success" : 
+                                   prop.status === 'REJECTED' ? "A Quiet Moment" : 
+                                   "Sent with Hope"}
+                                </span>
+                              </div>
+                              
+                              <h4 className="text-sm font-bold text-gray-800 mb-0.5">
+                                {prop.status === 'ACCEPTED' ? "Forever Yours, " : 
+                                 prop.status === 'REJECTED' ? "In Retrospect, " : 
+                                 "A Special Invite for "}{prop.partnerName}
+                              </h4>
+                              
+                              <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed mb-3">
+                                "{prop.message}"
+                              </p>
+
+                              <div className="flex items-center gap-3">
+                                <div className={cn(
+                                  "text-[10px] font-bold px-2 py-0.5 rounded-full border",
+                                  prop.status === 'ACCEPTED' ? "bg-rose-500/10 border-rose-200 text-rose-600" :
+                                  prop.status === 'REJECTED' ? "bg-slate-500/10 border-slate-200 text-slate-600" :
+                                  "bg-amber-500/10 border-amber-200 text-amber-600"
                                 )}>
                                   {prop.status}
-                                </span>
-                                <span className="text-[10px] text-gray-400">
-                                  {new Date(prop.createdAt).toLocaleDateString()}
+                                </div>
+                                <span className="text-[10px] text-gray-400 flex items-center gap-1">
+                                  <History className="w-2.5 h-2.5" />
+                                  {new Date(prop.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                                 </span>
                               </div>
                             </div>
-                            <Button 
-                              size="icon" 
-                              variant="ghost" 
-                              className="rounded-full hover:bg-rose-50 hover:text-rose-600"
-                              onClick={() => window.open(`${window.location.origin}/proposal/${prop._id}`, '_blank')}
-                            >
-                              <ExternalLink className="w-4 h-4" />
-                            </Button>
-                          </div>
-                          {prop.status === 'ACCEPTED' && prop.reactionVideoUrl && (
-                            <div className="bg-green-50 px-4 py-2 border-t border-green-100 flex items-center justify-between">
-                              <span className="text-xs text-green-700 font-medium">✨ Reaction Video Ready!</span>
-                              <Button variant="link" size="sm" className="text-xs text-green-800 h-auto p-0" onClick={() => window.open(prop.reactionVideoUrl, '_blank')}>
-                                View Reaction
+
+                            <div className="flex flex-col gap-2 relative z-10">
+                              <Button 
+                                size="icon" 
+                                variant="outline" 
+                                className="w-9 h-9 rounded-full bg-white/50 backdrop-blur-sm border-gray-100 shadow-sm hover:bg-white hover:text-rose-500 transition-colors"
+                                onClick={() => window.open(`${window.location.origin}/proposal/${prop._id}`, '_blank')}
+                                title="View Page"
+                              >
+                                <ExternalLink className="w-4 h-4" />
                               </Button>
                             </div>
-                          )}
-                          {prop.status === 'REJECTED' && prop.rejectionReason && (
-                            <div className="bg-gray-50 px-4 py-2 border-t border-gray-100">
-                              <span className="text-xs text-gray-600 font-medium italic italic">"{prop.rejectionReason}"</span>
+                          </div>
+
+                          {prop.status === 'ACCEPTED' ? (
+                            <div className="bg-rose-500/5 px-5 py-3 border-t border-rose-100 flex items-center justify-between relative z-10">
+                              <div className="flex items-center gap-2">
+                                <div className="w-7 h-7 bg-rose-100 rounded-full flex items-center justify-center animate-bounce">
+                                  <Video className="w-3.5 h-3.5 text-rose-600" />
+                                </div>
+                                <span className="text-[11px] text-rose-800 font-bold tracking-tight">She shared a reaction! 🎉</span>
+                              </div>
+                              <Button 
+                                variant="secondary" 
+                                size="sm" 
+                                className="h-8 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-sm" 
+                                onClick={() => window.open(prop.reactionVideoUrl, '_blank')}
+                              >
+                                Watch Video
+                              </Button>
+                            </div>
+                          ) : prop.status === 'REJECTED' ? (
+                            <div className="bg-slate-100/50 px-5 py-3 border-t border-slate-200 flex flex-col gap-1 relative z-10">
+                              <div className="flex items-center gap-2 mb-1">
+                                <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center">
+                                  <Mail className="w-3 h-3 text-slate-500" />
+                                </div>
+                                <span className="text-[11px] text-slate-700 font-bold">A thoughtful response...</span>
+                              </div>
+                              <p className="text-[11px] text-slate-500 italic pl-8">
+                                "{prop.rejectionReason || "No message left, but hope remains."}"
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="bg-amber-50/30 px-5 py-3 border-t border-amber-100 flex items-center justify-between relative z-10">
+                              <span className="text-[11px] text-amber-700 font-medium">✨ Waiting for butterflies...</span>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="h-7 text-[10px] text-amber-800 hover:bg-amber-100 font-bold"
+                                onClick={() => {
+                                  if (navigator.share) {
+                                    navigator.share({
+                                      title: 'A Surprise for You',
+                                      text: `Hi ${prop.partnerName}, I have a surprise for you!`,
+                                      url: `${window.location.origin}/proposal/${prop._id}`
+                                    });
+                                  } else {
+                                    copyToClipboard();
+                                  }
+                                }}
+                              >
+                                Reshare link
+                              </Button>
                             </div>
                           )}
                         </Card>

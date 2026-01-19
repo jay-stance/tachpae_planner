@@ -90,7 +90,10 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
         await fetch(uploadUrl, {
             method: 'PUT',
             body: file,
-            headers: { 'Content-Type': file.type }
+            headers: { 
+                'Content-Type': file.type,
+                'x-amz-acl': 'public-read'
+            }
         });
 
         // Step 3: Save response
