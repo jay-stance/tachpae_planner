@@ -21,8 +21,8 @@ export default function CitySelector({ cities, onSelect }: CitySelectorProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <Card className="w-full max-w-lg shadow-2xl animate-in zoom-in-95 duration-300 border-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4">
+      <Card className="w-full max-w-lg shadow-[0_20px_50px_rgba(0,0,0,0.3)] animate-in zoom-in-95 duration-300 border-0 bg-white">
         <CardContent className="p-8 text-center">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
             <MapPin className="w-8 h-8 text-primary" />

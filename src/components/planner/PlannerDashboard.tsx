@@ -113,8 +113,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <Badge 
-              className="mb-2 text-white border-0"
-              style={{ backgroundColor: primaryColor }}
+              className="mb-2 text-white border-0 bg-rose-600"
             >
               {city.name} Edition
             </Badge>
@@ -132,8 +131,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               {copied ? 'Copied!' : 'Share Wishlist'}
             </Button>
             <Button 
-              className="gap-2 rounded-full shadow-lg"
-              style={{ backgroundColor: primaryColor }}
+              className="gap-2 rounded-full shadow-lg bg-rose-600 hover:bg-rose-700 text-white font-bold px-6"
               onClick={() => setCartOpen(true)}
             >
               <ShoppingBag className="w-4 h-4" /> 

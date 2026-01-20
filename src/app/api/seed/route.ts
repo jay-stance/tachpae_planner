@@ -153,6 +153,38 @@ export async function POST() {
       { name: 'Gold Heart Pendant', description: '18K gold pendant with cubic zirconia.', basePrice: 85000, category: getCat('jewelry'), mediaGallery: [PLACEHOLDER_IMAGES.jewelry] },
       { name: 'Diamond Stud Earrings', description: 'Elegant diamond studs in white gold.', basePrice: 250000, category: getCat('jewelry'), mediaGallery: [PLACEHOLDER_IMAGES.jewelry] },
       { name: 'Couple Bracelets Set', description: 'Matching bracelets in sterling silver.', basePrice: 45000, category: getCat('jewelry'), mediaGallery: [PLACEHOLDER_IMAGES.jewelry] },
+      
+      // New products with media limits
+      { 
+        name: 'Digital Memory Scrapbook', 
+        description: 'A physical scrapbook with a digital twist. Upload up to 5 photos.', 
+        basePrice: 30000, 
+        category: getCat('digital-frames'), 
+        mediaGallery: [PLACEHOLDER_IMAGES.frame],
+        customizationSchema: {
+          steps: [
+            { title: 'Upload Memories', fields: [
+              { name: 'photos', label: 'Upload up to 5 Photos', type: 'file', accept: 'image/*', required: true, maxImages: 5 }
+            ]}
+          ]
+        }
+      },
+      { 
+        name: 'Cinematic Video Greeting', 
+        description: 'A professionally edited video message with a custom thumbnail.', 
+        basePrice: 20000, 
+        category: getCat('digital-frames'), 
+        mediaGallery: [PLACEHOLDER_IMAGES.frame],
+        customizationSchema: {
+          steps: [
+            { title: 'Upload Media', fields: [
+              { name: 'video', label: 'Upload Your Video', type: 'file', accept: 'video/*', required: true, maxVideos: 1 },
+              { name: 'thumbnail', label: 'Upload a Thumbnail Photo', type: 'file', accept: 'image/*', required: true, maxImages: 1 }
+            ]}
+          ]
+        },
+        videoConfig: { maxDuration: 60, maxSize: 100 }
+      },
     ];
 
     for (const product of productsData) {
@@ -223,6 +255,13 @@ export async function POST() {
 
     return NextResponse.json({ 
       message: 'Database seeded successfully!', 
+      data: {
+        event_id: event._id,
+        city_id: lagos?._id,
+        category_id: categories[0]?._id,
+        product_id: (await Product.findOne({ name: 'Classic Red Teddy' }))?._id,
+        complex_product_id: (await Product.findOne({ name: 'Digital Memory Scrapbook' }))?._id,
+      },
       counts: {
         cities: cities.length,
         categories: categories.length,

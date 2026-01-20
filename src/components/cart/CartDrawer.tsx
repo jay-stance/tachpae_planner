@@ -17,7 +17,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-md flex flex-col">
+      <SheetContent className="w-full sm:max-w-md flex flex-col bg-white border-l shadow-2xl">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5" />
@@ -37,7 +37,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.productId} className="flex gap-4 p-3 bg-muted/50 rounded-lg">
+              <div key={item.productId} className="flex gap-4 p-4 bg-white border border-gray-100 rounded-xl shadow-sm">
                 <div className="w-20 h-20 relative rounded-md overflow-hidden bg-gray-100 shrink-0">
                   {item.productImage ? (
                     <Image src={item.productImage} alt={item.productName} fill className="object-cover" />
@@ -83,12 +83,12 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
         </div>
 
         {items.length > 0 && (
-          <SheetFooter className="border-t pt-4 flex-col gap-3">
-            <div className="flex justify-between w-full text-lg font-bold">
+          <SheetFooter className=" pt-4 flex-col gap-3 bg-rose-50/50 py-6 mx-4 mb-6">
+            <div className="flex justify-between w-full text-lg font-bold p-3 bg-white rounded-xl shadow-sm mb-2">
               <span>Total:</span>
-              <span className="text-primary">₦{totalAmount.toLocaleString()}</span>
+              <span className="text-rose-600">₦{totalAmount.toLocaleString()}</span>
             </div>
-            <Button className="w-full h-12 text-lg">
+            <Button className="w-full h-14 text-lg bg-rose-600 hover:bg-rose-700 shadow-lg rounded-xl">
               Proceed to Checkout
             </Button>
             <Button variant="ghost" className="w-full text-sm text-muted-foreground" onClick={clearCart}>

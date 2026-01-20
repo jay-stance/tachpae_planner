@@ -21,6 +21,19 @@ const INTRO_TEXTS = [
     "Prepare for butterflies..."
 ];
 
+// Moved outside to prevent re-mounting on every progress update
+const Container = ({ children, className }: { children: React.ReactNode, className?: string }) => (
+  <motion.div 
+    className={cn("w-full max-w-md mx-auto p-2 relative z-10", className)}
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+    transition={{ duration: 0.5 }}
+  >
+    {children}
+  </motion.div>
+);
+
 export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   const { compressVideo, status: compressionStatus, progress, setUploading, setDone, reset } = useVideoCompressor();
   
@@ -34,7 +47,20 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
 
   // Randomize experience on mount
   useEffect(() => {
-      setIntroText(INTRO_TEXTS[Math.floor(Math.random() * INTRO_TEXTS.length)]);
+    setIntroText(INTRO_TEXTS[Math.floor(Math.random() * INTRO_TEXTS.length)]);
+  }, []);
+
+  // Stabilize background particles so they don't jump on every render
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100, // percentage
+      y: Math.random() * 100, // percentage
+      scale: Math.random() * 0.5 + 0.2,
+      duration: Math.random() * 10 + 10,
+      width: Math.random() * 10 + 5,
+      height: Math.random() * 10 + 5
+    }));
   }, []);
 
   const rejectionOptions = [
@@ -91,8 +117,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
             method: 'PUT',
             body: file,
             headers: { 
-                'Content-Type': file.type,
-                'x-amz-acl': 'public-read'
+                'Content-Type': file.type
             }
         });
 
@@ -130,7 +155,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
 
   const isProcessing = ['LOADING_CORE', 'COMPRESSING', 'UPLOADING'].includes(compressionStatus);
 
-  // --- Render Functions ---
+  // --- Render Logic ---
 
   if (stage === 'SUBMITTED' || proposal.status !== 'PENDING') {
       return (
@@ -151,43 +176,29 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
       );
   }
 
-  const Container = ({ children, className }: { children: React.ReactNode, className?: string }) => (
-      <motion.div 
-        className={cn("w-full max-w-md mx-auto p-2 relative z-10", className)}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-        transition={{ duration: 0.5 }}
-      >
-        {children}
-      </motion.div>
-  );
-
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden font-sans bg-gradient-to-br from-red-600 via-pink-600 to-purple-800">
         
         {/* Ambient Particles */}
-        {Array.from({ length: 15 }).map((_, i) => (
+        {particles.map((p) => (
             <motion.div
-                key={i}
+                key={p.id}
                 className="absolute bg-white rounded-full opacity-20"
-                initial={{ 
-                    x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000), 
-                    y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
-                    scale: Math.random() * 0.5 + 0.2
+                style={{
+                    left: `${p.x}%`,
+                    top: `${p.y}%`,
+                    scale: p.scale,
+                    width: p.width,
+                    height: p.height,
                 }}
                 animate={{ 
-                    y: [null, Math.random() * -100],
+                    y: [null, -100],
                     opacity: [0.3, 0.6, 0.3]
                 }}
                 transition={{ 
-                    duration: Math.random() * 10 + 10, 
+                    duration: p.duration, 
                     repeat: Infinity, 
                     ease: "linear" 
-                }}
-                style={{
-                    width: Math.random() * 10 + 5,
-                    height: Math.random() * 10 + 5,
                 }}
             />
         ))}

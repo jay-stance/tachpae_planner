@@ -1,15 +1,38 @@
 {
 	"info": {
-		"_postman_id": "tachpae-planner-id",
-		"name": "Tachpae Planner API",
+		"_postman_id": "tachpae-planner-v2",
+		"name": "Tachpae Planner API (Automated)",
+		"description": "Comprehensive test suite for Tachpae Planner. Run 'Seed Database' first to initialize variables.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "General",
+			"name": "0. Setup",
 			"item": [
 				{
 					"name": "Seed Database",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"if (jsonData.success !== false) {",
+									"    pm.environment.set(\"event_id\", jsonData.data.event_id);",
+									"    pm.environment.set(\"city_id\", jsonData.data.city_id);",
+									"    pm.environment.set(\"category_id\", jsonData.data.category_id);",
+									"    pm.environment.set(\"product_id\", jsonData.data.product_id);",
+									"    pm.environment.set(\"complex_product_id\", jsonData.data.complex_product_id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -29,10 +52,306 @@
 			]
 		},
 		{
-			"name": "Proposals",
+			"name": "1. Information",
 			"item": [
 				{
-					"name": "Get Upload URL (S3)",
+					"name": "Get Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Returns array of events\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/cities",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories?eventId={{event_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "{{event_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Products",
+			"item": [
+				{
+					"name": "Get Products (Filtered)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Filtered correctly\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.data.length > 0) {",
+									"       pm.expect(jsonData.data[0].category._id).to.eql(pm.environment.get(\"category_id\"));",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products?eventId={{event_id}}&categoryId={{category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "{{event_id}}"
+								},
+								{
+									"key": "categoryId",
+									"value": "{{category_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products?search=Teddy",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Teddy"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Checkout Flow",
+			"item": [
+				{
+					"name": "Create Simple Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Order created successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.json().success).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventId\": \"{{event_id}}\",\n    \"customer\": {\n        \"name\": \"Test User\",\n        \"email\": \"test@example.com\",\n        \"phone\": \"08000000000\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"{{product_id}}\",\n            \"quantity\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Complex Order (Multi-Media)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Complex order created\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventId\": \"{{event_id}}\",\n    \"customer\": {\n        \"name\": \"Complex User\",\n        \"email\": \"complex@example.com\",\n        \"phone\": \"08011111111\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"{{complex_product_id}}\",\n            \"quantity\": 1,\n            \"customizationData\": {\n                \"photos\": [\n                    \"https://s3.com/photo1.jpg\",\n                    \"https://s3.com/photo2.jpg\",\n                    \"https://s3.com/photo3.jpg\"\n                ]\n            }\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Proposals",
+			"item": [
+				{
+					"name": "Get Upload URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -51,45 +370,38 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Orders",
-			"item": [
-				{
-					"name": "Create Order",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"eventId\": \"EVENT_ID_FROM_SEED\",\n    \"customer\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"phone\": \"08012345678\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"PRODUCT_ID\",\n            \"quantity\": 1,\n            \"variantSelection\": {\n                \"Frame Color\": \"Black\"\n            },\n            \"customizationData\": {\n                \"video_file\": \"https://s3-url.com/video.mp4\"\n            }\n        }\n    ]\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/orders",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"orders"
-							]
-						}
-					},
-					"response": []
-				}
-			]
 		}
 	],
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:3000"
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "event_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "city_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "category_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "complex_product_id",
+			"value": "",
+			"type": "string"
 		}
 	]
 }

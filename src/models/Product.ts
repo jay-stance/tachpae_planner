@@ -32,6 +32,8 @@ export interface IProduct extends Document {
         required: boolean;
         options?: string[]; // For select
         accept?: string; // For file (e.g., "video/*")
+        maxImages?: number; // For file
+        maxVideos?: number; // For file
       }[];
     }[];
   };
