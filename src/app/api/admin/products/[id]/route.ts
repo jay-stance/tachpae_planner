@@ -1,10 +1,14 @@
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
+import { isAdmin } from '@/lib/middleware';
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   await dbConnect();
+  
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const body = await req.json();
     const product = await Product.findByIdAndUpdate(params.id, body, { new: true });
@@ -17,6 +21,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   await dbConnect();
+
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const product = await Product.findByIdAndDelete(params.id);
     if (!product) return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });

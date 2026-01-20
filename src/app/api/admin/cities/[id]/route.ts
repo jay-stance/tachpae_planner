@@ -1,10 +1,14 @@
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import City from '@/models/City';
+import { isAdmin } from '@/lib/middleware';
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   await dbConnect();
+
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const body = await req.json();
     const city = await City.findByIdAndUpdate(params.id, body, { new: true });
@@ -17,6 +21,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   await dbConnect();
+
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const city = await City.findByIdAndDelete(params.id);
     if (!city) return NextResponse.json({ success: false, error: 'City not found' }, { status: 404 });

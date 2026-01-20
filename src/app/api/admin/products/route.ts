@@ -1,11 +1,15 @@
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
+import { isAdmin } from '@/lib/middleware';
 
 // Create Product (Single or Batch)
 export async function POST(req: Request) {
   await dbConnect();
+  
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const body = await req.json();
     if (Array.isArray(body)) {

@@ -1,10 +1,14 @@
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Order from '@/models/Order';
+import { isAdmin } from '@/lib/middleware';
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   await dbConnect();
+
+  const auth = await isAdmin(req);
+  if (!auth.authorized) return auth.response;
+
   try {
     const body = await req.json();
     // Admin can update status, notes, or even specific items if needed
