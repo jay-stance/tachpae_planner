@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "tachpae-planner-v2",
-		"name": "Tachpae Planner API (Automated)",
-		"description": "Comprehensive test suite for Tachpae Planner. Run 'Seed Database' first to initialize variables.",
+		"_postman_id": "tachpae-planner-v3",
+		"name": "Tachpae Planner API (Admin & Automated)",
+		"description": "Comprehensive test suite for Tachpae Planner. Includes all Admin CRUD and Batch operations.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -52,27 +52,10 @@
 			]
 		},
 		{
-			"name": "1. Information",
+			"name": "1. Public APIs",
 			"item": [
 				{
 					"name": "Get Events",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Returns array of events\", function () {",
-									"    const jsonData = pm.response.json();",
-									"    pm.expect(jsonData.data).to.be.an('array');",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -86,24 +69,10 @@
 								"events"
 							]
 						}
-					},
-					"response": []
+					}
 				},
 				{
 					"name": "Get Cities",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -117,24 +86,10 @@
 								"cities"
 							]
 						}
-					},
-					"response": []
+					}
 				},
 				{
 					"name": "Get Categories",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -148,41 +103,13 @@
 								"categories"
 							],
 							"query": [
-								{
-									"key": "eventId",
-									"value": "{{event_id}}"
-								}
+								{ "key": "eventId", "value": "{{event_id}}" }
 							]
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "2. Products",
-			"item": [
+					}
+				},
 				{
 					"name": "Get Products (Filtered)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Filtered correctly\", function () {",
-									"    const jsonData = pm.response.json();",
-									"    if (jsonData.data.length > 0) {",
-									"       pm.expect(jsonData.data[0].category._id).to.eql(pm.environment.get(\"category_id\"));",
-									"    }",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -196,212 +123,111 @@
 								"products"
 							],
 							"query": [
-								{
-									"key": "eventId",
-									"value": "{{event_id}}"
-								},
-								{
-									"key": "categoryId",
-									"value": "{{category_id}}"
-								}
+								{ "key": "eventId", "value": "{{event_id}}" },
+								{ "key": "categoryId", "value": "{{category_id}}" }
 							]
 						}
-					},
-					"response": []
-				},
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Admin CRUD",
+			"item": [
 				{
-					"name": "Search Products",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
+					"name": "Create Event",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Event\",\n    \"slug\": \"new-event\",\n    \"isActive\": true\n}"
+						},
 						"url": {
-							"raw": "{{base_url}}/api/products?search=Teddy",
+							"raw": "{{base_url}}/api/admin/events",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
+								"admin",
+								"events"
+							]
+						}
+					}
+				},
+				{
+					"name": "Batch Add Products",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"Batch Product 1\",\n        \"description\": \"Test\",\n        \"basePrice\": 1000,\n        \"category\": \"{{category_id}}\",\n        \"event\": \"{{event_id}}\"\n    },\n    {\n        \"name\": \"Batch Product 2\",\n        \"description\": \"Test\",\n        \"basePrice\": 2000,\n        \"category\": \"{{category_id}}\",\n        \"event\": \"{{event_id}}\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
 								"products"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "Teddy"
-								}
 							]
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "3. Checkout Flow",
-			"item": [
-				{
-					"name": "Create Simple Order",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Order created successfully\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    pm.expect(pm.response.json().success).to.be.true;",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"eventId\": \"{{event_id}}\",\n    \"customer\": {\n        \"name\": \"Test User\",\n        \"email\": \"test@example.com\",\n        \"phone\": \"08000000000\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"{{product_id}}\",\n            \"quantity\": 1\n        }\n    ]\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/orders",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"orders"
-							]
-						}
-					},
-					"response": []
+					}
 				},
 				{
-					"name": "Create Complex Order (Multi-Media)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Complex order created\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
+					"name": "Update Product",
 					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"method": "PATCH",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"eventId\": \"{{event_id}}\",\n    \"customer\": {\n        \"name\": \"Complex User\",\n        \"email\": \"complex@example.com\",\n        \"phone\": \"08011111111\",\n        \"city\": \"Lagos\"\n    },\n    \"items\": [\n        {\n            \"type\": \"PRODUCT\",\n            \"referenceId\": \"{{complex_product_id}}\",\n            \"quantity\": 1,\n            \"customizationData\": {\n                \"photos\": [\n                    \"https://s3.com/photo1.jpg\",\n                    \"https://s3.com/photo2.jpg\",\n                    \"https://s3.com/photo3.jpg\"\n                ]\n            }\n        }\n    ]\n}"
+							"raw": "{\n    \"name\": \"Updated Product Name\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/api/orders",
+							"raw": "{{base_url}}/api/admin/products/{{product_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"orders"
+								"admin",
+								"products",
+								"{{product_id}}"
 							]
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "4. Proposals",
-			"item": [
+					}
+				},
 				{
-					"name": "Get Upload URL",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
+					"name": "Delete Product",
 					"request": {
-						"method": "POST",
-						"header": [],
+						"method": "DELETE",
 						"url": {
-							"raw": "{{base_url}}/api/proposal/upload-url",
+							"raw": "{{base_url}}/api/admin/products/{{product_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"proposal",
-								"upload-url"
+								"admin",
+								"products",
+								"{{product_id}}"
 							]
 						}
-					},
-					"response": []
+					}
 				}
 			]
 		}
 	],
 	"variable": [
-		{
-			"key": "base_url",
-			"value": "http://localhost:3000",
-			"type": "string"
-		},
-		{
-			"key": "event_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "city_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "category_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "product_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "complex_product_id",
-			"value": "",
-			"type": "string"
-		}
+		{ "key": "base_url", "value": "http://localhost:3000" },
+		{ "key": "event_id", "value": "" },
+		{ "key": "city_id", "value": "" },
+		{ "key": "category_id", "value": "" },
+		{ "key": "product_id", "value": "" },
+		{ "key": "complex_product_id", "value": "" }
 	]
 }

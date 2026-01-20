@@ -28,8 +28,8 @@ export async function GET(req: Request) {
     }
 
     const products = await Product.find(query)
-      .populate('category')
-      .populate('event')
+      .populate('category', 'name slug')
+      .populate('event', 'name slug')
       .lean();
 
     return NextResponse.json({

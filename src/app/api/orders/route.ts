@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     // 2. Validate Items & Calculate Total
     for (const item of validatedData.items) {
       if (item.type === 'PRODUCT') {
-        const product = await Product.findById(item.referenceId);
+        const product = await Product.findById(item.referenceId).select('name basePrice variantsConfig videoConfig');
         if (!product) throw new Error(`Product not found: ${item.referenceId}`);
         
         // Calculate price with variants
