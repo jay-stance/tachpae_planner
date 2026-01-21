@@ -22,6 +22,7 @@ interface PlannerDashboardProps {
     products: any[];
     services: any[];
     addons?: any[];
+    allCities?: any[];
   }
 }
 
@@ -111,12 +112,22 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <Badge 
-              className="mb-2 text-white border-0 bg-rose-600"
-            >
-              {city.name} Edition
-            </Badge>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-600">Location:</span>
+              <select 
+                value={city.slug}
+                onChange={(e) => router.push(`/planning/${e.target.value}`)}
+                className="bg-rose-100 text-rose-700 text-xs font-bold py-1.5 px-3 rounded-full border-none focus:ring-2 focus:ring-rose-500 cursor-pointer appearance-none outline-none"
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e11d48'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.5rem center', backgroundSize: '1rem', paddingRight: '2rem' }}
+              >
+                <option value={city.slug}>{city.name}</option>
+                {/* We should ideally fetch other cities here or pass them in props */}
+                {data.allCities?.map((c: any) => c.slug !== city.slug && (
+                  <option key={c._id} value={c.slug}>{c.name}</option>
+                ))}
+              </select>
+            </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Curate Your Package</h1>
             <p className="text-muted-foreground mt-1">Select gifts, experiences, and more.</p>
           </div>
@@ -396,7 +407,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       </Dialog>
 
       {/* Cart Drawer */}
-      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} city={city} />
     </div>
   );
 }

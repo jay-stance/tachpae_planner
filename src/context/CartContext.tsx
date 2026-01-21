@@ -26,15 +26,17 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = 'tachpae_cart';
+const CART_STORAGE_KEY_BASE = 'tachpae_cart';
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({ children, cityId }: { children: React.ReactNode, cityId?: string }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
 
+  const storageKey = cityId ? `${CART_STORAGE_KEY_BASE}_${cityId}` : CART_STORAGE_KEY_BASE;
+
   // Load cart from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
       try {
         setItems(JSON.parse(stored));
@@ -48,9 +50,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Save cart to localStorage on change
   useEffect(() => {
     if (isHydrated) {
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(storageKey, JSON.stringify(items));
     }
-  }, [items, isHydrated]);
+  }, [items, isHydrated, storageKey]);
 
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = items.reduce((sum, item) => sum + item.totalPrice, 0);

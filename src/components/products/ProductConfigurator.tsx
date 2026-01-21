@@ -353,55 +353,60 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-      <div className="p-6 md:p-8">
+    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
         {/* Phase 1: Variants */}
         {(!hasWizard || currentStep === 0) && renderVariants()}
 
         {/* Phase 2: Wizard Steps */}
-        {hasWizard && (
-          <>
-            {renderWizardStep()}
-            
-            <div className="flex justify-between items-center mt-8 pt-4 border-t">
-              <Button 
-                variant="ghost" 
-                onClick={prevStep} 
-                disabled={currentStep === 0}
-                className={cn("rounded-full", currentStep === 0 ? "invisible" : "visible")}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" /> Back
-              </Button>
-              
-              <div className="text-center">
-                <div className="text-sm text-gray-500">Total</div>
-                <div className="text-xl font-bold" style={{ color: primaryColor }}>
-                  ₦{calculateTotalPrice().toLocaleString()}
-                </div>
-              </div>
-              
-              <Button 
-                onClick={nextStep} 
-                className="rounded-full px-6 bg-rose-600 hover:bg-rose-700 text-white font-bold"
-              >
-                {currentStep === steps.length - 1 ? 'Add to Bundle' : 'Next Step'}
-                {currentStep !== steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
-              </Button>
-            </div>
-          </>
-        )}
+        {hasWizard && renderWizardStep()}
 
         {!hasWizard && (
-          <div className="mt-6 flex items-center justify-between pt-4 border-t">
+          <div className="mt-6 pt-4 border-t flex items-center justify-between">
             <div>
               <div className="text-sm text-gray-500">Total</div>
               <div className="text-2xl font-bold" style={{ color: primaryColor }}>
                 ₦{calculateTotalPrice().toLocaleString()}
               </div>
             </div>
+          </div>
+        )}
+      </div>
+
+      {/* Sticky Footer */}
+      <div className="p-6 md:px-8 md:py-6 border-t bg-gray-50/50 backdrop-blur-sm">
+        {hasWizard ? (
+          <div className="flex justify-between items-center gap-4">
+            <Button 
+              variant="ghost" 
+              onClick={prevStep} 
+              disabled={currentStep === 0}
+              className={cn("rounded-full", currentStep === 0 ? "invisible" : "visible")}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" /> Back
+            </Button>
+            
+            <div className="text-center hidden sm:block">
+              <div className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Total Price</div>
+              <div className="text-xl font-bold" style={{ color: primaryColor }}>
+                ₦{calculateTotalPrice().toLocaleString()}
+              </div>
+            </div>
+            
+            <Button 
+              onClick={nextStep} 
+              className="rounded-full px-8 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
+            >
+              {currentStep === steps.length - 1 ? 'Add to Bundle' : 'Next Step'}
+              {currentStep !== steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-end">
             <Button 
               onClick={handleComplete} 
-              className="rounded-full px-8 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold"
+              className="rounded-full px-10 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
             >
               Add to Bundle <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

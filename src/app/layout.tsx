@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: 'Pro Event Planning Platform',
 };
 
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
+
 export default async function RootLayout({
   children,
 }: {
@@ -24,11 +26,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen bg-background text-foreground")} suppressHydrationWarning>
         <EventProvider initialEvent={event}>
-          <CartProvider>
-            <main className="flex min-h-screen flex-col items-center justify-between">
-              {children}
-            </main>
-          </CartProvider>
+          <main className="flex min-h-screen flex-col items-center justify-between">
+            {children}
+          </main>
+          <WhatsAppIcon />
         </EventProvider>
       </body>
     </html>

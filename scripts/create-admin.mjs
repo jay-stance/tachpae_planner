@@ -1,7 +1,15 @@
-
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import User from '../src/models/User.js'; // Note: This might need adjustment based on how the environment handles TS imports in scripts
+
+const UserSchema = new Schema({
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['ADMIN', 'USER'], default: 'USER' },
+}, { timestamps: true });
+
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+
+
 
 // This script is meant to be run with a .env-aware runner or after build
 // For a quick fix, we use a simple Mongoose connection

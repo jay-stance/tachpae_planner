@@ -24,7 +24,11 @@ const CreateOrderSchema = z.object({
     name: z.string().min(2),
     email: z.string().email(),
     phone: z.string().min(10),
+    whatsapp: z.string().min(10),
+    address: z.string().min(5),
     city: z.string(),
+    secondaryPhone: z.string().optional(),
+    customMessage: z.string().optional(),
   }),
   items: z.array(OrderItemSchema).min(1),
 });
@@ -105,10 +109,16 @@ export async function POST(req: Request) {
         status: 'PENDING'
     });
 
+    // 4. Notify Admin (Mock)
+    console.log(`[ORDER NOTIFICATION] New Order ${orderId} placed by ${validatedData.customer.name}`);
+    // In a real app, you'd use something like sendEmail({ to: 'admin@tachpae.com', ... })
+
     return NextResponse.json({ 
         success: true, 
-        orderId: newOrder.orderId,
-        _id: newOrder._id,
+        order: {
+            orderId: newOrder.orderId,
+            _id: newOrder._id,
+        },
         totalAmount 
     });
 

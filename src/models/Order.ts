@@ -9,7 +9,11 @@ export interface IOrder extends Document {
     name: string;
     email: string;
     phone: string;
+    whatsapp: string;
+    secondaryPhone?: string;
+    address: string;
     city: string; // Snapshotted city name
+    customMessage?: string;
   };
   
   items: {
@@ -42,7 +46,11 @@ const OrderSchema: Schema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
+    whatsapp: { type: String, required: true },
+    secondaryPhone: { type: String },
+    address: { type: String, required: true },
     city: { type: String, required: true },
+    customMessage: { type: String },
   },
   items: [
     {

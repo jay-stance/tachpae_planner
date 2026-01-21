@@ -1,6 +1,8 @@
 import { getPlanningData } from '@/actions/planner';
+import { getCities } from '@/actions/city';
 import PlannerDashboard from '@/components/planner/PlannerDashboard';
 import { notFound } from 'next/navigation';
+import { CartProvider } from '@/context/CartContext';
 
 interface PageProps {
   params: Promise<{ citySlug: string }>;
@@ -16,12 +18,15 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function PlanningPage({ params }: PageProps) {
   const resolvedParams = await params;
   const data = await getPlanningData(resolvedParams.citySlug);
+  const allCities = await getCities();
 
   if (!data) {
     return notFound();
   }
 
   return (
-    <PlannerDashboard data={data} />
+    <CartProvider cityId={data.city._id}>
+      <PlannerDashboard data={{ ...data, allCities } as any} />
+    </CartProvider>
   );
 }
