@@ -15,6 +15,7 @@ import { useEvent } from '@/context/EventContext';
 import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 interface PlannerDashboardProps {
   data: {
@@ -180,7 +181,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               {/* SURPRISE YOURSELF - ELEGANT GIFTING EDIT */}
               <section className="relative overflow-hidden rounded-[2rem] bg-rose-50/50 border border-rose-100/50">
                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0">
-                  <div className="p-6 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4">
+                  <div className="p-8 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-rose-100 shadow-sm">
                         <Sparkles className="w-3 h-3 text-rose-500" />
                         <span className="text-[10px] font-bold tracking-wider text-rose-500 uppercase">The Mystery Edit</span>
@@ -191,29 +192,49 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                     </h2>
                     
                     <p className="text-gray-600 text-sm md:text-lg max-w-sm leading-relaxed">
-                      You don't need a partner to feel butterflies.You deserve a gift too. Let us curate a mystery box of joy, tailored just for you.
+                      You don't need a partner to feel butterflies. You deserve a gift too. Let us curate a mystery box of joy, tailored just for you.
                     </p>
 
                     <Button 
-                      onClick={() => {
-                        const targetCity = city?.slug || 'abuja';
-                        router.push(`/surprise?city=${targetCity}`);
-                      }}
+                      asChild
                       className="mt-2 h-12 px-8 rounded-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium transition-all shadow-lg hover:shadow-xl active:scale-95"
                     >
-                      Get My Gift <ArrowRight className="ml-2 w-4 h-4" />
+                      <Link href={`/surprise?city=${city?.slug || 'abuja'}`}>
+                        Get My Gift <ArrowRight className="ml-2 w-4 h-4" />
+                      </Link>
                     </Button>
                   </div>
 
-                  <div className="relative h-64 md:h-full min-h-[250px] order-1 md:order-2">
-                     <Image 
-                        src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80" 
-                        alt="Mystery Gift"
-                        fill
-                        className="object-cover"
+                  <div className="relative h-64 md:h-full min-h-[300px] order-1 md:order-2 flex items-center justify-center bg-gradient-to-br from-red-100/20 to-transparent">
+                     {/* Elegant Bouncing Box Animation */}
+                     <motion.div
+                        animate={{ 
+                            y: [0, -20, 0],
+                            filter: [
+                                "drop-shadow(0 0 25px rgba(220, 38, 38, 0.3))", 
+                                "drop-shadow(0 0 45px rgba(220, 38, 38, 0.5))", 
+                                "drop-shadow(0 0 25px rgba(220, 38, 38, 0.3))"
+                            ]
+                        }}
+                        transition={{ 
+                            duration: 3, 
+                            repeat: Infinity, 
+                            ease: "easeInOut" 
+                        }}
+                        className="relative z-10"
+                     >
+                        <span style={{ fontSize: '10rem' }} className="leading-none select-none block">🎁</span>
+                        
+                        {/* Inner glow hint */}
+                        <div className="absolute inset-0 bg-red-500/20 blur-3xl -z-10 rounded-full animate-pulse" />
+                     </motion.div>
+                     
+                     {/* Floor Shadow */}
+                     <motion.div 
+                        animate={{ scale: [1, 0.8, 1], opacity: [0.3, 0.1, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 w-40 h-8 bg-red-900/20 blur-xl rounded-full -z-10"
                      />
-                     {/* Gradient overlay for text readability on mobile if needed, but side-by-side handles it */}
-                     <div className="absolute inset-0 bg-gradient-to-t from-rose-50/80 to-transparent md:hidden" />
                   </div>
                 </div>
               </section>
@@ -237,10 +258,12 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                       </p>
                       <Button 
                         variant="link"
-                        onClick={() => router.push('/proposal/create')}
+                        asChild
                         className="text-rose-600 font-black p-0 h-auto text-lg underline-offset-4"
                       >
-                        Create Proposal Link <ArrowRight className="ml-1 w-4 h-4" />
+                        <Link href="/proposal/create">
+                          Create Proposal Link <ArrowRight className="ml-1 w-4 h-4" />
+                        </Link>
                       </Button>
                     </div>
                  </div>
