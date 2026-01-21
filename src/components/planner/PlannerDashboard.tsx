@@ -184,42 +184,47 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           {activeCategory?._id === 'specials' ? (
             <div className="space-y-24 pb-8">
-              {/* SURPRISE YOURSELF - ELEGANT GIFTING EDIT */}
-              <section className="relative overflow-hidden rounded-[2rem] bg-rose-50/50 border border-rose-100/50">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0">
-                  <div className="p-8 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4 relative z-50">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-rose-100 shadow-sm">
-                        <Sparkles className="w-3 h-3 text-rose-500" />
-                        <span className="text-[10px] font-bold tracking-wider text-rose-500 uppercase">The Mystery Edit</span>
+              {/* SURPRISE YOURSELF - DARK THEME */}
+              <section className="relative overflow-hidden rounded-[2rem] border border-white/10" style={{ background: '#050511' }}>
+                {/* Background orbs */}
+                <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.25 }} />
+                <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--tachpae-secondary)', opacity: 0.2 }} />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0 relative z-10">
+                  <div className="p-8 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-5">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                        <Sparkles className="w-3 h-3" style={{ color: 'var(--tachpae-secondary)' }} />
+                        <span className="text-[10px] font-bold tracking-wider uppercase" style={{ color: 'var(--tachpae-secondary)' }}>The Mystery Edit</span>
                     </div>
                     
-                    <h2 className="text-3xl md:text-5xl font-serif text-gray-900 leading-tight">
-                      Surprise <span className="italic text-rose-500">Yourself.</span>
+                    <h2 className="text-3xl md:text-5xl font-black text-white leading-tight">
+                      Surprise <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>Yourself.</span>
                     </h2>
                     
-                    <p className="text-gray-600 text-sm md:text-lg max-w-sm leading-relaxed">
+                    <p className="text-white/60 text-sm md:text-lg max-w-sm leading-relaxed">
                       You don't need a partner to feel butterflies. You deserve a gift too. Let us curate a mystery box of joy, tailored just for you.
                     </p>
 
                     <Button 
                       asChild
-                      className="mt-2 h-12 px-8 rounded-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium transition-all shadow-lg hover:shadow-xl active:scale-95"
+                      className="mt-2 h-12 px-8 rounded-full text-white text-sm font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 border-0"
+                      style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 24px rgba(53, 20, 245, 0.4)' }}
                     >
                       <Link href={`/surprise?city=${city?.slug || 'abuja'}`}>
-                        Get My Gift <ArrowRight className="ml-2 w-4 h-4" />
+                        Treat Myself <ArrowRight className="ml-2 w-4 h-4" />
                       </Link>
                     </Button>
                   </div>
 
-                  <div className="relative h-64 md:h-full min-h-[300px] order-1 md:order-2 flex items-center justify-center bg-gradient-to-br from-red-100/20 to-transparent">
+                  <div className="relative h-64 md:h-full min-h-[300px] order-1 md:order-2 flex items-center justify-center">
                      {/* Elegant Bouncing Box Animation */}
                      <motion.div
                         animate={{ 
                             y: [0, -20, 0],
                             filter: [
-                                "drop-shadow(0 0 25px rgba(220, 38, 38, 0.3))", 
-                                "drop-shadow(0 0 45px rgba(220, 38, 38, 0.5))", 
-                                "drop-shadow(0 0 25px rgba(220, 38, 38, 0.3))"
+                                "drop-shadow(0 0 30px rgba(53, 20, 245, 0.5))", 
+                                "drop-shadow(0 0 60px rgba(0, 194, 255, 0.6))", 
+                                "drop-shadow(0 0 30px rgba(53, 20, 245, 0.5))"
                             ]
                         }}
                         transition={{ 
@@ -232,14 +237,15 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                         <span style={{ fontSize: '10rem' }} className="leading-none select-none block">🎁</span>
                         
                         {/* Inner glow hint */}
-                        <div className="absolute inset-0 bg-red-500/20 blur-3xl -z-10 rounded-full animate-pulse" />
+                        <div className="absolute inset-0 blur-3xl -z-10 rounded-full animate-pulse" style={{ background: 'var(--tachpae-primary)', opacity: 0.4 }} />
                      </motion.div>
                      
                      {/* Floor Shadow */}
                      <motion.div 
-                        animate={{ scale: [1, 0.8, 1], opacity: [0.3, 0.1, 0.3] }}
+                        animate={{ scale: [1, 0.8, 1], opacity: [0.5, 0.2, 0.5] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 w-40 h-8 bg-red-900/20 blur-xl rounded-full -z-10"
+                        className="absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 w-40 h-8 blur-xl rounded-full -z-10"
+                        style={{ background: 'var(--tachpae-primary)' }}
                      />
                   </div>
                 </div>
@@ -247,49 +253,58 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
               {/* OTHER SPECIALS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                 {/* Be My Val */}
-                 <div className="space-y-6">
-                    <div className="relative aspect-video overflow-hidden rounded-[2rem] shadow-xl">
-                      <Image 
-                        src="https://images.unsplash.com/photo-1522673607200-164483ee01c1?auto=format&fit=crop&q=80"
-                        alt="Proposal"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="text-3xl font-black text-gray-900">Be My Val?</h3>
-                      <p className="text-gray-500 font-medium leading-relaxed">
-                        Planning for someone special? Create a digital proposal that builds anticipation and makes the big question unforgettable.
+                 {/* Personal Courier - NOW FIRST */}
+                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 p-8" style={{ background: '#050511' }}>
+                    {/* Background orb */}
+                    <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--tachpae-accent)', opacity: 0.15 }} />
+                    
+                    <div className="relative z-10 space-y-5">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-accent), var(--tachpae-secondary))' }}>
+                        <Package className="w-8 h-8 text-white" />
+                      </div>
+                      
+                      <h3 className="text-3xl font-black text-white">Personal <span style={{ color: 'var(--tachpae-accent)' }}>Courier.</span></h3>
+                      
+                      <p className="text-white/60 font-medium leading-relaxed">
+                        You know that <span className="text-white font-bold">one thing</span> they'd absolutely love? Get it yourself, pick more from our store, then send everything to our hub. We'll wrap it all up and deliver as one beautiful surprise.
                       </p>
+                      
                       <Button 
-                        variant="link"
-                        asChild
-                        className="text-rose-600 font-black p-0 h-auto text-lg underline-offset-4"
+                        variant="ghost"
+                        onClick={() => setShowLogisticsModal(true)}
+                        className="text-white font-bold p-0 h-auto text-base hover:bg-transparent group"
+                        style={{ color: 'var(--tachpae-secondary)' }}
                       >
-                        <Link href="/proposal/create">
-                          Create Proposal Link <ArrowRight className="ml-1 w-4 h-4" />
-                        </Link>
+                        Set up Pickup <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </div>
                  </div>
 
-                 {/* Logistics */}
-                 <div className="space-y-6">
-                    <div className="relative aspect-video overflow-hidden rounded-[2rem] bg-indigo-50 border-4 border-indigo-100 flex items-center justify-center">
-                      <Package className="w-24 h-24 text-indigo-200" />
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="text-3xl font-black text-gray-900">Personal Courier.</h3>
-                      <p className="text-gray-500 font-medium leading-relaxed">
-                        Got a special something already? We'll pick it up, wrap it with love, and deliver it alongside your curated bundle.
+                 {/* Be My Val - NOW SECOND */}
+                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 p-8" style={{ background: '#050511' }}>
+                    {/* Background orb */}
+                    <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.15 }} />
+                    
+                    <div className="relative z-10 space-y-5">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
+                        <Heart className="w-8 h-8 text-white fill-white" />
+                      </div>
+                      
+                      <h3 className="text-3xl font-black text-white">Be My <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>Val?</span></h3>
+                      
+                      <p className="text-white/60 font-medium leading-relaxed">
+                        Planning for someone special? Create a digital proposal that builds anticipation and makes the big question unforgettable.
                       </p>
+                      
                       <Button 
-                        variant="link"
-                        onClick={() => setShowLogisticsModal(true)}
-                        className="text-indigo-600 font-black p-0 h-auto text-lg underline-offset-4"
+                        variant="ghost"
+                        asChild
+                        className="text-white font-bold p-0 h-auto text-base hover:bg-transparent group"
+                        style={{ color: 'var(--tachpae-secondary)' }}
                       >
-                        Set up Logistics <ArrowRight className="ml-1 w-4 h-4" />
+                        <Link href="/proposal/create">
+                          Create Proposal Link <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
                       </Button>
                     </div>
                  </div>

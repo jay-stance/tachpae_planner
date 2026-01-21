@@ -215,16 +215,50 @@ export async function POST() {
       { 
         name: 'Surprise Yourself', 
         slug: 'surprise-yourself', 
-        type: 'QUESTIONNAIRE', 
+        type: 'QUESTIONNAIRE' as const, 
         description: 'Answer a few questions and let us curate a mystery package just for you!',
         price: 0,
-        icon: 'heart',
+        icon: 'gift',
         config: {
           questionnaireSchema: {
+            title: 'Love Starts With You',
+            subtitle: 'You deserve the mystery. You deserve the magic.',
+            prices: [
+              { label: '₦50,000', value: 50000, description: 'The Self-Care Bloom 🌸' },
+              { label: '₦100,000', value: 100000, description: 'The Empress Pack 👑' },
+              { label: '₦200,000', value: 200000, description: 'The Ultimate Glow Up ✨' },
+              { label: '₦350,000', value: 350000, description: 'The Legend Treatment 💎' },
+            ],
             questions: [
-              { id: 'budget', text: 'What is your budget?', type: 'select', options: ['Under ₦30K', '₦30K - ₦50K', '₦50K - ₦100K', 'Above ₦100K'] },
-              { id: 'recipient', text: 'Who is this for?', type: 'select', options: ['My Partner', 'Myself', 'A Friend', 'Family'] },
-              { id: 'vibe', text: 'What vibe are you going for?', type: 'select', options: ['Romantic', 'Fun & Playful', 'Luxurious', 'Thoughtful'] },
+              { 
+                id: 'hero-vibe', 
+                label: 'If you had a free Saturday, what are you doing?', 
+                type: 'select' as const, 
+                description: 'This helps us pick your perfect hero item!',
+                options: [
+                  { label: 'Netflix & Chill 🍿', value: 'home-comfort', resultHint: 'Cozy Box' },
+                  { label: 'Out with friends 💃', value: 'social-fashion', resultHint: 'Glam Box' },
+                  { label: 'Working on my hustle 💻', value: 'tech-productivity', resultHint: 'Boss Box' },
+                  { label: 'Self-care day 🧖‍♀️', value: 'wellness', resultHint: 'Wellness Box' },
+                ],
+                required: true
+              },
+              { 
+                id: 'hates', 
+                label: 'Your No-Go List', 
+                type: 'text' as const, 
+                description: 'What should we absolutely avoid? Allergies, dislikes, etc.',
+                placeholder: 'e.g. I hate chocolates, allergic to nuts, no strong perfumes...',
+                required: true
+              },
+              { 
+                id: 'note-to-self', 
+                label: 'A Note to Yourself', 
+                type: 'text' as const, 
+                description: 'Write a message for your card. Remind yourself how amazing you are.',
+                placeholder: 'You\'re doing great, sweetie... 💕',
+                required: false
+              },
             ]
           }
         }
@@ -232,7 +266,7 @@ export async function POST() {
       { 
         name: 'Be My Val Proposal', 
         slug: 'be-my-val', 
-        type: 'LINK', 
+        type: 'LINK' as const, 
         description: 'Send a romantic digital proposal link to your crush.',
         price: 0,
         icon: 'heart',
@@ -241,7 +275,7 @@ export async function POST() {
       { 
         name: 'Custom Logistics', 
         slug: 'custom-logistics', 
-        type: 'LOGISTICS', 
+        type: 'LOGISTICS' as const, 
         description: "Already bought a gift elsewhere? Send it to our hub, and we will package it with your order!",
         price: 2000,
         icon: 'package',
