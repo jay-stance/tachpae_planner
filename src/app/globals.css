@@ -36,6 +36,22 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Tachpae Brand Colors */
+  --tachpae-primary: #3514F5;
+  --tachpae-primary-light: #5B3CFA;
+  --tachpae-secondary: #00C2FF;
+  --tachpae-accent: #FF0080;
+  --tachpae-bg-dark: #050511;
+}
+
+/* Tachpae Brand Theme - Add class to <html> or <body> to activate */
+.theme-tachpae {
+  --primary: #3514F5;
+  --primary-foreground: #ffffff;
+  --secondary: #00C2FF;
+  --accent: #FF0080;
+  --ring: #5B3CFA;
 }
 
 @theme inline {

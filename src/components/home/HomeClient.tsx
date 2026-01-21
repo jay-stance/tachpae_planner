@@ -5,6 +5,7 @@ import { ICity } from '@/models/City';
 import Hero from './Hero';
 import CitySelector from './CitySelector';
 import { useRouter } from 'next/navigation';
+import Header from '@/components/layout/Header';
 
 export default function HomeClient({ cities }: { cities: ICity[] }) {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function HomeClient({ cities }: { cities: ICity[] }) {
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
+      <Header className="absolute top-0 left-0 right-0 z-50" variant="dark" />
       <Hero onStart={handleStart} />
       
       {/* We can add more sections here like "How it works", "Featured", etc. */}

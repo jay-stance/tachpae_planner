@@ -10,6 +10,12 @@ const nextConfig = {
         port: '',
         pathname: '/**', // Allows all paths from this domain
       },
+      {
+        protocol: 'https',
+        hostname: 'www.tachpae.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   };

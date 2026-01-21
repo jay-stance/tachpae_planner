@@ -16,6 +16,7 @@ import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Spark
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Header from '@/components/layout/Header';
 
 interface PlannerDashboardProps {
   data: {
@@ -104,7 +105,8 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
   return (
     <div className="w-full min-h-screen bg-white pb-32">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <Header className="border-b border-gray-100" variant="light" />
+      <div className="container mx-auto px-4 py-4 md:py-12">
         {/* Header */}
         <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="space-y-3">
@@ -127,14 +129,15 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
             <p className="text-gray-500 text-lg max-w-xl font-medium">Select gifts, experiences, and more for your Valentine.</p>
           </div>
           
-          <Button 
+          {/* share wishlist */}
+          {/* <Button 
             variant="outline" 
             className="h-12 px-6 rounded-2xl border-2 font-black border-gray-100 hover:bg-gray-50 active:scale-95 transition-all flex items-center gap-3"
             onClick={handleShareWishlist}
           >
             {copied ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Share2 className="w-5 h-5 text-rose-600" />}
             {copied ? 'Copied!' : 'Share Wishlist'}
-          </Button>
+          </Button> */}
         </header>
 
         {/* Categories Tabs */}
@@ -181,7 +184,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               {/* SURPRISE YOURSELF - ELEGANT GIFTING EDIT */}
               <section className="relative overflow-hidden rounded-[2rem] bg-rose-50/50 border border-rose-100/50">
                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0">
-                  <div className="p-8 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4">
+                  <div className="p-8 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4 relative z-50">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-rose-100 shadow-sm">
                         <Sparkles className="w-3 h-3 text-rose-500" />
                         <span className="text-[10px] font-bold tracking-wider text-rose-500 uppercase">The Mystery Edit</span>
