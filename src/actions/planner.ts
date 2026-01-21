@@ -38,7 +38,13 @@ export const getPlanningData = unstable_cache(
             isActive: true 
         }).lean();
 
+        const allCities = await City.find({ 
+            _id: { $in: event.cities },
+            isActive: true 
+        }).lean();
+
         return {
+            allCities: JSON.parse(JSON.stringify(allCities)),
             city: JSON.parse(JSON.stringify(city)),
             categories: JSON.parse(JSON.stringify(categories)),
             products: JSON.parse(JSON.stringify(products)),

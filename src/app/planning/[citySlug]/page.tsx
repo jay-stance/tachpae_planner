@@ -1,5 +1,6 @@
 import { getPlanningData } from '@/actions/planner';
 import { getCities } from '@/actions/city';
+import { getActiveEvent } from '@/actions/event';
 import PlannerDashboard from '@/components/planner/PlannerDashboard';
 import { notFound } from 'next/navigation';
 import { CartProvider } from '@/context/CartContext';
@@ -17,8 +18,9 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function PlanningPage({ params }: PageProps) {
   const resolvedParams = await params;
+  const event = await getActiveEvent('val-2026');
   const data = await getPlanningData(resolvedParams.citySlug);
-  const allCities = await getCities();
+  const allCities = await getCities(event?.cities as any);
 
   if (!data) {
     return notFound();

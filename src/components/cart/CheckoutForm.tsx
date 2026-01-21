@@ -113,7 +113,7 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
           Secure & Verified
         </div>
         <p className="text-xs text-rose-600/80">
-          Trusted by over 10,000+ people. You will be redirected to WhatsApp to finalize your payment securely.
+          Trusted by over 10,000+ people. You will be redirected to WhatsApp to finalize your payment securely, and stay connected with us for enquiries and updates.
         </p>
       </div>
 

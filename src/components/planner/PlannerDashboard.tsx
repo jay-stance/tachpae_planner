@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,7 +12,7 @@ import ProductConfigurator from '@/components/products/ProductConfigurator';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { useCart } from '@/context/CartContext';
 import { useEvent } from '@/context/EventContext';
-import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy } from 'lucide-react';
+import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -37,6 +38,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [showLogisticsModal, setShowLogisticsModal] = useState(false);
   const [logisticsAgreed, setLogisticsAgreed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<any>(categories[0] || null);
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
@@ -97,254 +99,264 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     }
   };
 
-  const handleAddonClick = (addon: any) => {
-    if (addon.type === 'LINK' && addon.config?.redirectUrl) {
-      router.push(addon.config.redirectUrl);
-    } else if (addon.type === 'LOGISTICS') {
-      setShowLogisticsModal(true);
-    } else if (addon.type === 'QUESTIONNAIRE') {
-      router.push(`/surprise?eventId=${event?._id || ''}`);
-    }
-  };
+  const filteredProducts = activeCategory?._id === 'specials' ? [] : getProductsByCategory(activeCategory?._id);
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-rose-50/50 to-white">
-      <div className="container mx-auto px-4 py-8">
+    <div className="w-full min-h-screen bg-white pb-32">
+      <div className="container mx-auto px-4 py-8 md:py-12">
         {/* Header */}
-        <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-rose-600">Location:</span>
-              <select 
-                value={city.slug}
-                onChange={(e) => router.push(`/planning/${e.target.value}`)}
-                className="bg-rose-100 text-rose-700 text-xs font-bold py-1.5 px-3 rounded-full border-none focus:ring-2 focus:ring-rose-500 cursor-pointer appearance-none outline-none"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e11d48'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.5rem center', backgroundSize: '1rem', paddingRight: '2rem' }}
-              >
-                <option value={city.slug}>{city.name}</option>
-                {/* We should ideally fetch other cities here or pass them in props */}
-                {data.allCities?.map((c: any) => c.slug !== city.slug && (
-                  <option key={c._id} value={c.slug}>{c.name}</option>
-                ))}
-              </select>
+        <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="px-3 py-1 bg-rose-50 rounded-full border border-rose-100 flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-rose-600">Location</span>
+                <select 
+                  value={city.slug}
+                  onChange={(e) => router.push(`/planning/${e.target.value}`)}
+                  className="text-xs font-bold text-rose-600 bg-transparent focus:outline-none cursor-pointer"
+                >
+                  <option value={city.slug}>{city.name}</option>
+                  {data.allCities?.map((c: any) => c.slug !== city.slug && (
+                    <option key={c._id} value={c.slug}>{c.name}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Curate Your Package</h1>
-            <p className="text-muted-foreground mt-1">Select gifts, experiences, and more.</p>
+            <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-none">Curate Your Package</h1>
+            <p className="text-gray-500 text-lg max-w-xl font-medium">Select gifts, experiences, and more for your Valentine.</p>
           </div>
           
-          <div className="flex gap-3">
-            <Button 
-              variant="outline" 
-              className="gap-2 rounded-full border-2 hover:bg-gray-50"
-              onClick={handleShareWishlist}
-            >
-              {copied ? <CheckCircle className="w-4 h-4 text-green-500" /> : <Share2 className="w-4 h-4" />}
-              {copied ? 'Copied!' : 'Share Wishlist'}
-            </Button>
-            <Button 
-              className="gap-2 rounded-full shadow-lg bg-rose-600 hover:bg-rose-700 text-white font-bold px-6"
-              onClick={() => setCartOpen(true)}
-            >
-              <ShoppingBag className="w-4 h-4" /> 
-              View Bundle ({itemCount})
-            </Button>
-          </div>
+          <Button 
+            variant="outline" 
+            className="h-12 px-6 rounded-2xl border-2 font-black border-gray-100 hover:bg-gray-50 active:scale-95 transition-all flex items-center gap-3"
+            onClick={handleShareWishlist}
+          >
+            {copied ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Share2 className="w-5 h-5 text-rose-600" />}
+            {copied ? 'Copied!' : 'Share Wishlist'}
+          </Button>
         </header>
 
-        {/* Tabs */}
-        <Tabs defaultValue="gifts" className="space-y-8">
-          <TabsList className="bg-white shadow-sm p-1.5 rounded-full border overflow-x-auto w-full md:w-auto flex">
-            <TabsTrigger value="gifts" className="rounded-full px-6 flex-1 md:flex-none data-[state=active]:shadow-sm">
-              <Gift className="w-4 h-4 mr-2" /> Gifts
-            </TabsTrigger>
-            <TabsTrigger value="experiences" className="rounded-full px-6 flex-1 md:flex-none data-[state=active]:shadow-sm">
-              <Calendar className="w-4 h-4 mr-2" /> Experiences
-            </TabsTrigger>
-            <TabsTrigger value="specials" className="rounded-full px-6 flex-1 md:flex-none data-[state=active]:shadow-sm">
-              <Sparkles className="w-4 h-4 mr-2" /> Specials
-            </TabsTrigger>
-          </TabsList>
+        {/* Categories Tabs */}
+        <div className="mb-12 sticky top-4 z-40 bg-white/80 backdrop-blur-xl p-1.5 rounded-3xl border-2 border-gray-50 shadow-xl shadow-gray-100/50 flex flex-nowrap gap-1 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
+            <button
+              onClick={() => setActiveCategory({ _id: 'gifts', name: 'Gifts' } as any)}
+              className={cn(
+                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
+                (activeCategory?._id === 'gifts' || !['experiences', 'specials'].includes(activeCategory?._id))
+                  ? "bg-rose-600 text-white shadow-lg shadow-rose-200" 
+                  : "text-gray-500 hover:bg-gray-50"
+              )}
+            >
+              <Gift className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Gifts
+            </button>
+            <button
+              onClick={() => setActiveCategory({ _id: 'experiences', name: 'Experiences' } as any)}
+              className={cn(
+                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
+                activeCategory?._id === 'experiences'
+                  ? "bg-rose-600 text-white shadow-lg shadow-rose-200" 
+                  : "text-gray-500 hover:bg-gray-50"
+              )}
+            >
+              <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Experiences
+            </button>
+            <button
+              onClick={() => setActiveCategory({ _id: 'specials', name: 'Specials' } as any)}
+              className={cn(
+                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
+                activeCategory?._id === 'specials'
+                  ? "bg-rose-600 text-white shadow-lg shadow-rose-200" 
+                  : "text-gray-500 hover:bg-gray-50"
+              )}
+            >
+              <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Specials
+            </button>
+        </div>
 
-          {/* GIFTS TAB */}
-          <TabsContent value="gifts" className="space-y-12">
-            {categories.map((cat) => {
-              const catProducts = getProductsByCategory(cat._id);
-              if (catProducts.length === 0) return null;
-
-              return (
-                <section key={cat._id}>
-                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-gray-800">
-                    <span className="text-2xl">{cat.icon || '🎁'}</span> {cat.name}
-                  </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                    {catProducts.map((product: any) => (
-                      <Card 
-                        key={product._id} 
-                        className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-0 shadow-md bg-white overflow-hidden" 
-                        onClick={() => handleProductClick(product)}
-                      >
-                        <div className="aspect-square relative overflow-hidden bg-gray-100">
-                          {product.mediaGallery?.[0] ? (
-                            <Image 
-                              src={product.mediaGallery[0]} 
-                              alt={product.name} 
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-500" 
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-300 text-4xl">🎁</div>
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold text-gray-900 line-clamp-1">{product.name}</h3>
-                          <p className="text-muted-foreground text-sm line-clamp-2 mt-1">{product.description}</p>
-                          <div className="flex justify-between items-center mt-3">
-                            <span className="font-bold text-lg" style={{ color: primaryColor }}>
-                              ₦{product.basePrice.toLocaleString()}
-                            </span>
-                            <Button 
-                              size="sm" 
-                              variant="secondary" 
-                              className="rounded-full group-hover:bg-primary group-hover:text-white transition-colors"
-                            >
-                              Add +
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
-            {products.length === 0 && (
-              <div className="text-center py-20 text-muted-foreground">
-                <Gift className="w-16 h-16 mx-auto mb-4 text-gray-200" />
-                <p>No products available for this location yet.</p>
-              </div>
-            )}
-          </TabsContent>
-
-          {/* EXPERIENCES TAB */}
-          <TabsContent value="experiences">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service: any) => (
-                <Card key={service._id} className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white overflow-hidden">
-                  <div className="h-40 bg-gradient-to-br from-rose-100 to-pink-50 flex items-center justify-center">
-                    <Calendar className="w-16 h-16 text-rose-300" />
-                  </div>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{service.name}</CardTitle>
-                    <CardDescription>{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-2xl" style={{ color: primaryColor }}>
-                        ₦{service.basePrice.toLocaleString()}
-                      </span>
-                      <Badge variant="outline" className="text-xs">
-                        {service.bookingType === 'DIRECT' ? 'Book Online' : 'External'}
-                      </Badge>
+        {/* Content Section */}
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {activeCategory?._id === 'specials' ? (
+            <div className="space-y-24 py-8">
+              {/* SURPRISE YOURSELF STORY SECTION */}
+              <section className="relative group">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div className="space-y-6 order-2 lg:order-1">
+                    <div className="inline-flex py-1.5 px-3 bg-rose-50 text-rose-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-rose-100">
+                      The Experience
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    {service.bookingType === 'DIRECT' ? (
-                      <Button className="w-full rounded-full" style={{ backgroundColor: primaryColor }}>
-                        Book Time Slot <ArrowRight className="ml-2 w-4 h-4" />
+                    <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-[1.1] tracking-tighter">
+                      The Best Love is <span className="text-rose-600">Self-Love.</span>
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-500 font-medium leading-relaxed">
+                      You don't need a partner to experience the magic. Tell us your vibe, your favorite treats, and what makes you smile—we'll curate a mystery box designed to celebrate the most important person in your life: You.
+                    </p>
+                    <Button 
+                      asChild
+                      className="h-16 px-10 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-lg font-black shadow-2xl shadow-rose-200 transition-all active:scale-95 group"
+                    >
+                      <Link href={`/surprise?city=${city.slug}`}>
+                        Treat Yourself <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className="relative order-1 lg:order-2 aspect-[4/3] overflow-hidden rounded-[2.5rem] shadow-3xl shadow-rose-100 group-hover:scale-[1.01] transition-transform duration-700">
+                    <Image 
+                      src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&q=80" 
+                      alt="Self Love"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-8 left-8 right-8">
+                       <p className="text-white font-black text-lg italic opacity-90">"I'm my own Valentine this year, and this mystery box was the highlight of my day."</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* OTHER SPECIALS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                 {/* Be My Val */}
+                 <div className="space-y-6">
+                    <div className="relative aspect-video overflow-hidden rounded-[2rem] shadow-xl">
+                      <Image 
+                        src="https://images.unsplash.com/photo-1522673607200-164483ee01c1?auto=format&fit=crop&q=80"
+                        alt="Proposal"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="text-3xl font-black text-gray-900">Be My Val?</h3>
+                      <p className="text-gray-500 font-medium leading-relaxed">
+                        Planning for someone special? Create a digital proposal that builds anticipation and makes the big question unforgettable.
+                      </p>
+                      <Button 
+                        variant="link"
+                        onClick={() => router.push('/proposal/create')}
+                        className="text-rose-600 font-black p-0 h-auto text-lg underline-offset-4"
+                      >
+                        Create Proposal Link <ArrowRight className="ml-1 w-4 h-4" />
                       </Button>
-                    ) : (
-                      <Button variant="outline" className="w-full rounded-full" asChild>
-                        <a href={service.redirectUrl || '#'} target="_blank" rel="noopener noreferrer">
-                          Visit Website <ArrowRight className="ml-2 w-4 h-4" />
+                    </div>
+                 </div>
+
+                 {/* Logistics */}
+                 <div className="space-y-6">
+                    <div className="relative aspect-video overflow-hidden rounded-[2rem] bg-indigo-50 border-4 border-indigo-100 flex items-center justify-center">
+                      <Package className="w-24 h-24 text-indigo-200" />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="text-3xl font-black text-gray-900">Personal Courier.</h3>
+                      <p className="text-gray-500 font-medium leading-relaxed">
+                        Got a special something already? We'll pick it up, wrap it with love, and deliver it alongside your curated bundle.
+                      </p>
+                      <Button 
+                        variant="link"
+                        onClick={() => setShowLogisticsModal(true)}
+                        className="text-indigo-600 font-black p-0 h-auto text-lg underline-offset-4"
+                      >
+                        Set up Logistics <ArrowRight className="ml-1 w-4 h-4" />
+                      </Button>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          ) : activeCategory?._id === 'experiences' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+              {services.map((service: any) => (
+                <Card key={service._id} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg shadow-gray-100 bg-white overflow-hidden rounded-[2rem]">
+                  <div className="h-48 bg-rose-50 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-700">
+                    <Calendar className="w-20 h-20 text-rose-200" />
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="text-2xl font-black text-gray-900 mb-2">{service.name}</h3>
+                    <p className="text-gray-500 font-medium mb-4">{service.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-black text-rose-600">₦{service.basePrice.toLocaleString()}</span>
+                      <Button 
+                         variant="outline" 
+                         className="rounded-full font-black text-xs px-6 border-2 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-100 transition-all"
+                         asChild
+                      >
+                        <a href={service.bookingType === 'DIRECT' ? '#' : service.redirectUrl} target="_blank" rel="noopener noreferrer">
+                          Book Now
                         </a>
                       </Button>
-                    )}
-                  </CardFooter>
+                    </div>
+                  </CardContent>
                 </Card>
               ))}
+              {services.length === 0 && (
+                <div className="col-span-full py-32 text-center bg-gray-50 rounded-[3rem]">
+                  <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-gray-200" />
+                  <h3 className="text-xl font-black text-gray-400">No experiences in this location yet.</h3>
+                </div>
+              )}
             </div>
-            {services.length === 0 && (
-              <div className="text-center py-20 text-muted-foreground">
-                <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-200" />
-                <p>No experiences found for this location yet.</p>
-              </div>
-            )}
-          </TabsContent>
-
-          {/* SPECIALS TAB */}
-          <TabsContent value="specials">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Surprise Yourself */}
-              <Card className="bg-gradient-to-br from-pink-500 to-rose-600 text-white border-0 shadow-xl hover:shadow-2xl transition-shadow overflow-hidden">
-                <CardHeader className="pb-2">
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                    <Heart className="w-8 h-8 fill-white" />
-                  </div>
-                  <CardTitle className="text-xl text-white">Surprise Yourself</CardTitle>
-                  <CardDescription className="text-white/80">
-                    Treat yourself to a mystery box curated just for you.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full bg-white text-rose-600 hover:bg-white/90 rounded-full font-semibold"
-                    onClick={() => router.push(`/surprise?eventId=${event?._id || ''}`)}
-                  >
-                    Start Questionnaire <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Be My Val */}
-              <Card className="bg-gradient-to-br from-red-500 to-rose-600 text-white border-0 shadow-xl hover:shadow-2xl transition-shadow overflow-hidden">
-                <CardHeader className="pb-2">
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                    <Heart className="w-8 h-8 fill-white" />
-                  </div>
-                  <CardTitle className="text-xl text-white">Be My Val Proposal</CardTitle>
-                  <CardDescription className="text-white/80">
-                    Send a romantic digital proposal link to your crush.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full bg-white text-red-600 hover:bg-white/90 rounded-full font-semibold"
-                    onClick={() => router.push('/proposal/create')}
-                  >
-                    Create Proposal Link <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Custom Logistics */}
-              <Card className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white border-0 shadow-xl hover:shadow-2xl transition-shadow overflow-hidden">
-                <CardHeader className="pb-2">
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                    <Package className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl text-white">Custom Logistics</CardTitle>
-                  <CardDescription className="text-white/80">
-                    Already bought a gift elsewhere? We will package it with your order!
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full bg-white text-indigo-600 hover:bg-white/90 rounded-full font-semibold"
-                    onClick={() => setShowLogisticsModal(true)}
-                  >
-                    Send Your Own Item <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+          ) : (
+            <div className="space-y-16 pb-12">
+              {categories.map((cat: any) => {
+                const catProducts = getProductsByCategory(cat._id);
+                if (catProducts.length === 0) return null;
+                return (
+                  <section key={cat._id} className="space-y-8">
+                    <h2 className="text-3xl font-black text-gray-900 flex items-center gap-4">
+                      <span className="text-4xl">{cat.icon || '🎁'}</span>
+                      {cat.name}
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {catProducts.map((product: any) => (
+                        <Card 
+                          key={product._id} 
+                          className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-0 shadow-lg shadow-gray-100 bg-white overflow-hidden rounded-[2rem]" 
+                          onClick={() => handleProductClick(product)}
+                        >
+                          <div className="aspect-square relative overflow-hidden bg-gray-50">
+                            {product.mediaGallery?.[0] ? (
+                              <Image 
+                                src={product.mediaGallery[0]} 
+                                alt={product.name} 
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-gray-200 text-6xl">🎁</div>
+                            )}
+                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          <CardContent className="p-6">
+                            <h3 className="font-black text-gray-900 text-lg line-clamp-1">{product.name}</h3>
+                            <p className="text-gray-500 text-sm font-medium line-clamp-1 mt-1">{product.description}</p>
+                            <div className="flex justify-between items-center mt-4">
+                              <span className="font-black text-xl" style={{ color: primaryColor }}>
+                                ₦{product.basePrice.toLocaleString()}
+                              </span>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
+              {products.length === 0 && (
+                <div className="col-span-full py-32 text-center bg-gray-50 rounded-[3rem]">
+                  <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-gray-200" />
+                  <h3 className="text-xl font-black text-gray-400">No items in this location yet.</h3>
+                </div>
+              )}
             </div>
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
 
       {/* Product Configurator Modal */}
       <Dialog open={!!selectedProduct} onOpenChange={(open) => !open && setSelectedProduct(null)}>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden bg-white rounded-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden bg-white rounded-[2.5rem] border-0 shadow-3xl">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Customize {selectedProduct?.name}</DialogTitle>
+          </DialogHeader>
           {selectedProduct && (
             <ProductConfigurator 
               product={selectedProduct} 
@@ -356,57 +368,61 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       
       {/* Logistics T&C Modal */}
       <Dialog open={showLogisticsModal} onOpenChange={setShowLogisticsModal}>
-        <DialogContent className="bg-white rounded-2xl">
+        <DialogContent className="bg-white rounded-[2.5rem] border-0">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Package className="w-5 h-5" /> Custom Logistics - Terms & Conditions
+            <DialogTitle className="flex items-center gap-2 text-2xl font-black px-2">
+              <Package className="w-6 h-6 text-indigo-600" /> Logistics Terms
             </DialogTitle>
-            <DialogDescription>
-              Please read carefully before proceeding.
-            </DialogDescription>
           </DialogHeader>
-          {!logisticsAgreed ? (
-            <div className="space-y-4 pt-4">
-              <ul className="list-disc pl-5 space-y-2 text-sm text-foreground/80">
-                <li><strong>No Contraband:</strong> We do not accept illegal items, drugs, or weapons.</li>
-                <li><strong>Perishables:</strong> No food items that expire within 48 hours unless pre-arranged.</li>
-                <li><strong>Delivery Window:</strong> Items must arrive at our hub 3 days before the delivery date.</li>
-                <li><strong>Packaging:</strong> Items should be reasonably packaged. We re-box them into the gift hamper.</li>
-              </ul>
-              <DialogFooter className="gap-2">
-                <Button variant="outline" onClick={() => setShowLogisticsModal(false)}>Cancel</Button>
-                <Button onClick={handleLogisticsAgree} style={{ backgroundColor: primaryColor }}>
-                  I Agree (₦2,000 fee)
-                </Button>
-              </DialogFooter>
-            </div>
-          ) : (
-            <div className="text-center pt-4 space-y-4">
-              <div className="flex flex-col items-center justify-center text-green-600 mb-4">
-                <CheckCircle className="w-12 h-12 mb-2" />
-                <span className="font-bold text-lg">Added to Bundle!</span>
-              </div>
-              <div className="bg-muted p-4 rounded-lg text-left">
-                <p className="text-sm font-bold text-foreground mb-1">Hub Address for {city.name}:</p>
-                <p className="text-sm text-muted-foreground">
-                  Tachpae Hub, 123 Valentine Avenue, <br/>
-                  Near {city.name} City Mall, <br/>
-                  {city.name} State.
-                </p>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                A handling fee of ₦2,000 has been added to your bundle.
-                Please drop off the item with your Order ID written on it.
-              </p>
-              <DialogFooter>
-                <Button onClick={() => setShowLogisticsModal(false)}>Close</Button>
-              </DialogFooter>
-            </div>
-          )}
+          <div className="p-4 space-y-6">
+             <div className="space-y-4 bg-gray-50 p-6 rounded-2xl">
+                <div className="flex gap-4">
+                   <div className="w-5 h-5 rounded-full bg-indigo-100 flex flex-shrink-0 items-center justify-center text-[10px] font-black text-indigo-600">1</div>
+                   <p className="text-sm font-bold text-gray-700">No contraband, drugs, or illegal items.</p>
+                </div>
+                <div className="flex gap-4">
+                   <div className="w-5 h-5 rounded-full bg-indigo-100 flex flex-shrink-0 items-center justify-center text-[10px] font-black text-indigo-600">2</div>
+                   <p className="text-sm font-bold text-gray-700">Items must arrive 3 days before delivery date.</p>
+                </div>
+                <div className="flex gap-4">
+                   <div className="w-5 h-5 rounded-full bg-indigo-100 flex flex-shrink-0 items-center justify-center text-[10px] font-black text-indigo-600">3</div>
+                   <p className="text-sm font-bold text-gray-700">Perishables must be pre-arranged.</p>
+                </div>
+             </div>
+             <Button 
+                onClick={handleLogisticsAgree} 
+                className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-lg shadow-xl shadow-indigo-100"
+              >
+                I Agree (₦2,000 fee)
+              </Button>
+          </div>
         </DialogContent>
       </Dialog>
 
-      {/* Cart Drawer */}
+      {/* FIXED BOTTOM BAR */}
+      <div className="fixed bottom-6 left-0 right-0 z-50 pointer-events-none px-4">
+        <div className="max-w-5xl mx-auto flex items-center justify-between pointer-events-auto">
+          {/* VIEW CART BUTTON */}
+          <Button 
+            onClick={() => setCartOpen(true)}
+            className="h-16 px-10 bg-gray-900 hover:bg-black text-white rounded-3xl shadow-3xl flex items-center gap-4 transition-all active:scale-95 group"
+          >
+            <div className="relative">
+              <ShoppingBag className="w-6 h-6" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-rose-600 text-white text-[10px] font-black min-w-[20px] h-[20px] rounded-full flex items-center justify-center shadow-lg border-2 border-gray-900 animate-in zoom-in-50">
+                  {itemCount}
+                </span>
+              )}
+            </div>
+            <div className="text-left">
+              <div className="text-[10px] font-black uppercase tracking-widest opacity-60">View Cart</div>
+              <div className="text-lg font-black leading-none">Your Bundle</div>
+            </div>
+          </Button>
+        </div>
+      </div>
+
       <CartDrawer open={cartOpen} onOpenChange={setCartOpen} city={city} />
     </div>
   );
