@@ -1,0 +1,19 @@
+{
+  "basePrice": 15000,
+  "description": "35cm Teddy Bear",
+  "category": "69713f1b89d8eb834e6bc5e2",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  "variantsConfig": {
+        "options": [
+      {
+        "name": "style",
+        "values": [
+          { "label": "Sitting", "value": "sitting", "priceModifier": 0 },
+          { "label": " with tie", "value": "with-tie", "priceModifier": 0 }
+        ]
+      }
+    ]
+
+  }
+}

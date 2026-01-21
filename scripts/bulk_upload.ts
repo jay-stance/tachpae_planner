@@ -133,9 +133,13 @@ const main = async () => {
       }
 
       // 4. Create Product in DB
+      // Use folder name as description if not provided
+      const description = metaData.description?.trim() || folderName;
+      
       const newProduct = new Product({
         ...metaData,
         name: folderName, // Folder name overrides meta name to ensure consistency
+        description,     // Use folder name if description is empty
         mediaGallery,
       });
 

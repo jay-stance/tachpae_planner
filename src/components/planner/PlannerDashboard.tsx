@@ -252,21 +252,83 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               </section>
 
               {/* OTHER SPECIALS */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                 {/* Personal Courier - NOW FIRST */}
-                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 p-8" style={{ background: '#050511' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 {/* ADD YOUR OWN GIFT - with visual */}
+                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10" style={{ background: '#050511' }}>
                     {/* Background orb */}
-                    <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--tachpae-accent)', opacity: 0.15 }} />
+                    <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--tachpae-accent)', opacity: 0.2 }} />
                     
-                    <div className="relative z-10 space-y-5">
-                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-accent), var(--tachpae-secondary))' }}>
-                        <Package className="w-8 h-8 text-white" />
+                    {/* Visual - Animated gift boxes combining */}
+                    <div className="relative h-48 flex items-center justify-center overflow-hidden">
+                      <div className="relative flex items-end justify-center gap-2">
+                        {/* Your gift */}
+                        <motion.div
+                          animate={{ 
+                            x: [0, 15, 0],
+                            rotate: [-5, 0, -5]
+                          }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="flex flex-col items-center"
+                        >
+                          <span className="text-5xl">🛍️</span>
+                          <span className="text-[10px] text-white/40 mt-1 font-bold">YOUR GIFT</span>
+                        </motion.div>
+                        
+                        {/* Plus sign */}
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="text-2xl font-black mb-4"
+                          style={{ color: 'var(--tachpae-secondary)' }}
+                        >
+                          +
+                        </motion.div>
+                        
+                        {/* Our items */}
+                        <motion.div
+                          animate={{ 
+                            x: [0, -15, 0],
+                            rotate: [5, 0, 5]
+                          }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="flex flex-col items-center"
+                        >
+                          <span className="text-5xl">🎁</span>
+                          <span className="text-[10px] text-white/40 mt-1 font-bold">OUR ITEMS</span>
+                        </motion.div>
+                        
+                        {/* Equals */}
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                          className="text-2xl font-black mb-4 ml-2"
+                          style={{ color: 'var(--tachpae-secondary)' }}
+                        >
+                          =
+                        </motion.div>
+                        
+                        {/* Combined delivery */}
+                        <motion.div
+                          animate={{ 
+                            y: [0, -8, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                          className="flex flex-col items-center ml-2"
+                        >
+                          <span className="text-6xl">📦</span>
+                          <span className="text-[10px] font-bold mt-1" style={{ color: 'var(--tachpae-accent)' }}>ONE DELIVERY!</span>
+                        </motion.div>
                       </div>
+                    </div>
+                    
+                    <div className="relative z-10 p-8 pt-0 space-y-4">
+                      <h3 className="text-2xl md:text-3xl font-black text-white">
+                        Already Bought <span style={{ color: 'var(--tachpae-accent)' }}>Something?</span>
+                      </h3>
                       
-                      <h3 className="text-3xl font-black text-white">Personal <span style={{ color: 'var(--tachpae-accent)' }}>Courier.</span></h3>
-                      
-                      <p className="text-white/60 font-medium leading-relaxed">
-                        You know that <span className="text-white font-bold">one thing</span> they'd absolutely love? Get it yourself, pick more from our store, then send everything to our hub. We'll wrap it all up and deliver as one beautiful surprise.
+                      <p className="text-white/60 font-medium leading-relaxed text-sm">
+                        Got something special? Send it to us! We'll package it with your order and deliver everything together as one perfect Valentine's surprise.
                       </p>
                       
                       <Button 
@@ -275,7 +337,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                         className="text-white font-bold p-0 h-auto text-base hover:bg-transparent group"
                         style={{ color: 'var(--tachpae-secondary)' }}
                       >
-                        Set up Pickup <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        Add My Gift <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </div>
                  </div>

@@ -1,18 +1,10 @@
 {
-  "basePrice": 10000,
-  "description": "25cm Teddy Bear",
-  "category": "6789abc123def456...",
+  "basePrice": 60000,
+  "description": "",
+  "category": "69713f1b89d8eb834e6bc5e2",
   "event": "696bb790aca35414ca4947fc",
   "isActive": true,
   "variantsConfig": {
-    "options": [
-      {
-        "name": "Size",
-        "values": [
-          { "label": "Standard", "value": "standard", "priceModifier": 0 },
-          { "label": "Large", "value": "large", "priceModifier": 10000 }
-        ]
-      }
-    ]
+
   }
 }
