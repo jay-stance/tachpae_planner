@@ -91,7 +91,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         >
           <Button 
             size="lg" 
-            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-[85%] md:w-full sm:w-auto border-0" 
+            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-[85%] !md:w-full sm:w-auto border-0" 
             style={{ 
               background: 'linear-gradient(135deg, var(--tachpae-primary) 0%, var(--tachpae-primary-light) 100%)',
               boxShadow: '0 8px 32px rgba(53, 20, 245, 0.4)'
@@ -104,7 +104,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-[85%] md:w-full sm:w-auto group"
+            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-[85%] !md:w-full sm:w-auto group"
             style={{ 
               background: 'rgba(255, 255, 255, 0.05)',
               borderColor: 'rgba(255, 255, 255, 0.15)',

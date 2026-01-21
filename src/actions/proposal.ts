@@ -33,12 +33,21 @@ export async function createProposal(data: {
 
 // Helper to generate a presigned GET URL for a reaction video
 async function signReactionUrl(url?: string) {
-  if (!url || !url.includes('s3.amazonaws.com')) return url;
+  if (!url) return url;
   
   try {
-    // Extract key from URL: https://bucket.s3.region.amazonaws.com/key
+    // Extract key from URL formats:
+    // Format 1: https://bucket.s3.region.amazonaws.com/key
+    // Format 2: https://s3.region.amazonaws.com/bucket/key
     const urlObj = new URL(url);
-    const key = urlObj.pathname.startsWith('/') ? urlObj.pathname.substring(1) : urlObj.pathname;
+    let key = urlObj.pathname.startsWith('/') ? urlObj.pathname.substring(1) : urlObj.pathname;
+    
+    // If the URL is already signed (has query params), don't re-sign
+    if (urlObj.search && urlObj.search.includes('X-Amz-Signature')) {
+      return url;
+    }
+    
+    console.log('[signReactionUrl] Signing key:', key);
     
     const command = new GetObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,
@@ -47,9 +56,11 @@ async function signReactionUrl(url?: string) {
     
     // Links refresh on every page visit/action. 
     // Setting to 7 days so they last a long time if tab stays open.
-    return await getSignedUrl(s3Client, command, { expiresIn: 3600 * 24 * 7 }); 
+    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 * 24 * 7 }); 
+    console.log('[signReactionUrl] Generated signed URL');
+    return signedUrl;
   } catch (error) {
-    console.error('Failed to sign URL:', error);
+    console.error('[signReactionUrl] Failed to sign URL:', url, error);
     return url;
   }
 }
@@ -86,10 +97,15 @@ export async function getProposalsByDeviceId(deviceId: string) {
 
 export async function getPresignedUploadUrl() {
   const fileKey = `reactions/${uuidv4()}.mp4`;
+  
+  // Note: For ACL to work, your bucket must have:
+  // 1. "Block public access" settings disabled for ACLs
+  // 2. Object Ownership set to "Bucket owner preferred" or "Object writer"
   const command = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: fileKey,
-    ContentType: 'video/mp4'
+    ContentType: 'video/mp4',
+    ACL: 'public-read', // Makes the uploaded file publicly readable
   });
 
   const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
