@@ -160,7 +160,8 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
 
     return (
         <>
-            <div className="relative w-full aspect-video bg-black group cursor-zoom-in" onClick={() => openLightbox(currentMediaIndex)}>
+            {/* Main Gallery - Square aspect ratio, balanced for mobile */}
+            <div className="relative w-full bg-gray-100 group" style={{ aspectRatio: '1/1' }}>
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentMedia}
@@ -168,7 +169,8 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute inset-0 flex items-center justify-center"
+                        className="absolute inset-0 flex items-center justify-center cursor-zoom-in"
+                        onClick={() => openLightbox(currentMediaIndex)}
                     >
                         {isCurrentVideo ? (
                             <div className="relative w-full h-full bg-black flex items-center justify-center" onClick={toggleVideo}>
@@ -184,14 +186,14 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
                                 />
                                 {!isPlaying && (
                                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors cursor-pointer">
-                                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center pl-1 shadow-xl">
-                                            <Play className="w-8 h-8 text-white fill-white" />
+                                        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center pl-1 shadow-xl">
+                                            <Play className="w-6 h-6 text-white fill-white" />
                                         </div>
                                     </div>
                                 )}
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}
-                                    className="absolute bottom-4 right-4 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                                    className="absolute bottom-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
                                 >
                                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                                 </button>
@@ -202,21 +204,35 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Navigation Arrows */}
+                {/* Navigation - Always visible when multiple */}
                 {mediaGallery.length > 1 && (
                     <>
                         <button 
                             onClick={(e) => { e.stopPropagation(); handleMediaNav('prev'); }}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all opacity-0 group-hover:opacity-100"
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-700 hover:bg-white transition-all z-10"
                         >
-                            <ChevronLeft className="w-6 h-6" />
+                            <ChevronLeft className="w-4 h-4" />
                         </button>
                         <button 
                             onClick={(e) => { e.stopPropagation(); handleMediaNav('next'); }}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all opacity-0 group-hover:opacity-100"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-700 hover:bg-white transition-all z-10"
                         >
-                            <ChevronRight className="w-6 h-6" />
+                            <ChevronRight className="w-4 h-4" />
                         </button>
+                        
+                        {/* Dots + Counter at bottom */}
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm z-10">
+                            {mediaGallery.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={(e) => { e.stopPropagation(); setCurrentMediaIndex(idx); setIsPlaying(false); }}
+                                    className={cn(
+                                        "w-2 h-2 rounded-full transition-all",
+                                        idx === currentMediaIndex ? "bg-white" : "bg-white/40"
+                                    )}
+                                />
+                            ))}
+                        </div>
                     </>
                 )}
             </div>
@@ -224,6 +240,8 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
         </>
     );
   };
+
+
 
   const handleVariantSelect = (optionName: string, value: any) => {
     setSelectedVariants(prev => ({ ...prev, [optionName]: value }));
@@ -537,69 +555,75 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Gallery Section */}
-        {renderGallery()}
+    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
+        {/* Gallery Section - Fixed width on desktop */}
+        <div className="md:w-[45%] md:max-h-[90vh] md:overflow-hidden flex-shrink-0">
+          {renderGallery()}
+        </div>
 
-      {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
-        {/* Phase 1: Variants */}
-        {(!hasWizard || currentStep === 0) && renderVariants()}
+      {/* Right Side: Content + Footer */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+          {/* Phase 1: Variants */}
+          {(!hasWizard || currentStep === 0) && renderVariants()}
 
-        {/* Phase 2: Wizard Steps */}
-        {hasWizard && renderWizardStep()}
+          {/* Phase 2: Wizard Steps */}
+          {hasWizard && renderWizardStep()}
 
-        {!hasWizard && (
-          <div className="mt-6 pt-4 border-t flex items-center justify-between">
-            <div>
-              <div className="text-sm text-gray-500">Total</div>
-              <div className="text-2xl font-bold" style={{ color: primaryColor }}>
-                ₦{calculateTotalPrice().toLocaleString()}
+          {!hasWizard && (
+            <div className="mt-6 pt-4 border-t flex items-center justify-between">
+              <div>
+                <div className="text-sm text-gray-500">Total</div>
+                <div className="text-2xl font-bold" style={{ color: primaryColor }}>
+                  ₦{calculateTotalPrice().toLocaleString()}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      {/* Sticky Footer */}
-      <div className="p-6 md:px-8 md:py-6 border-t bg-gray-50/50 backdrop-blur-sm z-20">
-        {hasWizard ? (
-          <div className="flex justify-between items-center gap-4">
-            <Button 
-              variant="ghost" 
-              onClick={prevStep} 
-              disabled={currentStep === 0}
-              className={cn("rounded-full", currentStep === 0 ? "invisible" : "visible")}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back
-            </Button>
-            
-            <div className="text-center hidden sm:block">
-              <div className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Total Price</div>
-              <div className="text-xl font-bold" style={{ color: primaryColor }}>
-                ₦{calculateTotalPrice().toLocaleString()}
+        {/* Sticky Footer */}
+        <div className="p-6 md:px-8 md:py-6 border-t bg-gray-50/50 backdrop-blur-sm z-20">
+          {hasWizard ? (
+            <div className="flex justify-between items-center gap-4">
+              <Button 
+                variant="ghost" 
+                onClick={prevStep} 
+                disabled={currentStep === 0}
+                className={cn("rounded-full", currentStep === 0 ? "invisible" : "visible")}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" /> Back
+              </Button>
+              
+              <div className="text-center hidden sm:block">
+                <div className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Total Price</div>
+                <div className="text-xl font-bold" style={{ color: primaryColor }}>
+                  ₦{calculateTotalPrice().toLocaleString()}
+                </div>
               </div>
+              
+              <Button 
+                onClick={nextStep} 
+                className="rounded-full px-8 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
+              >
+                {currentStep === steps.length - 1 ? 'Add to Bundle' : 'Next Step'}
+                {currentStep !== steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
+              </Button>
             </div>
-            
-            <Button 
-              onClick={nextStep} 
-              className="rounded-full px-8 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
-            >
-              {currentStep === steps.length - 1 ? 'Add to Bundle' : 'Next Step'}
-              {currentStep !== steps.length - 1 && <ArrowRight className="w-4 h-4 ml-2" />}
-            </Button>
-          </div>
-        ) : (
-          <div className="flex items-center justify-end">
-            <Button 
-              onClick={handleComplete} 
-              className="rounded-full px-10 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
-            >
-              Add to Bundle <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        )}
+          ) : (
+            <div className="flex items-center justify-end">
+              <Button 
+                onClick={handleComplete} 
+                className="rounded-full px-10 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-lg shadow-rose-200 transition-all active:scale-95"
+              >
+                Add to Bundle <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
