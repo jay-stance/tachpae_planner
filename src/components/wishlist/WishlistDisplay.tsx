@@ -88,28 +88,28 @@ export default function WishlistDisplay({ products, items }: WishlistDisplayProp
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] selection:bg-rose-100 selection:text-rose-900">
+    <div className="min-h-screen selection:bg-indigo-100 selection:text-indigo-900" style={{ background: 'var(--tachpae-bg-dark)' }}>
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vh] bg-rose-200/20 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vh] bg-indigo-200/20 blur-[150px] rounded-full" />
+          <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vh] blur-[120px] rounded-full" style={{ background: 'var(--tachpae-primary)', opacity: 0.15 }} />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vh] blur-[150px] rounded-full" style={{ background: 'var(--tachpae-secondary)', opacity: 0.1 }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 md:py-16">
         {/* Header */}
         <div className="flex flex-col items-center text-center space-y-4 md:space-y-6 mb-8 md:mb-16 animate-in fade-in slide-in-from-top-8 duration-700">
              <div className="relative transform scale-75 md:scale-100">
-                <div className="w-24 h-24 bg-white rounded-[2.5rem] shadow-2xl shadow-rose-100/50 flex items-center justify-center text-rose-600 rotate-3 transition-transform hover:rotate-6 duration-500">
-                    <Heart className="w-10 h-10 fill-rose-600" />
+                <div className="w-24 h-24 rounded-[2.5rem] shadow-2xl flex items-center justify-center text-white rotate-3 transition-transform hover:rotate-6 duration-500" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}>
+                    <Heart className="w-10 h-10 fill-white" />
                 </div>
-                <div className="absolute -bottom-2 -right-2 bg-black text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
+                <div className="absolute -bottom-2 -right-2 bg-white text-gray-900 text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
                     FOR YOU
                 </div>
              </div>
              <div>
-                <h1 className="text-3xl md:text-6xl font-black text-gray-900 tracking-tight leading-[1.1] mb-2 md:mb-4">
-                    A Curated <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-indigo-600">Expression.</span>
+                <h1 className="text-3xl md:text-6xl font-black text-white tracking-tight leading-[1.1] mb-2 md:mb-4">
+                    A Curated <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>Expression.</span>
                 </h1>
-                <p className="text-gray-500 text-sm md:text-xl font-medium max-w-2xl mx-auto leading-relaxed px-4">
+                <p className="text-white/60 text-sm md:text-xl font-medium max-w-2xl mx-auto leading-relaxed px-4">
                     Someone special crafted this experience just for you. Review the details below.
                 </p>
              </div>

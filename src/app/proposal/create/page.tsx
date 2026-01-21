@@ -111,10 +111,10 @@ export default function CreateProposal() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-start bg-gradient-to-br from-pink-50 via-white to-red-50 p-4 md:p-8 relative overflow-x-hidden">
-        {/* Background blobs */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-red-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-pink-200/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+    <div className="min-h-screen w-full flex flex-col items-center justify-start p-4 md:p-8 relative overflow-x-hidden" style={{ background: 'var(--tachpae-bg-dark)' }}>
+        {/* Background orbs */}
+        <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.2 }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 pointer-events-none" style={{ background: 'var(--tachpae-secondary)', opacity: 0.15 }} />
 
         <div className="relative z-10 w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
              
@@ -129,7 +129,7 @@ export default function CreateProposal() {
                         <div className="mx-auto w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
                             <Heart className="w-8 h-8 text-red-500 fill-red-500" />
                         </div>
-                        <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-pink-600">
+                        <CardTitle className="text-2xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>
                             {step === 1 ? 'Create Your Proposal' : 'Your Link is Ready!'}
                         </CardTitle>
                         <CardDescription>
@@ -193,7 +193,8 @@ export default function CreateProposal() {
                                 </div>
 
                                 <Button 
-                                    className="w-full h-12 text-lg mt-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white shadow-xl shadow-red-100 rounded-xl"
+                                    className="w-full h-12 text-lg mt-4 text-white shadow-xl rounded-xl"
+                                    style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 24px rgba(53, 20, 245, 0.3)' }}
                                     onClick={handleSubmit}
                                     disabled={loading || !formData.message || !formData.partnerName}
                                 >

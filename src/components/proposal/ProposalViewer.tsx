@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { IProposal } from '@/models/Proposal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2 } from 'lucide-react';
+import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -24,7 +24,7 @@ const INTRO_TEXTS = [
 // Moved outside to prevent re-mounting on every progress update
 const Container = ({ children, className }: { children: React.ReactNode, className?: string }) => (
   <motion.div 
-    className={cn("w-full max-w-md mx-auto p-2 relative z-10", className)}
+    className={cn("w-full max-w-lg mx-auto px-4 relative z-10", className)}
     initial={{ opacity: 0, scale: 0.95 }}
     animate={{ opacity: 1, scale: 1 }}
     exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
@@ -52,14 +52,14 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
 
   // Stabilize background particles so they don't jump on every render
   const particles = useMemo(() => {
-    return Array.from({ length: 15 }).map((_, i) => ({
+    return Array.from({ length: 20 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100, // percentage
       y: Math.random() * 100, // percentage
       scale: Math.random() * 0.5 + 0.2,
-      duration: Math.random() * 10 + 10,
-      width: Math.random() * 10 + 5,
-      height: Math.random() * 10 + 5
+      duration: Math.random() * 15 + 10,
+      width: Math.random() * 6 + 2,
+      height: Math.random() * 6 + 2
     }));
   }, []);
 
@@ -75,15 +75,15 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     setStage('OPENING');
     setTimeout(() => {
         setStage('REVEALED');
-    }, 2500);
+    }, 3000);
   };
 
   const handleAccept = () => {
     confetti({
-        particleCount: 150,
-        spread: 70,
+        particleCount: 200,
+        spread: 90,
         origin: { y: 0.6 },
-        colors: ['#ff0000', '#ff69b4', '#ffffff']
+        colors: ['#3514F5', '#00C2FF', '#FF0080', '#ffffff']
     });
     setStage('ACCEPTED');
   };
@@ -143,11 +143,11 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   // Memoized button text to reduce re-renders
   const buttonContent = useMemo(() => {
     const statusMap: Record<CompressionStatus, React.ReactNode> = {
-      'IDLE': <><Video className="w-5 h-5" /> Record Reaction (10s)</>,
-      'LOADING_CORE': <><Loader2 className="w-4 h-4 animate-spin" /> Preparing Studio...</>,
-      'COMPRESSING': <><Loader2 className="w-4 h-4 animate-spin" /> Compressing {progress}%</>,
+      'IDLE': <><Video className="w-5 h-5" /> Record My Reaction</>,
+      'LOADING_CORE': <><Loader2 className="w-4 h-4 animate-spin" /> Preparing...</>,
+      'COMPRESSING': <><Loader2 className="w-4 h-4 animate-spin" /> Processing {progress}%</>,
       'UPLOADING': <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</>,
-      'DONE': <><Heart className="w-5 h-5" /> Done!</>,
+      'DONE': <><Heart className="w-5 h-5" /> Sent!</>,
       'ERROR': <><XCircle className="w-5 h-5" /> Try Again</>,
     };
     return statusMap[compressionStatus] || statusMap['IDLE'];
@@ -159,41 +159,53 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
 
   if (stage === 'SUBMITTED' || proposal.status !== 'PENDING') {
       return (
-          <div className="flex flex-col items-center justify-center p-8 text-center min-h-[50vh] animate-in fade-in duration-1000">
-             <div className="relative">
-                 <div className="absolute inset-0 bg-white/20 blur-2xl rounded-full" />
-                 <div className="w-24 h-24 bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-6 shadow-2xl relative z-10 border border-white/40">
+          <div className="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center" style={{ background: 'var(--tachpae-bg-dark)' }}>
+             <motion.div 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', damping: 15 }}
+                className="relative"
+             >
+                 <div className="absolute inset-0 blur-3xl rounded-full" style={{ background: 'var(--tachpae-primary)', opacity: 0.3 }} />
+                 <div className="w-32 h-32 rounded-full flex items-center justify-center mb-8 shadow-2xl relative z-10 border border-white/10" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
                     {proposal.status === 'ACCEPTED' || stage === 'ACCEPTED' || stage === 'SUBMITTED' ? (
-                        <Heart className="w-12 h-12 text-red-500 fill-red-500 animate-pulse" />
+                        <Heart className="w-16 h-16 text-white fill-white animate-pulse" />
                     ) : (
-                        <XCircle className="w-12 h-12 text-gray-400" />
+                        <XCircle className="w-16 h-16 text-white/50" />
                     )}
                  </div>
-             </div>
-              <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-md">Response Sent</h2>
-              <p className="text-white/90 text-lg font-light">Your story continues...</p>
+             </motion.div>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Response Sent</h2>
+              <p className="text-white/60 text-lg">Your story continues...</p>
           </div>
       );
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden font-sans bg-gradient-to-br from-red-600 via-pink-600 to-purple-800">
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden font-sans" style={{ background: 'var(--tachpae-bg-dark)' }}>
+        
+        {/* Ambient Orbs */}
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.25 }} />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none" style={{ background: 'var(--tachpae-secondary)', opacity: 0.2 }} />
+        <div className="absolute top-[30%] right-[20%] w-[200px] h-[200px] rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--tachpae-accent)', opacity: 0.15 }} />
         
         {/* Ambient Particles */}
         {particles.map((p) => (
             <motion.div
                 key={p.id}
-                className="absolute bg-white rounded-full opacity-20"
+                className="absolute rounded-full"
                 style={{
                     left: `${p.x}%`,
                     top: `${p.y}%`,
                     scale: p.scale,
                     width: p.width,
                     height: p.height,
+                    background: 'var(--tachpae-secondary)',
+                    opacity: 0.4,
                 }}
                 animate={{ 
-                    y: [null, -100],
-                    opacity: [0.3, 0.6, 0.3]
+                    y: [null, -150],
+                    opacity: [0.2, 0.5, 0.2]
                 }}
                 transition={{ 
                     duration: p.duration, 
@@ -210,18 +222,37 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                 <Container key="envelope" className="cursor-pointer" >
                     <div onClick={handleOpenEnvelope}>
                         <motion.div 
-                            className="bg-white rounded-lg shadow-2xl p-8 md:p-12 text-center transform hover:scale-105 transition-transform duration-300 relative overflow-hidden"
-                            whileHover={{ rotate: [-1, 1, -1] }}
+                            className="rounded-3xl p-10 md:p-14 text-center relative overflow-hidden border border-white/10"
+                            style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)' }}
+                            whileHover={{ scale: 1.02, rotate: 1 }}
+                            whileTap={{ scale: 0.98 }}
                         >
-                            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-400 via-pink-500 to-red-400" />
-                            <Mail className="w-24 h-24 mx-auto text-pink-400 mb-6" />
-                            <h2 className="text-3xl font-serif text-gray-800 mb-2">For You</h2>
-                            <p className="text-gray-500 uppercase tracking-widest text-xs">Tap to Open</p>
-                            
+                            {/* Shimmer effect */}
                             <motion.div 
-                                className="absolute -bottom-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-2xl opacity-50"
-                                animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ repeat: Infinity, duration: 4 }}
+                                className="absolute inset-0 opacity-20"
+                                style={{ background: 'linear-gradient(135deg, transparent 40%, var(--tachpae-secondary) 50%, transparent 60%)' }}
+                                animate={{ x: ['-100%', '200%'] }}
+                                transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+                            />
+                            
+                            <motion.div
+                                animate={{ y: [0, -8, 0] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                            >
+                                <div className="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center mb-8" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>
+                                    <Mail className="w-12 h-12 text-white" />
+                                </div>
+                            </motion.div>
+                            
+                            <h2 className="text-3xl md:text-4xl font-black text-white mb-3">A Message For You</h2>
+                            <p className="text-white/40 uppercase tracking-[0.3em] text-xs font-medium">Tap to Reveal</p>
+                            
+                            {/* Glow ring */}
+                            <motion.div 
+                                className="absolute inset-0 rounded-3xl pointer-events-none"
+                                style={{ border: '1px solid var(--tachpae-primary)' }}
+                                animate={{ opacity: [0.2, 0.5, 0.2] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
                             />
                         </motion.div>
                     </div>
@@ -231,98 +262,160 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
             {/* STAGE 2: OPENING SEQUENCE */}
             {stage === 'OPENING' && (
                 <Container key="opening">
-                    <div className="text-center text-white">
+                    <div className="text-center">
                         <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ duration: 0.5, type: "spring" }}
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{ duration: 0.8, type: "spring" }}
+                            className="mb-10"
                         >
-                           <Heart className="w-24 h-24 text-white fill-white mx-auto mb-8 animate-pulse" />
+                           <div className="w-28 h-28 mx-auto rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
+                               <Heart className="w-14 h-14 text-white fill-white animate-pulse" />
+                           </div>
                         </motion.div>
                         <motion.h3 
-                            className="text-2xl md:text-3xl font-light italic"
-                            initial={{ opacity: 0, y: 20 }}
+                            className="text-2xl md:text-3xl font-light text-white/90 italic"
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                         >
                             "{introText}"
                         </motion.h3>
+                        <motion.div 
+                            className="mt-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.5 }}
+                        >
+                            <div className="w-12 h-1 mx-auto rounded-full animate-pulse" style={{ background: 'var(--tachpae-secondary)' }} />
+                        </motion.div>
                     </div>
                 </Container>
             )}
 
-            {/* STAGE 3: THE REVEAL */}
+            {/* STAGE 3: THE REVEAL - COMPLETELY REDESIGNED */}
             {stage === 'REVEALED' && (
                 <Container key="revealed">
-                    <Card className="bg-white/80 backdrop-blur-xl border-white/50 shadow-2xl overflow-hidden">
-                        <div className="relative h-48 bg-gradient-to-b from-pink-100 to-white flex items-center justify-center p-6">
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-                            <div className="text-center relative z-10">
-                                <motion.div 
-                                    initial={{ scale: 0.8, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ duration: 0.8, delay: 0.2 }}
-                                    className="inline-block p-3 rounded-full bg-white shadow-lg mb-4"
-                                >
-                                    <Sparkles className="w-8 h-8 text-yellow-400 fill-yellow-400" />
-                                </motion.div>
-                                <h2 className="text-2xl font-bold text-gray-800">Hi {proposal.partnerName},</h2>
-                                <p className="text-gray-500 text-sm mt-1">{proposal.proposerName} has a question...</p>
-                            </div>
+                    <motion.div 
+                        className="relative rounded-3xl overflow-hidden border border-white/10"
+                        style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(30px)' }}
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        {/* Top decorative gradient bar */}
+                        <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--tachpae-primary), var(--tachpae-secondary), var(--tachpae-accent))' }} />
+                        
+                        {/* Header Section */}
+                        <div className="relative px-8 pt-10 pb-6 text-center">
+                            <motion.div 
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.3, type: 'spring', damping: 15 }}
+                                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
+                                style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
+                            >
+                                <Sparkles className="w-8 h-8 text-white" />
+                            </motion.div>
+                            
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
+                            >
+                                <p className="text-white/40 text-sm uppercase tracking-widest mb-2">A Question From</p>
+                                <h2 className="text-3xl md:text-4xl font-black text-white">{proposal.proposerName}</h2>
+                            </motion.div>
                         </div>
                         
-                        <CardContent className="p-8 pt-2 text-center">
-                             <div className="mb-10 relative">
-                                <span className="absolute -top-6 left-0 text-6xl text-pink-200 font-serif">"</span>
-                                <p className="text-xl md:text-2xl font-medium text-gray-800 leading-relaxed font-serif px-6">
-                                    {proposal.message}
+                        {/* Message Section */}
+                        <div className="px-8 pb-8">
+                            <motion.div 
+                                className="relative p-6 rounded-2xl text-center"
+                                style={{ background: 'rgba(255,255,255,0.05)' }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.7 }}
+                            >
+                                <p className="text-xl md:text-2xl font-medium text-white leading-relaxed">
+                                    "{proposal.message}"
                                 </p>
-                                <span className="absolute -bottom-10 right-0 text-6xl text-pink-200 font-serif">"</span>
-                             </div>
+                            </motion.div>
+                            
+                            {/* Addressed to */}
+                            <motion.p 
+                                className="text-center text-white/50 text-sm mt-6"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.9 }}
+                            >
+                                — For <span className="text-white font-medium">{proposal.partnerName}</span>
+                            </motion.p>
+                        </div>
 
-                             <div className="space-y-4 pt-4">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="w-full py-4 text-xl font-bold text-white bg-gradient-to-r from-red-500 to-pink-600 rounded-xl shadow-xl shadow-red-200 hover:shadow-red-300 transition-all"
-                                    onClick={handleAccept}
-                                >
-                                    YES, I Will! 💖
-                                </motion.button>
-                                
+                        {/* Divider */}
+                        <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, var(--tachpae-primary), transparent)' }} />
+
+                        {/* Action Section */}
+                        <div className="p-8 space-y-4">
+                            <motion.button
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.1 }}
+                                whileHover={{ scale: 1.02, boxShadow: '0 12px 40px rgba(53, 20, 245, 0.4)' }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-full py-5 text-xl font-bold text-white rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3"
+                                style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 30px rgba(53, 20, 245, 0.3)' }}
+                                onClick={handleAccept}
+                            >
+                                <Heart className="w-6 h-6 fill-white" /> Yes, I'll Be Your Valentine!
+                            </motion.button>
+                            
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1.3 }}
+                            >
                                 <Button 
                                     variant="ghost" 
-                                    className="text-gray-400 hover:text-gray-600 hover:bg-transparent text-sm"
+                                    className="w-full text-white/30 hover:text-white/60 hover:bg-white/5 text-sm py-3"
                                     onClick={handleReject}
                                 >
-                                    No, maybe later
+                                    Not right now...
                                 </Button>
-                             </div>
-                        </CardContent>
-                    </Card>
+                            </motion.div>
+                        </div>
+                    </motion.div>
                 </Container>
             )}
 
             {/* STAGE 4: ACCEPTED (VIDEO UPLOAD) */}
             {stage === 'ACCEPTED' && (
                 <Container key="accepted">
-                    <Card className="bg-white/90 backdrop-blur-xl border-none shadow-2xl">
-                        <CardContent className="p-8 text-center">
+                    <motion.div 
+                        className="rounded-3xl overflow-hidden border border-white/10"
+                        style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(30px)' }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                    >
+                        <div className="p-8 text-center">
                             <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
-                                className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                                transition={{ type: 'spring', damping: 12 }}
+                                className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6"
+                                style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}
                             >
-                                <Heart className="w-10 h-10 fill-green-600" />
+                                <Heart className="w-12 h-12 text-white fill-white" />
                             </motion.div>
                             
-                            <h2 className="text-2xl font-bold text-gray-900 mb-2">Yaaay! You said YES! 🎉</h2>
-                            <p className="text-gray-600 mb-4">
-                                {proposal.proposerName} is going to be so happy. 
+                            <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
+                            <p className="text-white/60 mb-6">
+                                Make {proposal.proposerName}'s day even more special by sending a quick reaction video!
                             </p>
-                            <div className="bg-orange-50 border border-orange-100 rounded-lg p-3 mb-6 text-sm text-orange-800">
-                                📸 <strong>Tip:</strong> Keep your reaction video under <strong>10 seconds</strong>! 
-                                <br/>(Short & sweet works best 😉)
+                            
+                            <div className="rounded-xl p-4 mb-6 text-sm text-white/70 border border-white/10" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                                📸 <strong className="text-white">Pro Tip:</strong> Keep it under <strong className="text-white">10 seconds</strong> — short & sweet!
                             </div>
                             
                             <input 
@@ -336,7 +429,8 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                             
                             <Button 
                                 size="lg" 
-                                className="w-full h-14 bg-gray-900 hover:bg-black text-white rounded-xl mb-3 gap-2"
+                                className="w-full h-14 text-white rounded-2xl mb-4 gap-2 font-bold text-lg"
+                                style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
                                 disabled={isProcessing}
                                 onClick={() => fileInputRef.current?.click()}
                             >
@@ -344,33 +438,42 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                             </Button>
 
                             <button 
-                                onClick={() => setStage('SUBMITTED')} 
-                                className="text-sm text-gray-400 hover:underline"
+                                onClick={async () => { 
+                                    setUploading();
+                                    await respondToProposal(proposal._id as unknown as string, 'ACCEPTED', {});
+                                    setDone();
+                                    setStage('SUBMITTED'); 
+                                }} 
+                                className="text-sm text-white/30 hover:text-white/50 transition-colors"
                                 disabled={isProcessing}
                             >
-                                Skip video upload
+                                Skip and send response
                             </button>
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </motion.div>
                 </Container>
             )}
 
             {/* STAGE 5: REJECTED */}
              {stage === 'REJECTED' && (
                  <Container key="rejected">
-                    <Card className="bg-white/95 backdrop-blur-xl border-none shadow-2xl">
-                        <CardContent className="p-8">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-4">Awww... wait, why? 🥺</h3>
-                            <div className="space-y-2 mb-6">
+                    <motion.div 
+                        className="rounded-3xl overflow-hidden border border-white/10"
+                        style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(30px)' }}
+                    >
+                        <div className="p-8">
+                            <h3 className="text-xl font-bold text-white mb-6">Let them down easy... 💔</h3>
+                            <div className="space-y-3 mb-6">
                                 {rejectionOptions.map((opt) => (
                                     <motion.div 
                                         key={opt}
                                         className={cn(
                                             "p-4 rounded-xl border text-left cursor-pointer transition-all",
                                             rejectionReason === opt 
-                                                ? "border-red-500 bg-red-50 text-red-900" 
-                                                : "border-gray-100 hover:bg-gray-50 text-gray-600"
+                                                ? "border-white/30 text-white" 
+                                                : "border-white/10 hover:border-white/20 text-white/60"
                                         )}
+                                        style={rejectionReason === opt ? { background: 'rgba(255,255,255,0.1)' } : { background: 'rgba(255,255,255,0.02)' }}
                                         onClick={() => setRejectionReason(opt)}
                                         whileTap={{ scale: 0.98 }}
                                     >
@@ -379,7 +482,8 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                                 ))}
                             </div>
                             <Button 
-                                className="w-full h-12 rounded-xl"
+                                className="w-full h-12 rounded-xl text-white font-bold"
+                                style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
                                 disabled={!rejectionReason || isProcessing}
                                 onClick={submitRejection}
                             >
@@ -389,10 +493,10 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                                     <>Send Response <Send className="w-4 h-4 ml-2" /></>
                                 )}
                             </Button>
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </motion.div>
                  </Container>
-            )}
+             )}
 
         </AnimatePresence>
     </div>

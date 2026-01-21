@@ -37,7 +37,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         style={{ background: 'var(--tachpae-accent)', opacity: 0.2 }}
       />
 
-      <div className="container relative z-10 px-4 text-center">
+      <div className="container relative z-10 px-5 text-center">
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -54,14 +54,14 @@ export default function Hero({ onStart }: { onStart: () => void }) {
           </span>
         </motion.div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.05]">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-[1.1]">
           <motion.span 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.2, duration: 0.8 }}
              className="block text-white"
           >
-            Plan Less.
+            Make This Valentine
           </motion.span>
           <motion.span 
              initial={{ opacity: 0, scale: 0.9 }}
@@ -70,7 +70,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
              className="block bg-clip-text text-transparent pb-2"
              style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary) 0%, var(--tachpae-secondary) 100%)' }}
           >
-             Celebrate More.
+             Easy & Unforgettable.
           </motion.span>
         </h1>
 
@@ -78,9 +78,9 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
-            className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
+            className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-12 font-medium"
         >
-          We handle the setup, food, and vibes. <span className="font-medium text-white/90">You just show up and shine.</span>
+          Plan Less. Celebrate More.
         </motion.p>
 
         <motion.div 
@@ -91,20 +91,20 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         >
           <Button 
             size="lg" 
-            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-full sm:w-auto border-0" 
+            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-[85%] md:w-full sm:w-auto border-0" 
             style={{ 
               background: 'linear-gradient(135deg, var(--tachpae-primary) 0%, var(--tachpae-primary-light) 100%)',
               boxShadow: '0 8px 32px rgba(53, 20, 245, 0.4)'
             }}
             onClick={onStart}
           >
-            <Sparkles className="mr-2 w-4 h-4" /> Browse Packages
+            <Sparkles className="mr-2 w-4 h-4" /> Start Planning
           </Button>
           
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full sm:w-auto group"
+            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-[85%] md:w-full sm:w-auto group"
             style={{ 
               background: 'rgba(255, 255, 255, 0.05)',
               borderColor: 'rgba(255, 255, 255, 0.15)',
@@ -112,7 +112,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             }}
             onClick={handleProposalClick}
           >
-            Build Custom <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Send Be My Val Link <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>
       </div>
