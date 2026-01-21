@@ -176,40 +176,44 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         {/* Content Section */}
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           {activeCategory?._id === 'specials' ? (
-            <div className="space-y-24 py-8">
-              {/* SURPRISE YOURSELF STORY SECTION */}
-              <section className="relative group">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  <div className="space-y-6 order-2 lg:order-1">
-                    <div className="inline-flex py-1.5 px-3 bg-rose-50 text-rose-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-rose-100">
-                      The Experience
+            <div className="space-y-24 pb-8">
+              {/* SURPRISE YOURSELF - ELEGANT GIFTING EDIT */}
+              <section className="relative overflow-hidden rounded-[2rem] bg-rose-50/50 border border-rose-100/50">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0">
+                  <div className="p-6 md:p-12 order-2 md:order-1 flex flex-col items-start space-y-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-rose-100 shadow-sm">
+                        <Sparkles className="w-3 h-3 text-rose-500" />
+                        <span className="text-[10px] font-bold tracking-wider text-rose-500 uppercase">The Mystery Edit</span>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-[1.1] tracking-tighter">
-                      The Best Love is <span className="text-rose-600">Self-Love.</span>
+                    
+                    <h2 className="text-3xl md:text-5xl font-serif text-gray-900 leading-tight">
+                      Surprise <span className="italic text-rose-500">Yourself.</span>
                     </h2>
-                    <p className="text-lg md:text-xl text-gray-500 font-medium leading-relaxed">
-                      You don't need a partner to experience the magic. Tell us your vibe, your favorite treats, and what makes you smile—we'll curate a mystery box designed to celebrate the most important person in your life: You.
+                    
+                    <p className="text-gray-600 text-sm md:text-lg max-w-sm leading-relaxed">
+                      You don't need a partner to feel butterflies.You deserve a gift too. Let us curate a mystery box of joy, tailored just for you.
                     </p>
+
                     <Button 
-                      asChild
-                      className="h-16 px-10 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-lg font-black shadow-2xl shadow-rose-200 transition-all active:scale-95 group"
+                      onClick={() => {
+                        const targetCity = city?.slug || 'abuja';
+                        router.push(`/surprise?city=${targetCity}`);
+                      }}
+                      className="mt-2 h-12 px-8 rounded-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium transition-all shadow-lg hover:shadow-xl active:scale-95"
                     >
-                      <Link href={`/surprise?city=${city.slug}`}>
-                        Treat Yourself <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </Link>
+                      Get My Gift <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="relative order-1 lg:order-2 aspect-[4/3] overflow-hidden rounded-[2.5rem] shadow-3xl shadow-rose-100 group-hover:scale-[1.01] transition-transform duration-700">
-                    <Image 
-                      src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&q=80" 
-                      alt="Self Love"
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-8 left-8 right-8">
-                       <p className="text-white font-black text-lg italic opacity-90">"I'm my own Valentine this year, and this mystery box was the highlight of my day."</p>
-                    </div>
+
+                  <div className="relative h-64 md:h-full min-h-[250px] order-1 md:order-2">
+                     <Image 
+                        src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80" 
+                        alt="Mystery Gift"
+                        fill
+                        className="object-cover"
+                     />
+                     {/* Gradient overlay for text readability on mobile if needed, but side-by-side handles it */}
+                     <div className="absolute inset-0 bg-gradient-to-t from-rose-50/80 to-transparent md:hidden" />
                   </div>
                 </div>
               </section>

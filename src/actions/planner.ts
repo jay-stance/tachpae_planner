@@ -8,6 +8,7 @@ import Service from '@/models/Service';
 import Addon from '@/models/Addon';
 import { getActiveEvent } from './event';
 import { unstable_cache } from 'next/cache';
+import mongoose from 'mongoose';
 
 // Cached fetch for the entire planning view data
 export const getPlanningData = unstable_cache(
@@ -55,4 +56,16 @@ export const getPlanningData = unstable_cache(
     ['planning-data'], 
     { revalidate: 3600, tags: ['products', 'services', 'addons'] }
 );
+
+export const getProductsByIds = async (ids: string[]) => {
+    await dbConnect();
+    // Filter out special IDs like 'surprise-box' and 'logistics-fee'
+    const validIds = ids.filter(id => mongoose.Types.ObjectId.isValid(id));
+    const products = await Product.find({ 
+        _id: { $in: validIds },
+        isActive: true 
+    }).populate('category').lean();
+    
+    return JSON.parse(JSON.stringify(products));
+};
 
