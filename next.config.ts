@@ -16,6 +16,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'tachpae-planner-upload.s3.us-east-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   };

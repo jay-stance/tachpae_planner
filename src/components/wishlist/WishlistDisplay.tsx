@@ -10,6 +10,14 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
+// Helper to detect video URLs
+const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
+
+// Get the first image from a media gallery
+const getFirstImage = (mediaGallery: string[] = []) => {
+  return mediaGallery.find(url => !isVideoUrl(url)) || null;
+};
+
 interface WishlistDisplayProps {
   products: any[];
   items: { id: string; q: number }[];
@@ -38,7 +46,7 @@ export default function WishlistDisplay({ products, items }: WishlistDisplayProp
       name: product.name,
       price: product.basePrice,
       quantity: item.q,
-      image: product.mediaGallery?.[0]
+      image: getFirstImage(product.mediaGallery) || product.mediaGallery?.[0]
     } : null;
   }).filter(Boolean);
 
@@ -59,6 +67,7 @@ export default function WishlistDisplay({ products, items }: WishlistDisplayProp
       </div>
     );
   }
+
 
   const total = wishlistItems.reduce((sum, item) => sum + (item!.price * item!.quantity), 0);
 

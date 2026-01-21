@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+// Load environment variables from .env.local (Next.js convention)
+dotenv.config({ path: path.join(__dirname, '../.env.local') });
 import mongoose from 'mongoose';
 import mime from 'mime-types';
 import Product, { IProduct } from '../src/models/Product';

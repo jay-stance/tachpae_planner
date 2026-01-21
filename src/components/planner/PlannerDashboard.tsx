@@ -18,6 +18,19 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 
+// Helper to detect video URLs
+const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
+
+// Get the first image from a media gallery, or null if none
+const getFirstImage = (mediaGallery: string[] = []) => {
+  return mediaGallery.find(url => !isVideoUrl(url)) || null;
+};
+
+// Get the first video from a media gallery, or null if none
+const getFirstVideo = (mediaGallery: string[] = []) => {
+  return mediaGallery.find(url => isVideoUrl(url)) || null;
+};
+
 interface PlannerDashboardProps {
   data: {
     city: any;
@@ -58,12 +71,13 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     addItem({
       productId: selectedProduct._id,
       productName: selectedProduct.name,
-      productImage: selectedProduct.mediaGallery?.[0],
+      productImage: getFirstImage(selectedProduct.mediaGallery) || selectedProduct.mediaGallery?.[0],
       basePrice: config.totalPrice || selectedProduct.basePrice,
       quantity: 1,
       variantSelection: config.variants || {},
       customizationData: config.wizardData || {},
     });
+
     
     setSelectedProduct(null);
   };
@@ -423,16 +437,38 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                           onClick={() => handleProductClick(product)}
                         >
                           <div className="aspect-square relative overflow-hidden bg-gray-50">
-                            {product.mediaGallery?.[0] ? (
-                              <Image 
-                                src={product.mediaGallery[0]} 
-                                alt={product.name} 
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-700" 
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-gray-200 text-6xl">🎁</div>
-                            )}
+                            {(() => {
+                              const firstImage = getFirstImage(product.mediaGallery);
+                              const firstVideo = getFirstVideo(product.mediaGallery);
+                              
+                              if (firstImage) {
+                                // Show the first image
+                                return (
+                                  <Image 
+                                    src={firstImage} 
+                                    alt={product.name} 
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                                  />
+                                );
+                              } else if (firstVideo) {
+                                // Show video as thumbnail (auto-loads first frame)
+                                return (
+                                  <video 
+                                    src={firstVideo}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                  />
+                                );
+                              } else {
+                                // Fallback placeholder
+                                return (
+                                  <div className="w-full h-full flex items-center justify-center text-gray-200 text-6xl">🎁</div>
+                                );
+                              }
+                            })()}
                             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
                           <CardContent className="p-6">

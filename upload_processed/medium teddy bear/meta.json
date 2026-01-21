@@ -1,0 +1,20 @@
+{
+  "basePrice": 25000,
+  "description": "Medium Teddy Bear",
+  "category": "69713f1b89d8eb834e6bc5e2",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  "variantsConfig": {
+        "options": [
+      {
+        "name": "size",
+        "values": [
+          { "label": "40 cm", "value": "40_cm", "priceModifier": 0 },
+          { "label": "50 cm", "value": "50_cm", "priceModifier": 10000 },
+          { "label": "60 cm", "value": "60_cm", "priceModifier": 25000 }
+        ]
+      }
+    ]
+
+  }
+}

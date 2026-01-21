@@ -40,6 +40,9 @@ export interface IProduct extends Document {
 
   isActive: boolean;
   
+  // Location restrictions (empty = available everywhere)
+  locations: mongoose.Types.ObjectId[];
+  
   // Video upload constraints (optional)
   videoConfig?: {
     maxDuration: number; // seconds
@@ -60,6 +63,9 @@ const ProductSchema: Schema = new Schema({
   videoConfig: { type: Schema.Types.Mixed, default: null },
   
   isActive: { type: Boolean, default: true },
+  
+  // Location restrictions: empty array = available to all locations
+  locations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
 }, { timestamps: true });
 
 const Product: Model<IProduct> = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
