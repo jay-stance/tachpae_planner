@@ -1,0 +1,22 @@
+{
+  "basePrice": 45000,
+  "description": "",
+  "category": "6972003bb55fa56b7e5e4b0b",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "bundles",
+        "values": [
+          { "label": "₦25,000 bundle - ₦500 notes", "value": "25000_500", "priceModifier": 0 },
+          { "label": "₦30,000 bundle - ₦500 notes", "value": "30000_500", "priceModifier": 15000 },
+          { "label": "₦50,000 bundle - ₦500 notes", "value": "50000_500", "priceModifier": 40000 }
+        ]
+      }
+    ]
+
+  },
+  "locations": []
+}

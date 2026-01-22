@@ -1,0 +1,14 @@
+{
+  "basePrice": 65000,
+  "description": "Glamorous $25 boquet",
+  "category": "6972003bb55fa56b7e5e4b0b",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  
+  "variantsConfig": {
+    "options": [
+    ]
+
+  },
+  "locations": ["696bb78faca35414ca4947f9", "696bb78faca35414ca4947f3"]
+}

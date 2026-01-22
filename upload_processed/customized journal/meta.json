@@ -1,0 +1,11 @@
+{
+  "basePrice": 12000,
+  "description": "",
+  "category": "69723795b55fa56b7e5e4b1f",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  "variantsConfig": {
+
+  },
+  "locations": ["696bb78faca35414ca4947f9", "696bb78faca35414ca4947f3"]
+}

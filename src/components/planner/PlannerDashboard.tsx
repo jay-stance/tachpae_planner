@@ -118,19 +118,19 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const filteredProducts = activeCategory?._id === 'specials' ? [] : getProductsByCategory(activeCategory?._id);
 
   return (
-    <div className="w-full min-h-screen bg-white pb-32">
+    <div className="w-full min-h-screen bg-white pb-24 md:pb-32">
       <Header className="border-b border-gray-100" variant="light" />
-      <div className="container mx-auto px-4 py-4 md:py-12">
+      <div className="container mx-auto px-3 md:px-4 py-3 md:py-12">
         {/* Header */}
-        <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="px-3 py-1 bg-rose-50 rounded-full border border-rose-100 flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-rose-600">Location</span>
+        <header className="mb-6 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="space-y-2 md:space-y-3">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="px-2 md:px-3 py-1 bg-rose-50 rounded-full border border-rose-100 flex items-center gap-1.5 md:gap-2">
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-rose-600">Location</span>
                 <select 
                   value={city.slug}
                   onChange={(e) => router.push(`/planning/${e.target.value}`)}
-                  className="text-xs font-bold text-rose-600 bg-transparent focus:outline-none cursor-pointer"
+                  className="text-[11px] md:text-xs font-bold text-rose-600 bg-transparent focus:outline-none cursor-pointer"
                 >
                   <option value={city.slug}>{city.name}</option>
                   {data.allCities?.map((c: any) => c.slug !== city.slug && (
@@ -139,8 +139,8 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                 </select>
               </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-none">Curate Your Package</h1>
-            <p className="text-gray-500 text-lg max-w-xl font-medium">Select gifts, experiences, and more for your Valentine.</p>
+            <h1 className="text-2xl md:text-5xl font-black text-gray-900 tracking-tight leading-none">Curate Your Package</h1>
+            <p className="text-gray-500 text-sm md:text-lg max-w-xl font-medium">Select gifts, experiences, and more for your Valentine.</p>
           </div>
           
           {/* share wishlist */}
@@ -155,7 +155,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         </header>
 
         {/* Categories Tabs */}
-        <div className="mb-12 sticky top-4 z-40 bg-white/80 backdrop-blur-xl p-1.5 rounded-3xl border-2 border-gray-50 shadow-xl shadow-gray-100/50 flex flex-nowrap gap-1 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
+        <div className="mb-6 md:mb-12 sticky top-2 md:top-4 z-40 bg-white/90 backdrop-blur-xl p-1 md:p-1.5 rounded-2xl md:rounded-3xl border border-gray-100 md:border-2 md:border-gray-50 shadow-lg md:shadow-xl shadow-gray-100/50 flex flex-nowrap gap-0.5 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveCategory({ _id: 'gifts', name: 'Gifts' } as any)}
               className={cn(
@@ -419,21 +419,21 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               )}
             </div>
           ) : (
-            <div className="space-y-16 pb-12">
+            <div className="space-y-8 md:space-y-16 pb-8 md:pb-12">
               {categories.map((cat: any) => {
                 const catProducts = getProductsByCategory(cat._id);
                 if (catProducts.length === 0) return null;
                 return (
-                  <section key={cat._id} className="space-y-8">
-                    <h2 className="text-3xl font-black text-gray-900 flex items-center gap-4">
-                      <span className="text-4xl">{cat.icon || '🎁'}</span>
+                  <section key={cat._id} className="space-y-4 md:space-y-8">
+                    <h2 className="text-xl md:text-3xl font-black text-gray-900 flex items-center gap-2 md:gap-4">
+                      <span className="text-2xl md:text-4xl">{cat.icon || '🎁'}</span>
                       {cat.name}
                     </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
                       {catProducts.map((product: any) => (
                         <Card 
                           key={product._id} 
-                          className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-0 shadow-lg shadow-gray-100 bg-white overflow-hidden rounded-[2rem]" 
+                          className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-0 shadow-md md:shadow-lg shadow-gray-100 bg-white overflow-hidden rounded-2xl md:rounded-[2rem]" 
                           onClick={() => handleProductClick(product)}
                         >
                           <div className="aspect-square relative overflow-hidden bg-gray-50">
@@ -471,11 +471,11 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                             })()}
                             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
-                          <CardContent className="p-6">
-                            <h3 className="font-black text-gray-900 text-lg line-clamp-1">{product.name}</h3>
-                            <p className="text-gray-500 text-sm font-medium line-clamp-1 mt-1">{product.description}</p>
-                            <div className="flex justify-between items-center mt-4">
-                              <span className="font-black text-xl" style={{ color: primaryColor }}>
+                          <CardContent className="p-3 md:p-6">
+                            <h3 className="font-black text-gray-900 text-sm md:text-lg line-clamp-1">{product.name}</h3>
+                            <p className="text-gray-500 text-xs md:text-sm font-medium line-clamp-1 mt-0.5 md:mt-1">{product.description}</p>
+                            <div className="flex justify-between items-center mt-2 md:mt-4">
+                              <span className="font-black text-base md:text-xl" style={{ color: primaryColor }}>
                                 ₦{product.basePrice.toLocaleString()}
                               </span>
                             </div>
@@ -546,24 +546,24 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       </Dialog>
 
       {/* FIXED BOTTOM BAR */}
-      <div className="fixed bottom-6 left-0 right-0 z-50 pointer-events-none px-4">
+      <div className="fixed bottom-4 md:bottom-6 left-0 right-0 z-50 pointer-events-none px-3 md:px-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between pointer-events-auto">
           {/* VIEW CART BUTTON */}
           <Button 
             onClick={() => setCartOpen(true)}
-            className="h-16 px-10 bg-gray-900 hover:bg-black text-white rounded-3xl shadow-3xl flex items-center gap-4 transition-all active:scale-95 group"
+            className="h-12 md:h-16 px-4 md:px-10 bg-gray-900 hover:bg-black text-white rounded-2xl md:rounded-3xl shadow-2xl flex items-center gap-2 md:gap-4 transition-all active:scale-95 group"
           >
             <div className="relative">
-              <ShoppingBag className="w-6 h-6" />
+              <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
               {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-rose-600 text-white text-[10px] font-black min-w-[20px] h-[20px] rounded-full flex items-center justify-center shadow-lg border-2 border-gray-900 animate-in zoom-in-50">
+                <span className="absolute -top-1.5 md:-top-2 -right-1.5 md:-right-2 bg-rose-600 text-white text-[9px] md:text-[10px] font-black min-w-[16px] md:min-w-[20px] h-[16px] md:h-[20px] rounded-full flex items-center justify-center shadow-lg border-2 border-gray-900 animate-in zoom-in-50">
                   {itemCount}
                 </span>
               )}
             </div>
             <div className="text-left">
-              <div className="text-[10px] font-black uppercase tracking-widest opacity-60">View Cart</div>
-              <div className="text-lg font-black leading-none">Your Bundle</div>
+              <div className="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-60">View Cart</div>
+              <div className="text-sm md:text-lg font-black leading-none">Your Bundle</div>
             </div>
           </Button>
         </div>

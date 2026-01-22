@@ -1,0 +1,24 @@
+{
+  "basePrice": 170000,
+  "description": "",
+  "category": "6972003bb55fa56b7e5e4b0b",
+  "event": "696bb790aca35414ca4947fc",
+  "isActive": true,
+  
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "bundles",
+        "values": [
+          { "label": "₦100,000 bundle - ₦500 notes", "value": "100000_500", "priceModifier": 0 },
+          { "label": "₦150,000 bundle - ₦500 notes", "value": "150000_500", "priceModifier": 100000 },
+          { "label": "₦200,000 bundle - ₦500 notes", "value": "200000_500", "priceModifier": 170000 },
+          { "label": "₦200,000 bundle - ₦1,000 notes", "value": "200000_1000", "priceModifier": 130000 },
+          { "label": "₦500,000 bundle - ₦1,000 notes", "value": "500000_1000", "priceModifier": 480000 }
+        ]
+      }
+    ]
+
+  },
+  "locations": ["696bb78faca35414ca4947f9", "696bb78faca35414ca4947f3"]
+}

@@ -24,8 +24,12 @@ const INTRO_TEXTS = [
 // Moved outside to prevent re-mounting on every progress update
 const Container = ({ children, className }: { children: React.ReactNode, className?: string }) => (
   <motion.div 
-    className={cn("w-full max-w-lg mx-auto px-4 relative z-10", className)}
+    className={cn("w-full max-w-lg mx-auto px-3 md:px-4 relative z-10", className)}
     initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+    transition={{ duration: 0.5 }}
+  >
     animate={{ opacity: 1, scale: 1 }}
     exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
     transition={{ duration: 0.5 }}
@@ -159,7 +163,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
 
   if (stage === 'SUBMITTED' || proposal.status !== 'PENDING') {
       return (
-          <div className="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center" style={{ background: 'var(--tachpae-bg-dark)' }}>
+          <div className="min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-8 text-center" style={{ background: 'var(--tachpae-bg-dark)' }}>
              <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -167,16 +171,16 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                 className="relative"
              >
                  <div className="absolute inset-0 blur-3xl rounded-full" style={{ background: 'var(--tachpae-primary)', opacity: 0.3 }} />
-                 <div className="w-32 h-32 rounded-full flex items-center justify-center mb-8 shadow-2xl relative z-10 border border-white/10" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
+                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center mb-6 md:mb-8 shadow-2xl relative z-10 border border-white/10" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
                     {proposal.status === 'ACCEPTED' || stage === 'ACCEPTED' || stage === 'SUBMITTED' ? (
-                        <Heart className="w-16 h-16 text-white fill-white animate-pulse" />
+                        <Heart className="w-12 h-12 md:w-16 md:h-16 text-white fill-white animate-pulse" />
                     ) : (
-                        <XCircle className="w-16 h-16 text-white/50" />
+                        <XCircle className="w-12 h-12 md:w-16 md:h-16 text-white/50" />
                     )}
                  </div>
              </motion.div>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Response Sent</h2>
-              <p className="text-white/60 text-lg">Your story continues...</p>
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-3 md:mb-4">Response Sent</h2>
+              <p className="text-white/60 text-base md:text-lg">Your story continues...</p>
           </div>
       );
   }
@@ -222,7 +226,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                 <Container key="envelope" className="cursor-pointer" >
                     <div onClick={handleOpenEnvelope}>
                         <motion.div 
-                            className="rounded-3xl p-10 md:p-14 text-center relative overflow-hidden border border-white/10"
+                            className="rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-14 text-center relative overflow-hidden border border-white/10"
                             style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)' }}
                             whileHover={{ scale: 1.02, rotate: 1 }}
                             whileTap={{ scale: 0.98 }}
@@ -239,13 +243,13 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                                 animate={{ y: [0, -8, 0] }}
                                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                             >
-                                <div className="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center mb-8" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>
-                                    <Mail className="w-12 h-12 text-white" />
+                                <div className="w-16 h-16 md:w-24 md:h-24 mx-auto rounded-xl md:rounded-2xl flex items-center justify-center mb-5 md:mb-8" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>
+                                    <Mail className="w-8 h-8 md:w-12 md:h-12 text-white" />
                                 </div>
                             </motion.div>
                             
-                            <h2 className="text-3xl md:text-4xl font-black text-white mb-3">A Message For You</h2>
-                            <p className="text-white/40 uppercase tracking-[0.3em] text-xs font-medium">Tap to Reveal</p>
+                            <h2 className="text-2xl md:text-4xl font-black text-white mb-2 md:mb-3">A Message For You</h2>
+                            <p className="text-white/40 uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs font-medium">Tap to Reveal</p>
                             
                             {/* Glow ring */}
                             <motion.div 
@@ -267,14 +271,14 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                             initial={{ scale: 0, rotate: -180 }}
                             animate={{ scale: 1, rotate: 0 }}
                             transition={{ duration: 0.8, type: "spring" }}
-                            className="mb-10"
+                            className="mb-6 md:mb-10"
                         >
-                           <div className="w-28 h-28 mx-auto rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
-                               <Heart className="w-14 h-14 text-white fill-white animate-pulse" />
+                           <div className="w-20 h-20 md:w-28 md:h-28 mx-auto rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
+                               <Heart className="w-10 h-10 md:w-14 md:h-14 text-white fill-white animate-pulse" />
                            </div>
                         </motion.div>
                         <motion.h3 
-                            className="text-2xl md:text-3xl font-light text-white/90 italic"
+                            className="text-xl md:text-3xl font-light text-white/90 italic"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
@@ -307,15 +311,15 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                         <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--tachpae-primary), var(--tachpae-secondary), var(--tachpae-accent))' }} />
                         
                         {/* Header Section */}
-                        <div className="relative px-8 pt-10 pb-6 text-center">
+                        <div className="relative px-5 md:px-8 pt-6 md:pt-10 pb-4 md:pb-6 text-center">
                             <motion.div 
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ delay: 0.3, type: 'spring', damping: 15 }}
-                                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
+                                className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl mb-4 md:mb-6"
                                 style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
                             >
-                                <Sparkles className="w-8 h-8 text-white" />
+                                <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-white" />
                             </motion.div>
                             
                             <motion.div
@@ -323,28 +327,28 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.5 }}
                             >
-                                <p className="text-white/40 text-sm uppercase tracking-widest mb-2">A Question From</p>
-                                <h2 className="text-3xl md:text-4xl font-black text-white">{proposal.proposerName}</h2>
+                                <p className="text-white/40 text-xs md:text-sm uppercase tracking-widest mb-1 md:mb-2">A Question From</p>
+                                <h2 className="text-2xl md:text-4xl font-black text-white">{proposal.proposerName}</h2>
                             </motion.div>
                         </div>
                         
                         {/* Message Section */}
-                        <div className="px-8 pb-8">
+                        <div className="px-5 md:px-8 pb-5 md:pb-8">
                             <motion.div 
-                                className="relative p-6 rounded-2xl text-center"
+                                className="relative p-4 md:p-6 rounded-xl md:rounded-2xl text-center"
                                 style={{ background: 'rgba(255,255,255,0.05)' }}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.7 }}
                             >
-                                <p className="text-xl md:text-2xl font-medium text-white leading-relaxed">
+                                <p className="text-lg md:text-2xl font-medium text-white leading-relaxed">
                                     "{proposal.message}"
                                 </p>
                             </motion.div>
                             
                             {/* Addressed to */}
                             <motion.p 
-                                className="text-center text-white/50 text-sm mt-6"
+                                className="text-center text-white/50 text-xs md:text-sm mt-4 md:mt-6"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.9 }}
@@ -357,18 +361,18 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                         <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, var(--tachpae-primary), transparent)' }} />
 
                         {/* Action Section */}
-                        <div className="p-8 space-y-4">
+                        <div className="p-5 md:p-8 space-y-3 md:space-y-4">
                             <motion.button
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 1.1 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 12px 40px rgba(53, 20, 245, 0.4)' }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full py-5 text-xl font-bold text-white rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3"
+                                className="w-full py-4 md:py-5 text-base md:text-xl font-bold text-white rounded-xl md:rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 md:gap-3"
                                 style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 30px rgba(53, 20, 245, 0.3)' }}
                                 onClick={handleAccept}
                             >
-                                <Heart className="w-6 h-6 fill-white" /> Yes, I'll Be Your Valentine!
+                                <Heart className="w-5 h-5 md:w-6 md:h-6 fill-white" /> Yes, I'll Be Your Valentine!
                             </motion.button>
                             
                             <motion.div
