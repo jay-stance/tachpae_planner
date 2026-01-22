@@ -121,7 +121,7 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
     
     ctx.font = 'bold 48px Arial';
     ctx.fillStyle = '#FFFFFF';
-    ctx.fillText('planner.tachpae.com', 540, 1720);
+    ctx.fillText('val.tachpae.com', 540, 1720);
 
     // Tachpae logo text
     ctx.font = 'bold 28px Arial';
