@@ -232,28 +232,30 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                  className="w-full max-w-lg mt-8"
                >
                  <div 
-                   className="rounded-2xl p-5 border border-white/10 text-center"
-                   style={{ background: 'rgba(255,255,255,0.03)' }}
+                   className="rounded-2xl p-5 border border-white/20 text-center"
+                   style={{ background: 'rgba(30, 30, 50, 0.9)' }}
                  >
                    <h3 className="text-lg font-bold text-white mb-2">Share Your Love Story 💕</h3>
-                   <p className="text-white/50 text-xs mb-4">
+                   <p className="text-gray-300 text-xs mb-4">
                      Make {proposal.proposerName} famous! Let the world know you said YES.
                    </p>
                    
                    <div className="flex gap-3 justify-center flex-wrap">
-                     <Button
-                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold"
-                       style={{ background: '#25D366' }}
+                     <button
+                       type="button"
+                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold px-4 transition-all hover:scale-105 active:scale-95"
+                       style={{ backgroundColor: '#25D366' }}
                        onClick={() => {
                          const shareText = `🥰 I just said YES to ${proposal.proposerName}'s Valentine proposal on Tachpae! Create yours: https://planner.tachpae.com/proposal/create`;
                          window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
                        }}
                      >
                        WhatsApp
-                     </Button>
-                     <Button
-                       variant="outline"
-                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white/80 border-white/20 text-sm font-bold hover:bg-white/10"
+                     </button>
+                     <button
+                       type="button"
+                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold px-4 border-2 border-white/40 transition-all hover:bg-white/20 hover:scale-105 active:scale-95"
+                       style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
                        onClick={async () => {
                          const shareText = `💕 I just said YES on Tachpae! Create your own romantic proposal: https://planner.tachpae.com/proposal/create`;
                          try {
@@ -265,10 +267,10 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                        }}
                      >
                        Copy for Stories
-                     </Button>
+                     </button>
                    </div>
                    
-                   <p className="text-white/30 text-[10px] mt-3">
+                   <p className="text-gray-400 text-[10px] mt-3">
                      Tag @tachpae on Instagram & TikTok for a chance to be featured!
                    </p>
                  </div>

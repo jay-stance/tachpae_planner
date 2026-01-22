@@ -154,6 +154,36 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
           </Button> */}
         </header>
 
+        {/* Urgency Banner - Psychological triggers */}
+        <div className="mb-6 md:mb-8 p-3 md:p-4 rounded-2xl bg-gradient-to-r from-rose-50 via-pink-50 to-purple-50 border border-rose-100 animate-in fade-in slide-in-from-top-2 duration-700">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
+            {/* Urgency Message */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+                <span className="text-lg md:text-xl animate-pulse">⏰</span>
+              </div>
+              <div>
+                <p className="text-xs md:text-sm font-bold text-rose-900">
+                  Valentine's Day is {Math.max(0, Math.ceil((new Date('2026-02-14').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))} days away!
+                </p>
+                <p className="text-[10px] md:text-xs text-rose-700/80">
+                  🔥 Popular items sell out fast. Secure yours now.
+                </p>
+              </div>
+            </div>
+            
+            {/* Social Proof */}
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/70 rounded-full border border-rose-100">
+              <div className="flex -space-x-2">
+                <div className="w-5 h-5 rounded-full bg-rose-200 flex items-center justify-center text-[8px]">💕</div>
+                <div className="w-5 h-5 rounded-full bg-pink-200 flex items-center justify-center text-[8px]">🎁</div>
+                <div className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-[8px]">❤️</div>
+              </div>
+              <span className="text-[10px] md:text-xs font-bold text-rose-800">10,000+ couples trust us</span>
+            </div>
+          </div>
+        </div>
+
         {/* Categories Tabs */}
         <div className="mb-6 md:mb-12 sticky top-2 md:top-4 z-40 bg-white/90 backdrop-blur-xl p-1 md:p-1.5 rounded-2xl md:rounded-3xl border border-gray-100 md:border-2 md:border-gray-50 shadow-lg md:shadow-xl shadow-gray-100/50 flex flex-nowrap gap-0.5 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
             <button
