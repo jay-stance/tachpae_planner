@@ -10,7 +10,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const eventId = searchParams.get('eventId');
     
-    const query: any = { isActive: true };
+    const query: any = {};
     if (eventId) query.event = eventId;
 
     const categories = await Category.find(query).lean();

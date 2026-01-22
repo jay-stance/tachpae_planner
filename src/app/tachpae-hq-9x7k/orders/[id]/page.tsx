@@ -9,9 +9,10 @@ import Link from 'next/link';
 interface OrderItem {
   productId: string;
   productName: string;
+  name?: string;
   quantity: number;
-  basePrice: number;
-  variantSelection: Record<string, string>;
+  priceAtPurchase: number;
+  variantSelection?: Record<string, string>;
 }
 
 interface Order {
@@ -205,14 +206,14 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 <Package className="w-6 h-6 text-white/40" />
               </div>
               <div className="flex-1">
-                <p className="text-white font-medium">{item.productName}</p>
+                <p className="text-white font-medium">{item.name || item.productName}</p>
                 <p className="text-white/40 text-sm">Qty: {item.quantity}</p>
                 {Object.entries(item.variantSelection || {}).map(([key, val]) => (
                   <span key={key} className="text-white/50 text-xs mr-2">{key}: {val}</span>
                 ))}
               </div>
               <div className="text-right">
-                <p className="text-white font-bold">₦{item.basePrice.toLocaleString()}</p>
+                <p className="text-white font-bold">₦{(item.priceAtPurchase || 0).toLocaleString()}</p>
               </div>
             </div>
           ))}
