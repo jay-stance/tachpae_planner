@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Heart, Copy, ArrowRight, Check, History, ExternalLink, Mail, User, XCircle, Sparkles, Video } from 'lucide-react';
+import { Heart, Copy, ArrowRight, Check, History, ExternalLink, Mail, User, XCircle, Sparkles, Video, Gift } from 'lucide-react';
 import { createProposal, getProposalsByDeviceId } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function CreateProposal() {
   const router = useRouter();
@@ -28,6 +30,11 @@ export default function CreateProposal() {
   
   const [generatedLink, setGeneratedLink] = useState('');
   const [copied, setCopied] = useState(false);
+  const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
+
+  // Helper to detect video URLs
+  const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
+  const getFirstImage = (mediaGallery: string[] = []) => mediaGallery.find(url => !isVideoUrl(url)) || null;
 
   // Initialize Device ID and Fetch History
   useEffect(() => {
@@ -55,6 +62,22 @@ export default function CreateProposal() {
       console.error("Failed to fetch history", err);
     }
   };
+
+  // Prefetch upsell products in background
+  useEffect(() => {
+    const fetchUpsellProducts = async () => {
+      try {
+        const res = await fetch('/api/products/upsell?count=2&categories=3');
+        const data = await res.json();
+        if (data.success) {
+          setUpsellProducts(data.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch upsell products:', error);
+      }
+    };
+    fetchUpsellProducts();
+  }, []);
 
   if (!isMounted) return null; // Prevent hydration mismatch
 
@@ -223,6 +246,61 @@ export default function CreateProposal() {
                                         Share on WhatsApp
                                     </Button>
                                 </div>
+
+                                {/* Upsell Section - After Link Generation */}
+                                {upsellProducts.length > 0 && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="mt-6 pt-6 border-t border-gray-100"
+                                  >
+                                    <div className="flex items-center gap-2 mb-3">
+                                      <Gift className="w-4 h-4 text-rose-500" />
+                                      <h4 className="text-sm font-bold text-gray-800">Complete the Surprise!</h4>
+                                    </div>
+                                    <p className="text-xs text-gray-500 mb-4">
+                                      Words are beautiful, but gifts make them unforgettable. <span className="text-rose-600 font-medium">Don't let your proposal be just a message.</span>
+                                    </p>
+                                    
+                                    <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+                                      {upsellProducts.slice(0, 4).map((product: any) => (
+                                        <Link 
+                                          key={product._id}
+                                          href="/planning/abuja"
+                                          className="flex-shrink-0 w-28 rounded-xl overflow-hidden border border-gray-100 hover:border-rose-200 hover:shadow-lg transition-all bg-white"
+                                        >
+                                          <div className="aspect-square relative bg-gray-50">
+                                            {getFirstImage(product.mediaGallery) ? (
+                                              <Image
+                                                src={getFirstImage(product.mediaGallery)!}
+                                                alt={product.name}
+                                                fill
+                                                className="object-cover"
+                                              />
+                                            ) : (
+                                              <div className="w-full h-full flex items-center justify-center text-2xl">🎁</div>
+                                            )}
+                                          </div>
+                                          <div className="p-2">
+                                            <p className="text-[10px] font-medium text-gray-800 line-clamp-1">{product.name}</p>
+                                            <p className="text-[10px] font-bold text-rose-600">₦{product.basePrice.toLocaleString()}</p>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                    
+                                    <Button 
+                                      asChild
+                                      className="w-full mt-3 h-10 text-white text-sm font-bold rounded-xl"
+                                      style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
+                                    >
+                                      <Link href="/planning/abuja">
+                                        Browse All Gifts <ArrowRight className="ml-2 w-4 h-4" />
+                                      </Link>
+                                    </Button>
+                                  </motion.div>
+                                )}
 
                                 <Button variant="ghost" className="w-full" onClick={() => {
                                     setStep(1);

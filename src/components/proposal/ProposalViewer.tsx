@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import confetti from 'canvas-confetti';
 import { useVideoCompressor, CompressionStatus } from '@/hooks/useVideoCompressor';
+import UpsellProducts from './UpsellProducts';
 
 const INTRO_TEXTS = [
     "Someone thinks about you a lot...",
@@ -30,10 +31,6 @@ const Container = ({ children, className }: { children: React.ReactNode, classNa
     exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
     transition={{ duration: 0.5 }}
   >
-    animate={{ opacity: 1, scale: 1 }}
-    exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-    transition={{ duration: 0.5 }}
-  >
     {children}
   </motion.div>
 );
@@ -47,7 +44,24 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   
   const [rejectionReason, setRejectionReason] = useState('');
   const [introText, setIntroText] = useState('');
+  const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Prefetch upsell products in background on mount
+  useEffect(() => {
+    const fetchUpsellProducts = async () => {
+      try {
+        const res = await fetch('/api/products/upsell?count=2&categories=3');
+        const data = await res.json();
+        if (data.success) {
+          setUpsellProducts(data.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch upsell products:', error);
+      }
+    };
+    fetchUpsellProducts();
+  }, []);
 
   // Randomize experience on mount
   useEffect(() => {
@@ -162,25 +176,116 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   // --- Render Logic ---
 
   if (stage === 'SUBMITTED' || proposal.status !== 'PENDING') {
+      const isAccepted = proposal.status === 'ACCEPTED' || stage === 'ACCEPTED' || stage === 'SUBMITTED';
+      
       return (
-          <div className="min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-8 text-center" style={{ background: 'var(--tachpae-bg-dark)' }}>
-             <motion.div 
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', damping: 15 }}
-                className="relative"
-             >
-                 <div className="absolute inset-0 blur-3xl rounded-full" style={{ background: 'var(--tachpae-primary)', opacity: 0.3 }} />
-                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center mb-6 md:mb-8 shadow-2xl relative z-10 border border-white/10" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
-                    {proposal.status === 'ACCEPTED' || stage === 'ACCEPTED' || stage === 'SUBMITTED' ? (
-                        <Heart className="w-12 h-12 md:w-16 md:h-16 text-white fill-white animate-pulse" />
-                    ) : (
-                        <XCircle className="w-12 h-12 md:w-16 md:h-16 text-white/50" />
-                    )}
+          <div className="min-h-screen w-full flex flex-col items-center py-12 px-4 md:px-8" style={{ background: 'var(--tachpae-bg-dark)' }}>
+             {/* Hero Section */}
+             <div className="text-center mb-8 md:mb-12">
+               <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', damping: 15 }}
+                  className="relative inline-block mb-6"
+               >
+                   <div className="absolute inset-0 blur-3xl rounded-full" style={{ background: 'var(--tachpae-primary)', opacity: 0.3 }} />
+                   <div className="w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center shadow-2xl relative z-10 border border-white/10" style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}>
+                      {isAccepted ? (
+                          <Heart className="w-10 h-10 md:w-14 md:h-14 text-white fill-white animate-pulse" />
+                      ) : (
+                          <XCircle className="w-10 h-10 md:w-14 md:h-14 text-white/50" />
+                      )}
+                   </div>
+               </motion.div>
+               <h2 className="text-2xl md:text-4xl font-black text-white mb-2">
+                 {isAccepted ? 'Response Sent! 💖' : 'Response Sent'}
+               </h2>
+               <p className="text-white/60 text-sm md:text-base max-w-md mx-auto">
+                 {isAccepted 
+                   ? `${proposal.proposerName} will be thrilled! Your love story is just beginning...`
+                   : 'Your response has been delivered.'}
+               </p>
+             </div>
+
+             {/* Upsell Section */}
+             {upsellProducts.length > 0 && (
+               <div className="w-full max-w-lg">
+                 <UpsellProducts 
+                   products={upsellProducts}
+                   citySlug="abuja"
+                   title={isAccepted ? "Make this moment unforgettable" : "Treat yourself today"}
+                   subtitle={isAccepted 
+                     ? "10,000+ couples chose Tachpae to say 'I love you'. Your turn?"
+                     : "You deserve something special too."
+                   }
+                   ctaText="Explore More Gifts"
+                 />
+               </div>
+             )}
+
+             {/* Share Your Love Story Section */}
+             {isAccepted && (
+               <motion.div
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.8 }}
+                 className="w-full max-w-lg mt-8"
+               >
+                 <div 
+                   className="rounded-2xl p-5 border border-white/10 text-center"
+                   style={{ background: 'rgba(255,255,255,0.03)' }}
+                 >
+                   <h3 className="text-lg font-bold text-white mb-2">Share Your Love Story 💕</h3>
+                   <p className="text-white/50 text-xs mb-4">
+                     Make {proposal.proposerName} famous! Let the world know you said YES.
+                   </p>
+                   
+                   <div className="flex gap-3 justify-center flex-wrap">
+                     <Button
+                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold"
+                       style={{ background: '#25D366' }}
+                       onClick={() => {
+                         const shareText = `🥰 I just said YES to ${proposal.proposerName}'s Valentine proposal on Tachpae! Create yours: https://planner.tachpae.com/proposal/create`;
+                         window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+                       }}
+                     >
+                       WhatsApp
+                     </Button>
+                     <Button
+                       variant="outline"
+                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white/80 border-white/20 text-sm font-bold hover:bg-white/10"
+                       onClick={async () => {
+                         const shareText = `💕 I just said YES on Tachpae! Create your own romantic proposal: https://planner.tachpae.com/proposal/create`;
+                         try {
+                           await navigator.clipboard.writeText(shareText);
+                           alert('Copied! Share on your Instagram story 📸');
+                         } catch {
+                           alert(shareText);
+                         }
+                       }}
+                     >
+                       Copy for Stories
+                     </Button>
+                   </div>
+                   
+                   <p className="text-white/30 text-[10px] mt-3">
+                     Tag @tachpae on Instagram & TikTok for a chance to be featured!
+                   </p>
                  </div>
+               </motion.div>
+             )}
+
+             {/* Social Proof */}
+             <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ delay: 1 }}
+               className="mt-8 text-center"
+             >
+               <p className="text-white/30 text-xs">
+                 💝 Trusted by lovers across Nigeria
+               </p>
              </motion.div>
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-3 md:mb-4">Response Sent</h2>
-              <p className="text-white/60 text-base md:text-lg">Your story continues...</p>
           </div>
       );
   }

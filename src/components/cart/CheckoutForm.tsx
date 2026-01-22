@@ -90,7 +90,7 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       message += `_This order was placed on Tachpae Planner._`;
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/2341234567890?text=${encodedMessage}`; // Use real admin number
+      const whatsappUrl = `https://wa.me/+2347070295596?text=${encodedMessage}`;
 
       // 3. Clear Cart and Redirect
       clearCart();

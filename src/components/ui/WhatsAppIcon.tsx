@@ -10,7 +10,7 @@ export default function WhatsAppIcon() {
 
   return (
     <a
-      href="https://wa.me/+2341234567890" // This should probably be dynamic or in config
+      href="https://wa.me/+2347070295596"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full text-white shadow-2xl transition-transform hover:scale-110 active:scale-95 group"
