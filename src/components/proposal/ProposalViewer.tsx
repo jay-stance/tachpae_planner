@@ -4,13 +4,14 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { IProposal } from '@/models/Proposal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars } from 'lucide-react';
+import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import confetti from 'canvas-confetti';
 import { useVideoCompressor, CompressionStatus } from '@/hooks/useVideoCompressor';
 import UpsellProducts from './UpsellProducts';
+import ShareCard from './ShareCard';
 
 const INTRO_TEXTS = [
     "Someone thinks about you a lot...",
@@ -45,6 +46,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   const [rejectionReason, setRejectionReason] = useState('');
   const [introText, setIntroText] = useState('');
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
+  const [showShareCard, setShowShareCard] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Prefetch upsell products in background on mount
@@ -229,53 +231,47 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.8 }}
-                 className="w-full max-w-lg mt-8"
+                 className="w-full max-w-lg mt-8 relative z-20"
                >
                  <div 
-                   className="rounded-2xl p-5 border border-white/20 text-center"
-                   style={{ background: 'rgba(30, 30, 50, 0.9)' }}
+                   className="rounded-2xl p-5 text-center shadow-2xl"
+                   style={{ 
+                     background: 'linear-gradient(135deg, rgba(53, 20, 245, 0.3), rgba(255, 0, 128, 0.2))',
+                     border: '2px solid rgba(255,255,255,0.2)',
+                   }}
                  >
-                   <h3 className="text-lg font-bold text-white mb-2">Share Your Love Story 💕</h3>
-                   <p className="text-gray-300 text-xs mb-4">
-                     Make {proposal.proposerName} famous! Let the world know you said YES.
+                   <h3 className="text-xl font-bold text-white mb-2">Share Your Love Story 💕</h3>
+                   <p className="text-white text-sm mb-5 opacity-80">
+                     Create a beautiful card to share with friends!
                    </p>
                    
-                   <div className="flex gap-3 justify-center flex-wrap">
-                     <button
-                       type="button"
-                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold px-4 transition-all hover:scale-105 active:scale-95"
-                       style={{ backgroundColor: '#25D366' }}
-                       onClick={() => {
-                         const shareText = `🥰 I just said YES to ${proposal.proposerName}'s Valentine proposal on Tachpae! Create yours: https://planner.tachpae.com/proposal/create`;
-                         window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
-                       }}
-                     >
-                       WhatsApp
-                     </button>
-                     <button
-                       type="button"
-                       className="flex-1 max-w-[140px] h-10 rounded-xl text-white text-sm font-bold px-4 border-2 border-white/40 transition-all hover:bg-white/20 hover:scale-105 active:scale-95"
-                       style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-                       onClick={async () => {
-                         const shareText = `💕 I just said YES on Tachpae! Create your own romantic proposal: https://planner.tachpae.com/proposal/create`;
-                         try {
-                           await navigator.clipboard.writeText(shareText);
-                           alert('Copied! Share on your Instagram story 📸');
-                         } catch {
-                           alert(shareText);
-                         }
-                       }}
-                     >
-                       Copy for Stories
-                     </button>
-                   </div>
+                   <button
+                     type="button"
+                     onClick={() => setShowShareCard(true)}
+                     className="w-full h-14 rounded-2xl text-white text-lg font-bold flex items-center justify-center gap-3 shadow-xl transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                     style={{ 
+                       background: 'linear-gradient(135deg, #3514F5, #FF0080)',
+                     }}
+                   >
+                     <Share2 className="w-6 h-6" />
+                     Create Share Card
+                   </button>
                    
-                   <p className="text-gray-400 text-[10px] mt-3">
+                   <p className="text-white text-[11px] mt-4 opacity-50">
                      Tag @tachpae on Instagram & TikTok for a chance to be featured!
                    </p>
                  </div>
                </motion.div>
              )}
+
+             {/* Share Card Modal */}
+             <ShareCard
+               proposerName={proposal.proposerName}
+               partnerName="Partner"
+               message={proposal.message}
+               isOpen={showShareCard}
+               onClose={() => setShowShareCard(false)}
+             />
 
              {/* Social Proof */}
              <motion.div 
