@@ -225,8 +225,8 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                </div>
              )}
 
-             {/* Share Your Love Story Section */}
-             {isAccepted && (
+             {/* Share Your Answer Section */}
+             {(isAccepted || proposal.status === 'REJECTED' || stage === 'REJECTED') && (
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
@@ -236,13 +236,17 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                  <div 
                    className="rounded-2xl p-5 text-center shadow-2xl"
                    style={{ 
-                     background: 'linear-gradient(135deg, rgba(53, 20, 245, 0.3), rgba(255, 0, 128, 0.2))',
+                     background: isAccepted 
+                        ? 'linear-gradient(135deg, rgba(53, 20, 245, 0.3), rgba(255, 0, 128, 0.2))' 
+                        : 'linear-gradient(135deg, rgba(100, 116, 139, 0.3), rgba(71, 85, 105, 0.2))',
                      border: '2px solid rgba(255,255,255,0.2)',
                    }}
                  >
-                   <h3 className="text-xl font-bold text-white mb-2">Share Your Love Story 💕</h3>
+                   <h3 className="text-xl font-bold text-white mb-2">
+                     {isAccepted ? 'Share Your Love Story 💕' : 'Share Your Decision 💔'}
+                   </h3>
                    <p className="text-white text-sm mb-5 opacity-80">
-                     Create a beautiful card to share with friends!
+                     Create a card to share with friends!
                    </p>
                    
                    <button
@@ -250,7 +254,9 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                      onClick={() => setShowShareCard(true)}
                      className="w-full h-14 rounded-2xl text-white text-lg font-bold flex items-center justify-center gap-3 shadow-xl transition-transform hover:scale-[1.02] active:scale-[0.98]"
                      style={{ 
-                       background: 'linear-gradient(135deg, #3514F5, #FF0080)',
+                       background: isAccepted
+                        ? 'linear-gradient(135deg, #3514F5, #FF0080)'
+                        : 'linear-gradient(135deg, #64748b, #475569)',
                      }}
                    >
                      <Share2 className="w-6 h-6" />
@@ -258,7 +264,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                    </button>
                    
                    <p className="text-white text-[11px] mt-4 opacity-50">
-                     Tag @tachpae on Instagram & TikTok for a chance to be featured!
+                     Tag @tachpae on Instagram & TikTok!
                    </p>
                  </div>
                </motion.div>
@@ -271,6 +277,8 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                message={proposal.message}
                isOpen={showShareCard}
                onClose={() => setShowShareCard(false)}
+               status={proposal.status === 'REJECTED' || stage === 'REJECTED' ? 'REJECTED' : 'ACCEPTED'}
+               rejectionReason={proposal.rejectionReason || rejectionReason}
              />
 
              {/* Social Proof */}

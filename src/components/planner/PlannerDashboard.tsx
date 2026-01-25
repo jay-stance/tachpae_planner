@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
+import { toast } from 'sonner';
 
 // Helper to detect video URLs
 const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
@@ -56,6 +57,16 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [activeCategory, setActiveCategory] = useState<any>(categories[0] || null);
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
+
+  // Toast on location change
+  React.useEffect(() => {
+    if (city?.name) {
+      toast.success(`You are browsing items available in ${city.name}`, {
+        icon: '📍',
+        duration: 4000
+      });
+    }
+  }, [city?.name]);
 
   const getProductsByCategory = (catId: string) => products.filter((p: any) => 
     (p.category?._id || p.category) === catId
@@ -250,13 +261,22 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                     </p>
 
                     <Button 
-                      asChild
-                      className="mt-2 h-12 px-8 rounded-full text-white text-sm font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 border-0"
+                      onClick={() => {
+                        addItem({
+                          productId: 'surprise-box-mystery', 
+                          productName: 'The Mystery Edit (Curated Box)', 
+                          basePrice: 50000, 
+                          quantity: 1, 
+                          variantSelection: {}, 
+                          customizationData: {}
+                        });
+                        setCartOpen(true);
+                        toast.success("Mystery Box added! Complete your checkout.");
+                      }}
+                      className="mt-2 h-12 px-8 rounded-full text-white text-sm font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 border-0 cursor-pointer"
                       style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 24px rgba(53, 20, 245, 0.4)' }}
                     >
-                      <Link href={`/surprise?city=${city?.slug || 'abuja'}`}>
-                        Treat Myself <ArrowRight className="ml-2 w-4 h-4" />
-                      </Link>
+                      Treat Myself <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
 

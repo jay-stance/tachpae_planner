@@ -64,11 +64,11 @@ export function useVideoCompressor() {
             // Faster compression: higher CRF, simpler scaling
             await ffmpeg.exec([
                 '-i', inputName,
-                '-t', '10',
-                '-vf', 'scale=640:-2',  // Smaller output = faster
+                '-t', '30',
+                '-vf', 'scale=720:-2',  // 720p width, auto height
                 '-c:v', 'libx264',
-                '-crf', '32',           // Higher CRF = faster, smaller file
-                '-preset', 'ultrafast',
+                '-crf', '23',           // Lower CRF = higher quality (18-28 is good range)
+                '-preset', 'veryfast',
                 '-tune', 'fastdecode',
                 outputName
             ]);

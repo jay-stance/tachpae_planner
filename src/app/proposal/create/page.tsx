@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 
 export default function CreateProposal() {
   const router = useRouter();
@@ -82,7 +83,7 @@ export default function CreateProposal() {
   if (!isMounted) return null; // Prevent hydration mismatch
 
   const handleSubmit = async () => {
-    if (!formData.proposerName || !formData.partnerName || !formData.message) return;
+    if (!formData.proposerName || !formData.partnerName || !formData.message || !formData.proposerEmail) return;
     
     setLoading(true);
     try {
@@ -193,7 +194,7 @@ export default function CreateProposal() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Your Email (Optional - for notifications)</label>
+                                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Your Email</label>
                                     <div className="relative">
                                       <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                                       <Input 
@@ -219,7 +220,7 @@ export default function CreateProposal() {
                                     className="w-full h-12 text-lg mt-4 text-white shadow-xl rounded-xl"
                                     style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 24px rgba(53, 20, 245, 0.3)' }}
                                     onClick={handleSubmit}
-                                    disabled={loading || !formData.message || !formData.partnerName}
+                                    disabled={loading || !formData.message || !formData.partnerName || !formData.proposerEmail}
                                 >
                                     {loading ? 'Creating Magic...' : 'Generate Proposal Link'} <ArrowRight className="ml-2 w-5 h-5" />
                                 </Button>
@@ -411,21 +412,50 @@ export default function CreateProposal() {
                           </div>
 
                           {prop.status === 'ACCEPTED' ? (
-                            <div className="bg-rose-500/5 px-5 py-3 border-t border-rose-100 flex items-center justify-between relative z-10">
-                              <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 bg-rose-100 rounded-full flex items-center justify-center animate-bounce">
-                                  <Video className="w-3.5 h-3.5 text-rose-600" />
+                            <div className="bg-rose-500/5 px-5 py-3 border-t border-rose-100 flex flex-col gap-3 relative z-10">
+                              {prop.reactionVideoUrl ? (
+                                <>
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-7 h-7 bg-rose-100 rounded-full flex items-center justify-center animate-bounce">
+                                      <Video className="w-3.5 h-3.5 text-rose-600" />
+                                    </div>
+                                    <span className="text-[11px] text-rose-800 font-bold tracking-tight">She shared a reaction! 🎉</span>
+                                  </div>
+                                  <Dialog>
+                                    <DialogTrigger asChild>
+                                      <Button 
+                                        variant="secondary" 
+                                        size="sm" 
+                                        className="h-8 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-sm w-full" 
+                                      >
+                                        Watch Video
+                                      </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-md p-0 overflow-hidden bg-black border-white/10">
+                                      <DialogTitle className="sr-only">Reaction Video</DialogTitle>
+                                      <div className="relative aspect-[9/16] w-full bg-black">
+                                        <video 
+                                          src={prop.reactionVideoUrl} 
+                                          controls 
+                                          className="w-full h-full object-contain"
+                                          autoPlay
+                                        />
+                                        {/* Watermark */}
+                                        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 opacity-70 pointer-events-none">
+                                            <div className="w-6 h-6 rounded-full bg-rose-600 flex items-center justify-center">
+                                                <Heart className="w-3 h-3 text-white fill-white" />
+                                            </div>
+                                            <span className="text-white font-bold text-xs shadow-black drop-shadow-md">Tachpae</span>
+                                        </div>
+                                      </div>
+                                    </DialogContent>
+                                  </Dialog>
+                                </>
+                              ) : (
+                                <div className="flex items-center gap-2 opacity-70">
+                                  <span className="text-[11px] text-rose-800 font-medium">✨ Accepted, but no video reaction yet.</span>
                                 </div>
-                                <span className="text-[11px] text-rose-800 font-bold tracking-tight">She shared a reaction! 🎉</span>
-                              </div>
-                              <Button 
-                                variant="secondary" 
-                                size="sm" 
-                                className="h-8 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-sm" 
-                                onClick={() => window.open(prop.reactionVideoUrl, '_blank')}
-                              >
-                                Watch Video
-                              </Button>
+                              )}
                             </div>
                           ) : prop.status === 'REJECTED' ? (
                             <div className="bg-slate-100/50 px-5 py-3 border-t border-slate-200 flex flex-col gap-1 relative z-10">

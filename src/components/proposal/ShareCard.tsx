@@ -10,9 +10,11 @@ interface ShareCardProps {
   message: string;
   isOpen: boolean;
   onClose: () => void;
+  status?: 'ACCEPTED' | 'REJECTED';
+  rejectionReason?: string;
 }
 
-export default function ShareCard({ proposerName, partnerName, message, isOpen, onClose }: ShareCardProps) {
+export default function ShareCard({ proposerName, partnerName, message, isOpen, onClose, status = 'ACCEPTED', rejectionReason }: ShareCardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [generating, setGenerating] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -52,22 +54,39 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
     // Heart icon area
     ctx.beginPath();
     ctx.arc(540, 500, 120, 0, Math.PI * 2);
-    const heartGradient = ctx.createLinearGradient(420, 380, 660, 620);
-    heartGradient.addColorStop(0, '#3514F5');
-    heartGradient.addColorStop(1, '#FF0080');
-    ctx.fillStyle = heartGradient;
-    ctx.fill();
+    
+    if (status === 'REJECTED') {
+      ctx.fillStyle = '#334155'; // Slate-700
+      ctx.fill();
+      
+      // Broken Heart emoji
+      ctx.font = 'bold 100px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('💔', 540, 530);
 
-    // Heart emoji
-    ctx.font = 'bold 100px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('💕', 540, 530);
+      // "I said NO" text
+      ctx.font = 'bold 90px Arial';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.fillText('I said NO', 540, 720);
+    } else {
+      const heartGradient = ctx.createLinearGradient(420, 380, 660, 620);
+      heartGradient.addColorStop(0, '#3514F5');
+      heartGradient.addColorStop(1, '#FF0080');
+      ctx.fillStyle = heartGradient;
+      ctx.fill();
 
-    // "I said YES!" text
-    ctx.font = 'bold 90px Arial';
-    ctx.fillStyle = '#FFFFFF';
-    ctx.textAlign = 'center';
-    ctx.fillText('I said YES!', 540, 720);
+      // Heart emoji
+      ctx.font = 'bold 100px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('💕', 540, 530);
+
+      // "I said YES!" text
+      ctx.font = 'bold 90px Arial';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.fillText('I said YES!', 540, 720);
+    }
 
     // Proposer name
     ctx.font = 'bold 50px Arial';
@@ -82,14 +101,20 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // The message
+    // The message (or rejection reason)
     ctx.font = 'italic 40px Georgia';
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
     
+    // Choose text to display: The proposal message OR the rejection reason?
+    // User said "Ensure the card gracefully depicts the NO, with the reason"
+    const textToDisplay = status === 'REJECTED' && rejectionReason 
+        ? `Reason: ${rejectionReason}` 
+        : message;
+
     // Word wrap the message
     const maxWidth = 900;
     const lineHeight = 55;
-    const words = message.split(' ');
+    const words = textToDisplay.split(' ');
     let line = '';
     let y = 980;
     
@@ -109,10 +134,10 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
       ctx.fillText(`"${line.trim()}"`, 540, y);
     }
 
-    // Partner response
+    // Partner response signature (only for Yes?) or generic
     ctx.font = 'bold 36px Arial';
-    ctx.fillStyle = '#FF69B4';
-    ctx.fillText(`- ${partnerName} 💝`, 540, y + 100);
+    ctx.fillStyle = status === 'REJECTED' ? '#cbd5e1' : '#FF69B4';
+    ctx.fillText(`- ${partnerName} ${status === 'REJECTED' ? '' : '💝'}`, 540, y + 100);
 
     // Tachpae branding
     ctx.font = 'bold 32px Arial';

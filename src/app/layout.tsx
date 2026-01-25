@@ -6,6 +6,8 @@ import { EventProvider } from '@/context/EventContext';
 import { CartProvider } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/layout/Footer';
+import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -99,6 +101,8 @@ export default async function RootLayout({
           </main>
           <Footer />
           <WhatsAppIcon />
+          <Toaster richColors position="top-center" />
+          <Analytics />
         </EventProvider>
       </body>
     </html>
