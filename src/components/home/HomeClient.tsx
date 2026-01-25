@@ -10,6 +10,7 @@ import Header from '@/components/layout/Header';
 export default function HomeClient({ cities }: { cities: ICity[] }) {
   const router = useRouter();
   const [showCitySelector, setShowCitySelector] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleStart = () => {
     setShowCitySelector(true);
@@ -21,6 +22,7 @@ export default function HomeClient({ cities }: { cities: ICity[] }) {
     // Let's assume for now we find it here.
     const city = cities.find(c => (c._id as unknown as string) === cityId);
     if (city) {
+        setIsNavigating(true);
         router.push(`/planning/${city.slug}`);
     }
   };
@@ -34,6 +36,15 @@ export default function HomeClient({ cities }: { cities: ICity[] }) {
       
       {showCitySelector && (
         <CitySelector cities={cities} onSelect={handleCitySelect} />
+      )}
+      
+      {/* Loading Overlay */}
+      {isNavigating && (
+        <div className="fixed inset-0 z-[60] bg-black/80 flex flex-col items-center justify-center p-4">
+             <div className="w-16 h-16 rounded-full border-4 border-white/20 border-t-rose-600 animate-spin mb-4" />
+             <h3 className="text-xl font-bold text-white mb-2">Entering the Magic...</h3>
+             <p className="text-white/60 text-sm">Preparing your personalized experience</p>
+        </div>
       )}
     </div>
   );

@@ -440,12 +440,15 @@ export default function CreateProposal() {
                                           className="w-full h-full object-contain"
                                           autoPlay
                                         />
-                                        {/* Watermark */}
-                                        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 opacity-70 pointer-events-none">
-                                            <div className="w-6 h-6 rounded-full bg-rose-600 flex items-center justify-center">
-                                                <Heart className="w-3 h-3 text-white fill-white" />
+                                        <div className="absolute top-4 right-4 z-20 flex items-center gap-2 opacity-70 pointer-events-none">
+                                            <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm">
+                                                <img 
+                                                  src="/icon.png" 
+                                                  alt="Tachpae" 
+                                                  className="w-full h-full object-cover"
+                                                />
                                             </div>
-                                            <span className="text-white font-bold text-xs shadow-black drop-shadow-md">Tachpae</span>
+                                            <span className="text-white font-black text-xs shadow-black drop-shadow-md tracking-wide">Tachpae</span>
                                         </div>
                                       </div>
                                     </DialogContent>

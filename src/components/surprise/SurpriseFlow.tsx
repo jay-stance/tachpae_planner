@@ -97,7 +97,7 @@ export default function SurpriseFlow() {
     });
 
     const citySlug = searchParams.get('city') || 'abuja';
-    router.push(`/planning/${citySlug}`);
+    router.push(`/planning/${citySlug}?openCart=true`);
   };
 
   const totalSteps = 4;

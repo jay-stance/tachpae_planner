@@ -58,6 +58,20 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
+  // Read search params using hook? Or use window if strict client? 
+  // Next.js useSearchParams is better.
+  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+
+  // Auto-open cart if ?openCart=true
+  React.useEffect(() => {
+    if (searchParams?.get('openCart') === 'true') {
+      setCartOpen(true);
+      // Clean up URL
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, []);
+
   // Toast on location change
   React.useEffect(() => {
     if (city?.name) {
@@ -261,22 +275,13 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                     </p>
 
                     <Button 
-                      onClick={() => {
-                        addItem({
-                          productId: 'surprise-box-mystery', 
-                          productName: 'The Mystery Edit (Curated Box)', 
-                          basePrice: 50000, 
-                          quantity: 1, 
-                          variantSelection: {}, 
-                          customizationData: {}
-                        });
-                        setCartOpen(true);
-                        toast.success("Mystery Box added! Complete your checkout.");
-                      }}
-                      className="mt-2 h-12 px-8 rounded-full text-white text-sm font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 border-0 cursor-pointer"
+                      asChild
+                      className="mt-2 h-12 px-8 rounded-full text-white text-sm font-bold transition-all shadow-lg hover:shadow-xl active:scale-95 border-0"
                       style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))', boxShadow: '0 8px 24px rgba(53, 20, 245, 0.4)' }}
                     >
-                      Treat Myself <ArrowRight className="ml-2 w-4 h-4" />
+                      <Link href={`/surprise?city=${city?.slug || 'abuja'}`}>
+                        Treat Myself <ArrowRight className="ml-2 w-4 h-4" />
+                      </Link>
                     </Button>
                   </div>
 
