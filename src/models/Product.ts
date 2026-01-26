@@ -8,6 +8,11 @@ export interface IProduct extends Document {
   category: mongoose.Types.ObjectId;
   mediaGallery: string[]; // URLs of images/videos
   
+  // CRO Tags for filtering and display
+  tags: mongoose.Types.ObjectId[]; // References to Tag model
+  tierLabel?: 'entry' | 'popular' | 'grandGesture';
+  microBenefits?: string[]; // e.g., ["Fast Delivery", "Premium Quality"]
+  
   // Dynamic Configuration for SKUs
   variantsConfig: {
     options: {
@@ -57,6 +62,11 @@ const ProductSchema: Schema = new Schema({
   event: { type: Schema.Types.ObjectId, ref: 'Event', required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
   mediaGallery: [{ type: String }],
+  
+  // CRO fields
+  tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
+  tierLabel: { type: String, enum: ['entry', 'popular', 'grandGesture'], default: null },
+  microBenefits: [{ type: String }],
   
   variantsConfig: { type: Schema.Types.Mixed, default: { options: [] } },
   customizationSchema: { type: Schema.Types.Mixed, default: { steps: [] } },

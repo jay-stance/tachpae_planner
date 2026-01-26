@@ -12,7 +12,7 @@ import ProductConfigurator from '@/components/products/ProductConfigurator';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { useCart } from '@/context/CartContext';
 import { useEvent } from '@/context/EventContext';
-import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle } from 'lucide-react';
+import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle, Filter, X, MapPin, Truck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -40,14 +40,15 @@ interface PlannerDashboardProps {
     services: any[];
     addons?: any[];
     allCities?: any[];
+    bundles?: any[];
   }
 }
 
 export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { city, categories, products, services, addons = [] } = data;
-  const { itemCount, addItem, getShareableLink } = useCart();
+  const { city, categories, products, services, addons = [], bundles = [] } = data;
+  const { itemCount, totalAmount, addItem, getShareableLink } = useCart();
   const { event } = useEvent();
   
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -56,6 +57,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [logisticsAgreed, setLogisticsAgreed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeCategory, setActiveCategory] = useState<any>(categories[0] || null);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'under25k' | 'luxury' | 'popular'>('all');
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
@@ -143,7 +145,35 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     }
   };
 
-  const filteredProducts = activeCategory?._id === 'specials' ? [] : getProductsByCategory(activeCategory?._id);
+  const handleBundleAddToCart = (bundle: any) => {
+    addItem({
+      productId: bundle._id,
+      type: 'BUNDLE',
+      productName: bundle.name,
+      productImage: bundle.mediaGallery?.[0] || bundle.products?.[0]?.mediaGallery?.[0],
+      basePrice: bundle.bundlePrice,
+      quantity: 1,
+      variantSelection: {},
+      customizationData: {},
+    });
+    toast.success("Bundle added to cart! 🎁");
+  };
+
+  const getFilteredProducts = () => {
+    let prods = activeCategory?._id === 'specials' ? [] : getProductsByCategory(activeCategory?._id);
+    
+    if (activeFilter === 'under25k') {
+      prods = prods.filter((p: any) => p.basePrice < 25000);
+    } else if (activeFilter === 'luxury') {
+      prods = prods.filter((p: any) => p.tags?.some((t: any) => t.slug === 'luxury-pick' || t.slug === 'grand-gesture') || p.basePrice > 50000);
+    } else if (activeFilter === 'popular') {
+      prods = prods.filter((p: any) => p.tags?.some((t: any) => t.slug === 'most-popular' || t.slug === 'best-seller'));
+    }
+    
+    return prods;
+  };
+
+  const filteredProducts = getFilteredProducts();
 
   return (
     <div className="w-full min-h-screen bg-white pb-24 md:pb-32">
@@ -212,8 +242,27 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
           </div>
         </div>
 
+        {/* Delivery Confidence Strip */}
+        <div className="mb-8 flex flex-wrap justify-center gap-y-2 gap-x-6 md:gap-8 text-[10px] md:text-sm font-bold text-gray-500 bg-white/50 p-3 rounded-xl backdrop-blur-sm border border-gray-100">
+           <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5 text-green-600"/> Guaranteed Delivery</span>
+           <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-rose-600"/> Delivered in {city.name}</span>
+           <span className="flex items-center gap-1.5"><Heart className="w-3.5 h-3.5 text-purple-600"/> 100% Satisfaction</span>
+        </div>
+
         {/* Categories Tabs */}
         <div className="mb-6 md:mb-12 sticky top-2 md:top-4 z-40 bg-white/90 backdrop-blur-xl p-1 md:p-1.5 rounded-2xl md:rounded-3xl border border-gray-100 md:border-2 md:border-gray-50 shadow-lg md:shadow-xl shadow-gray-100/50 flex flex-nowrap gap-0.5 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
+            <button
+              onClick={() => setActiveCategory({ _id: 'bundles', name: 'Bundles' } as any)}
+              className={cn(
+                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
+                activeCategory?._id === 'bundles'
+                  ? "text-white shadow-lg" 
+                  : "text-gray-500 hover:bg-gray-50"
+              )}
+              style={activeCategory?._id === 'bundles' ? { background: 'var(--tachpae-primary)', boxShadow: '0 4px 14px rgba(53, 20, 245, 0.25)' } : {}}
+            >
+              <Package className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Curated Bundles
+            </button>
             <button
               onClick={() => setActiveCategory({ _id: 'gifts', name: 'Gifts' } as any)}
               className={cn(
@@ -226,6 +275,19 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
             >
               <Gift className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Gifts
             </button>
+                        <button
+              onClick={() => setActiveCategory({ _id: 'specials', name: 'Specials' } as any)}
+              className={cn(
+                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
+                activeCategory?._id === 'specials'
+                  ? "text-white shadow-lg" 
+                  : "text-gray-500 hover:bg-gray-50"
+              )}
+              style={activeCategory?._id === 'specials' ? { background: 'var(--tachpae-primary)', boxShadow: '0 4px 14px rgba(53, 20, 245, 0.25)' } : {}}
+            >
+              <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Specials
+            </button>
+
             <button
               onClick={() => setActiveCategory({ _id: 'experiences', name: 'Experiences' } as any)}
               className={cn(
@@ -238,19 +300,37 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
             >
               <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Experiences
             </button>
-            <button
-              onClick={() => setActiveCategory({ _id: 'specials', name: 'Specials' } as any)}
-              className={cn(
-                "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
-                activeCategory?._id === 'specials'
-                  ? "text-white shadow-lg" 
-                  : "text-gray-500 hover:bg-gray-50"
-              )}
-              style={activeCategory?._id === 'specials' ? { background: 'var(--tachpae-primary)', boxShadow: '0 4px 14px rgba(53, 20, 245, 0.25)' } : {}}
-            >
-              <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Specials
-            </button>
         </div>
+
+        {/* Smart Filters */}
+        {activeCategory?._id !== 'specials' && activeCategory?._id !== 'experiences' && activeCategory?._id !== 'bundles' && (
+          <div className="mb-8 flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-2 duration-500 delay-100">
+             <button 
+               onClick={() => setActiveFilter('all')}
+               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border", activeFilter === 'all' ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
+             >
+               All Items
+             </button>
+             <button 
+               onClick={() => setActiveFilter('popular')}
+               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'popular' ? "bg-rose-100 text-rose-700 border-rose-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
+             >
+               🔥 Best Sellers
+             </button>
+             <button 
+               onClick={() => setActiveFilter('under25k')}
+               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'under25k' ? "bg-green-100 text-green-700 border-green-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
+             >
+               💰 Under ₦25k
+             </button>
+             <button 
+               onClick={() => setActiveFilter('luxury')}
+               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'luxury' ? "bg-purple-100 text-purple-700 border-purple-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
+             >
+               💎 Luxury Picks
+             </button>
+          </div>
+        )}
 
         {/* Content Section */}
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -444,6 +524,85 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                  </div>
               </div>
             </div>
+          ) : activeCategory?._id === 'bundles' ? (
+            <div className="space-y-8">
+               <div className="text-center max-w-2xl mx-auto mb-12">
+                 <h2 className="text-3xl font-black text-gray-900 mb-3">Perfectly Curated Packages</h2>
+                 <p className="text-gray-500 font-medium">Why stress? We've combined our best items into perfect bundles to save you time and money.</p>
+               </div>
+               
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                 {bundles.map((bundle: any) => (
+                   <div key={bundle._id} className="group bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col">
+                     {/* Image Header */}
+                     <div className="h-64 relative bg-gray-100 overflow-hidden">
+                       {bundle.mediaGallery?.[0] ? (
+                         <Image src={bundle.mediaGallery[0]} alt={bundle.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                       ) : (
+                         <div className="w-full h-full flex items-center justify-center text-6xl">🎁</div>
+                       )}
+                       
+                       {/* Savings Badge */}
+                       {bundle.savings > 0 && (
+                         <div className="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-xs font-black rounded-full shadow-lg">
+                           SAVE ₦{bundle.savings.toLocaleString()}
+                         </div>
+                       )}
+                       
+                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+                       
+                       <div className="absolute bottom-4 left-6 right-6">
+                         <h3 className="text-2xl font-black text-white leading-tight mb-1">{bundle.name}</h3>
+                         <p className="text-white/80 text-sm line-clamp-2">{bundle.description}</p>
+                       </div>
+                     </div>
+                     
+                     {/* Content */}
+                     <div className="p-6 flex-1 flex flex-col">
+                       <div className="mb-6 space-y-3">
+                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Includes {bundle.products?.length} items:</p>
+                         <div className="flex -space-x-3 overflow-hidden py-1">
+                           {bundle.products?.map((prod: any, idx: number) => (
+                             <div key={prod._id} className="relative w-12 h-12 rounded-full border-2 border-white shadow-md bg-gray-50 overflow-hidden" title={prod.name}>
+                               {prod.mediaGallery?.[0] ? (
+                                 <Image src={prod.mediaGallery[0]} alt="" fill className="object-cover" />
+                               ) : (
+                                 <div className="w-full h-full flex items-center justify-center text-xs">📦</div>
+                               )}
+                             </div>
+                           ))}
+                           {bundle.products?.length > 4 && (
+                             <div className="w-12 h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                               +{bundle.products.length - 4}
+                             </div>
+                           )}
+                         </div>
+                       </div>
+                       
+                       <div className="mt-auto flex items-center justify-between gap-4">
+                         <div>
+                            <span className="block text-xs text-gray-400 font-bold line-through">₦{(bundle.originalValue || bundle.bundlePrice * 1.1).toLocaleString()}</span>
+                            <span className="text-2xl font-black text-rose-600">₦{bundle.bundlePrice.toLocaleString()}</span>
+                         </div>
+                         <Button 
+                           onClick={() => handleBundleAddToCart(bundle)}
+                           className="flex-1 h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg shadow-gray-200"
+                         >
+                           Add to Cart
+                         </Button>
+                       </div>
+                     </div>
+                   </div>
+                 ))}
+               </div>
+               
+               {bundles.length === 0 && (
+                 <div className="py-20 text-center bg-gray-50 rounded-[3rem]">
+                   <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                   <h3 className="text-xl font-black text-gray-400">No bundles available right now.</h3>
+                 </div>
+               )}
+            </div>
           ) : activeCategory?._id === 'experiences' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
               {services.map((service: any) => (
@@ -499,9 +658,9 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                               const firstImage = getFirstImage(product.mediaGallery);
                               const firstVideo = getFirstVideo(product.mediaGallery);
                               
+                              let mediaElement;
                               if (firstImage) {
-                                // Show the first image
-                                return (
+                                mediaElement = (
                                   <Image 
                                     src={firstImage} 
                                     alt={product.name} 
@@ -510,8 +669,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                                   />
                                 );
                               } else if (firstVideo) {
-                                // Show video as thumbnail (auto-loads first frame)
-                                return (
+                                mediaElement = (
                                   <video 
                                     src={firstVideo}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -521,11 +679,32 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                                   />
                                 );
                               } else {
-                                // Fallback placeholder
-                                return (
+                                mediaElement = (
                                   <div className="w-full h-full flex items-center justify-center text-gray-200 text-6xl">🎁</div>
                                 );
                               }
+
+                              return (
+                                <>
+                                  <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start">
+                                    {product.tags?.map((tag: any) => (
+                                      <span 
+                                        key={tag._id} 
+                                        className="px-2 py-0.5 rounded text-[10px] font-bold shadow-sm backdrop-blur-md border border-white/20 whitespace-nowrap"
+                                        style={{ background: tag.color, color: 'white' }}
+                                      >
+                                        {tag.icon} {tag.name}
+                                      </span>
+                                    ))}
+                                    {product.microBenefits?.slice(0, 1).map((benefit: string, idx: number) => (
+                                      <span key={idx} className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/90 text-gray-700 shadow-sm border border-gray-100 whitespace-nowrap">
+                                        ✨ {benefit}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  {mediaElement}
+                                </>
+                              );
                             })()}
                             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
@@ -620,8 +799,8 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               )}
             </div>
             <div className="text-left">
-              <div className="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-60">View Cart</div>
-              <div className="text-sm md:text-lg font-black leading-none">Your Bundle</div>
+              <div className="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-60">Total: ₦{totalAmount.toLocaleString()}</div>
+              <div className="text-sm md:text-lg font-black leading-none">You're creating something special ❤️</div>
             </div>
           </Button>
         </div>

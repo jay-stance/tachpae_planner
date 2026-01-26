@@ -11,7 +11,7 @@ export interface CartItem {
   variantSelection: Record<string, any>;
   customizationData: Record<string, any>;
   totalPrice: number;
-  type: 'PRODUCT' | 'SERVICE' | 'ADDON';
+  type: 'PRODUCT' | 'SERVICE' | 'ADDON' | 'BUNDLE';
 }
 
 interface CartContextType {

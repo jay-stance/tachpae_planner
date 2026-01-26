@@ -45,6 +45,14 @@ interface Event {
   name: string;
 }
 
+interface Tag {
+  _id: string;
+  name: string;
+  slug: string;
+  color: string;
+  icon?: string;
+}
+
 export default function NewProductPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -54,6 +62,7 @@ export default function NewProductPage() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+  const [availableTags, setAvailableTags] = useState<Tag[]>([]);
   
   const [form, setForm] = useState({
     name: '',
@@ -65,21 +74,27 @@ export default function NewProductPage() {
     mediaGallery: [] as string[],
     variantsConfig: { options: [] as VariantOption[] },
     customizationSchema: { steps: [] as CustomizationStep[] },
+    tags: [] as string[], // Tag IDs
+    tierLabel: '' as '' | 'entry' | 'popular' | 'grandGesture',
+    microBenefits: [] as string[],
   });
 
   // Fetch categories and events on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [catRes, eventRes] = await Promise.all([
+        const [catRes, eventRes, tagsRes] = await Promise.all([
           fetch('/api/categories'),
           fetch('/api/events'),
+          fetch('/api/admin/tags'),
         ]);
         const catData = await catRes.json();
         const eventData = await eventRes.json();
+        const tagsData = await tagsRes.json();
         
         setCategories(catData.data || []);
         setEvents(eventData.data || []);
+        setAvailableTags(tagsData.data || []);
         
         // Auto-select first event if available
         if (eventData.data?.[0]?._id) {
@@ -346,14 +361,80 @@ export default function NewProductPage() {
         {/* Pricing */}
         <div className="rounded-2xl border border-white/10 p-6" style={{ background: 'rgba(255,255,255,0.02)' }}>
           <h2 className="text-lg font-bold text-white mb-4">Pricing</h2>
-          <div>
-            <label className="text-white/70 text-sm font-medium block mb-2">Base Price (₦)</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-white/70 text-sm font-medium block mb-2">Base Price (₦)</label>
+              <Input
+                type="number"
+                value={form.basePrice}
+                onChange={(e) => setForm({ ...form, basePrice: Number(e.target.value) })}
+                className="h-12 bg-white/5 border-white/10 text-white rounded-xl"
+              />
+            </div>
+            <div>
+              <label className="text-white/70 text-sm font-medium block mb-2">Price Tier Label</label>
+              <select
+                value={form.tierLabel}
+                onChange={(e) => setForm({ ...form, tierLabel: e.target.value as any })}
+                className="w-full h-12 px-4 bg-white/5 border border-white/10 text-white rounded-xl"
+              >
+                <option value="">No tier label</option>
+                <option value="entry">Entry (Budget-friendly)</option>
+                <option value="popular">Popular (Best value)</option>
+                <option value="grandGesture">Grand Gesture (Premium)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Tags & CRO */}
+        <div className="rounded-2xl border border-white/10 p-6" style={{ background: 'rgba(255,255,255,0.02)' }}>
+          <h2 className="text-lg font-bold text-white mb-2">Tags & Badges</h2>
+          <p className="text-white/40 text-xs mb-4">Select tags to help customers find and decide on this product</p>
+          
+          {availableTags.length === 0 ? (
+            <p className="text-white/50 text-sm">No tags available. <a href="/tachpae-hq-9x7k/tags" className="text-indigo-400 hover:underline">Create tags first</a></p>
+          ) : (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {availableTags.map((tag) => {
+                const isSelected = form.tags.includes(tag._id);
+                return (
+                  <button
+                    key={tag._id}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        setForm({ ...form, tags: form.tags.filter(t => t !== tag._id) });
+                      } else {
+                        setForm({ ...form, tags: [...form.tags, tag._id] });
+                      }
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                      isSelected
+                        ? 'ring-2 ring-white/30 scale-105'
+                        : 'opacity-60 hover:opacity-100'
+                    }`}
+                    style={{ background: tag.color }}
+                  >
+                    {tag.icon} {tag.name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          
+          <div className="mt-4">
+            <label className="text-white/70 text-sm font-medium block mb-2">Micro-Benefits (comma-separated)</label>
             <Input
-              type="number"
-              value={form.basePrice}
-              onChange={(e) => setForm({ ...form, basePrice: Number(e.target.value) })}
-              className="h-12 bg-white/5 border-white/10 text-white rounded-xl max-w-xs"
+              value={form.microBenefits.join(', ')}
+              onChange={(e) => setForm({ 
+                ...form, 
+                microBenefits: e.target.value.split(',').map(s => s.trim()).filter(Boolean) 
+              })}
+              placeholder="e.g., Fast Delivery, Premium Quality, Gift Wrapped"
+              className="h-12 bg-white/5 border-white/10 text-white rounded-xl"
             />
+            <p className="text-white/40 text-xs mt-1">These appear as small badges on product cards</p>
           </div>
         </div>
 

@@ -1,0 +1,2312 @@
+[{
+  "_id": {
+    "$oid": "69715542b42b07874767e9a7"
+  },
+  "name": "100cm height Mickey(blue ) and mini (pink )",
+  "description": "100cm height Mickey(blue ) and mini (pink )",
+  "basePrice": 50000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_height_mickey_blue___and_mini__pink__/1769035067586_WhatsApp Image 2026-01-21 at 13.15.48 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_height_mickey_blue___and_mini__pink__/1769035070508_WhatsApp Image 2026-01-21 at 13.15.48.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:37:54.803Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T23:00:11.616Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715606b42b07874767e9aa"
+  },
+  "name": "100cm sitting with heart design",
+  "description": "100cm sitting with heart design",
+  "basePrice": 48000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_sitting_with_heart_design/1769035075025_WhatsApp Image 2026-01-21 at 13.15.49 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_sitting_with_heart_design/1769035075850_WhatsApp Image 2026-01-21 at 13.15.49 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_sitting_with_heart_design/1769035076814_WhatsApp Image 2026-01-21 at 13.15.49.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100cm_sitting_with_heart_design/1769035077589_WhatsApp Video 2026-01-21 at 13.15.50.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:10.002Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:10.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715609b42b07874767e9ad"
+  },
+  "name": "110cm white&red I ❤️ you panda ",
+  "description": "110cm white&red I ❤️ you panda ",
+  "basePrice": 55000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/110cm_white_red_i____you_panda_/1769035270196_WhatsApp Image 2026-01-21 at 13.15.50.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/110cm_white_red_i____you_panda_/1769035271468_WhatsApp Video 2026-01-21 at 13.15.50.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:13.859Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:13.859Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6971560fb42b07874767e9b0"
+  },
+  "name": "120cm teddy",
+  "description": "120cm teddy",
+  "basePrice": 60000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035274088_WhatsApp Image 2026-01-21 at 13.15.51.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035274452_WhatsApp Image 2026-01-21 at 13.15.52 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035274814_WhatsApp Image 2026-01-21 at 13.15.52 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035275175_WhatsApp Image 2026-01-21 at 13.15.52.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035275504_WhatsApp Image 2026-01-21 at 13.15.53 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035275888_WhatsApp Image 2026-01-21 at 13.15.53.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035276297_WhatsApp Video 2026-01-21 at 13.15.51.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:19.980Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:19.980Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715611b42b07874767e9b3"
+  },
+  "name": "160cm teddy with tie",
+  "description": "160cm teddy with tie",
+  "basePrice": 100000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/160cm_teddy_with_tie/1769035280176_WhatsApp Image 2026-01-21 at 13.15.57 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/160cm_teddy_with_tie/1769035280494_WhatsApp Image 2026-01-21 at 13.15.57 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/160cm_teddy_with_tie/1769035280873_WhatsApp Image 2026-01-21 at 13.15.57.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/160cm_teddy_with_tie/1769035281228_WhatsApp Image 2026-01-21 at 13.15.58 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/160cm_teddy_with_tie/1769035281559_WhatsApp Image 2026-01-21 at 13.15.58.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:21.879Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:21.879Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715613b42b07874767e9b6"
+  },
+  "name": "200cm teddy",
+  "description": "200cm teddy",
+  "basePrice": 170000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200cm_teddy/1769035282075_WhatsApp Image 2026-01-21 at 13.16.00 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200cm_teddy/1769035282434_WhatsApp Image 2026-01-21 at 13.16.00.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200cm_teddy/1769035282788_WhatsApp Image 2026-01-21 at 13.16.01.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:23.146Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:23.146Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715614b42b07874767e9b9"
+  },
+  "name": "25cm teddy bear",
+  "description": "25cm Teddy Bear",
+  "basePrice": 10000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/25cm_teddy_bear/1769035283348_WhatsApp Image 2026-01-21 at 13.15.35 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/25cm_teddy_bear/1769035283673_WhatsApp Image 2026-01-21 at 13.15.35.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/25cm_teddy_bear/1769035283988_WhatsApp Image 2026-01-21 at 13.15.36 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/25cm_teddy_bear/1769035284299_WhatsApp Image 2026-01-21 at 13.15.36.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:24.613Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:24.613Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715615b42b07874767e9bc"
+  },
+  "name": "30dm teddy bear",
+  "description": "35cm Teddy Bear",
+  "basePrice": 15000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/30dm_teddy_bear/1769035284852_WhatsApp Image 2026-01-21 at 13.15.37.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/30dm_teddy_bear/1769035285166_WhatsApp Video 2026-01-21 at 13.15.38.mp4"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "style",
+        "values": [
+          {
+            "label": "Sitting",
+            "value": "sitting",
+            "priceModifier": 0
+          },
+          {
+            "label": " with tie",
+            "value": "with-tie",
+            "priceModifier": 0
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:25.971Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:25.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715618b42b07874767e9bf"
+  },
+  "name": "60cm standing heart teddy",
+  "description": "60cm standing heart teddy",
+  "basePrice": 30000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/60cm_standing_heart_teddy/1769035286178_WhatsApp Image 2026-01-21 at 13.15.42 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/60cm_standing_heart_teddy/1769035286496_WhatsApp Image 2026-01-21 at 13.15.43 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/60cm_standing_heart_teddy/1769035286806_WhatsApp Image 2026-01-21 at 13.15.43 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/60cm_standing_heart_teddy/1769035287146_WhatsApp Image 2026-01-21 at 13.15.43.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/60cm_standing_heart_teddy/1769035287572_WhatsApp Video 2026-01-21 at 13.15.44.mp4"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "60 cm",
+            "value": "60_cm",
+            "priceModifier": 30000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:28.231Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:28.231Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715618b42b07874767e9c2"
+  },
+  "name": "Labubu key chain ",
+  "description": "Labubu key chain ",
+  "basePrice": 13500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/labubu_key_chain_/1769035288413_WhatsApp Image 2026-01-21 at 13.16.11.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:28.824Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:28.824Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6971561ab42b07874767e9c5"
+  },
+  "name": "love heart medium teddy bear",
+  "description": "Love heart Medium Teddy Bear",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035289008_WhatsApp Image 2026-01-21 at 13.15.39.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035289325_WhatsApp Image 2026-01-21 at 13.15.40 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035289632_WhatsApp Image 2026-01-21 at 13.15.40 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035289953_WhatsApp Image 2026-01-21 at 13.15.40.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035290273_WhatsApp Image 2026-01-21 at 13.15.41.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "40 cm",
+            "value": "40_cm",
+            "priceModifier": 0
+          },
+          {
+            "label": "50 cm",
+            "value": "50_cm",
+            "priceModifier": 10000
+          },
+          {
+            "label": "60 cm",
+            "value": "60_cm",
+            "priceModifier": 25000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:30.584Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:30.584Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6971561bb42b07874767e9c8"
+  },
+  "name": "medium teddy bear",
+  "description": "Medium Teddy Bear",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035290788_WhatsApp Image 2026-01-21 at 13.15.38 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035291103_WhatsApp Image 2026-01-21 at 13.15.38.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035291402_WhatsApp Image 2026-01-21 at 13.15.39.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "40 cm",
+            "value": "40_cm",
+            "priceModifier": 0
+          },
+          {
+            "label": "50 cm",
+            "value": "50_cm",
+            "priceModifier": 10000
+          },
+          {
+            "label": "60 cm",
+            "value": "60_cm",
+            "priceModifier": 25000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:31.713Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:31.713Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715623b42b07874767e9cb"
+  },
+  "name": "reathing stich teddies",
+  "description": "reathing stich teddies",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/reathing_stich_teddies/1769035291902_WhatsApp Image 2026-01-21 at 13.16.01 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/reathing_stich_teddies/1769035292229_WhatsApp Image 2026-01-21 at 13.16.01.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/reathing_stich_teddies/1769035292544_WhatsApp Video 2026-01-21 at 13.16.03.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:39.845Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:39.845Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715628b42b07874767e9ce"
+  },
+  "name": "red long leg teddy bear",
+  "description": "Red Long Leg Teddy Bear",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/red_long_leg_teddy_bear/1769035300036_WhatsApp Image 2026-01-21 at 13.15.41.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/red_long_leg_teddy_bear/1769035300372_WhatsApp Video 2026-01-21 at 13.15.41.mp4"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "40 cm",
+            "value": "40_cm",
+            "priceModifier": 0
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:44.317Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:44.317Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69715628b42b07874767e9d1"
+  },
+  "name": "twin medium teddy bear",
+  "description": "Twin Medium Teddy Bear",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69713f1b89d8eb834e6bc5e2"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/twin_medium_teddy_bear/1769035304530_WhatsApp Image 2026-01-21 at 13.15.39.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "40 cm",
+            "value": "40_cm",
+            "priceModifier": 0
+          },
+          {
+            "label": "50 cm",
+            "value": "50_cm",
+            "priceModifier": 10000
+          },
+          {
+            "label": "60 cm",
+            "value": "60_cm",
+            "priceModifier": 25000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-01-21T22:41:44.860Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-21T22:41:44.860Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad453bf522c9aef2e56"
+  },
+  "name": "12in1 Hair dryer",
+  "description": "12in1 Hair dryer",
+  "basePrice": 20500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/12in1_hair_dryer/1769093842609_WhatsApp Image 2026-01-21 at 15.29.35.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:24.019Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:24.019Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad553bf522c9aef2e5b"
+  },
+  "name": "3in1 Laptop Bag",
+  "description": "3in1 Laptop Bag",
+  "basePrice": 13000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/3in1_laptop_bag/1769093844538_WhatsApp Image 2026-01-21 at 15.29.36.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:25.066Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:25.066Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad653bf522c9aef2e5e"
+  },
+  "name": "3in1 VSA Perfume",
+  "description": "3in1 VSA Perfume",
+  "basePrice": 12500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/3in1_vsa_perfume/1769093845421_WhatsApp Image 2026-01-21 at 15.29.38.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:26.034Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:26.034Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad653bf522c9aef2e61"
+  },
+  "name": "80 Suit Extreme Smart Watch",
+  "description": "80 Suit Extreme Smart Watch",
+  "basePrice": 36500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/80_suit_extreme_smart_watch/1769093846362_WhatsApp Image 2026-01-21 at 15.29.35.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:26.952Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:26.952Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad753bf522c9aef2e64"
+  },
+  "name": "Chelsea Men Set",
+  "description": "Chelsea Men Set",
+  "basePrice": 26000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/chelsea_men_set/1769093847297_WhatsApp Image 2026-01-21 at 15.29.37.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:27.873Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:27.873Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad953bf522c9aef2e69"
+  },
+  "name": "Comestic organizer",
+  "description": "Comestic organizer",
+  "basePrice": 10000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/comestic_organizer/1769093848996_WhatsApp Image 2026-01-21 at 15.29.34.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:29.291Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:29.291Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ad953bf522c9aef2e6c"
+  },
+  "name": "Cuban Engraved Bracelet",
+  "description": "Cuban Engraved Bracelet",
+  "basePrice": 13500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/cuban_engraved_bracelet/1769093849638_WhatsApp Image 2026-01-21 at 16.15.17.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:29.936Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:29.936Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723adb53bf522c9aef2e6f"
+  },
+  "name": "Endless Love Pack",
+  "description": "Endless Love Pack",
+  "basePrice": 45000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69722cbab55fa56b7e5e4b10"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/endless_love_pack/1769093850276_WhatsApp Image 2026-01-21 at 16.14.44.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/endless_love_pack/1769093850617_WhatsApp Image 2026-01-21 at 16.14.45 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/endless_love_pack/1769093850930_WhatsApp Image 2026-01-21 at 16.14.45.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:31.256Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:31.256Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723adc53bf522c9aef2e72"
+  },
+  "name": "Love LanguagePack ",
+  "description": "Love LanguagePack ",
+  "basePrice": 35000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69722cbab55fa56b7e5e4b10"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_languagepack_/1769093851596_WhatsApp Image 2026-01-21 at 16.14.44.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_languagepack_/1769093851899_WhatsApp Image 2026-01-21 at 16.14.45 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_languagepack_/1769093852255_WhatsApp Image 2026-01-21 at 16.14.45.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:32.612Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:32.612Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723add53bf522c9aef2e75"
+  },
+  "name": "Men Gift Set (01)",
+  "description": "Men Gift Set (01)",
+  "basePrice": 24500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/men_gift_set__01_/1769093853357_WhatsApp Image 2026-01-21 at 15.29.36.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:33.714Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:33.714Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ade53bf522c9aef2e78"
+  },
+  "name": "Rolex Engraved bracelet",
+  "description": "Rolex Engraved bracelet",
+  "basePrice": 15000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/rolex_engraved_bracelet/1769093854052_WhatsApp Image 2026-01-21 at 16.15.17.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:34.348Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:34.348Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae053bf522c9aef2e7d"
+  },
+  "name": "Solar rotating car aromatherapy",
+  "description": "Solar rotating car aromatherapy",
+  "basePrice": 14500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/solar_rotating_car_aromatherapy/1769093855904_WhatsApp Video 2026-01-21 at 15.29.37.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:36.419Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:36.419Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae153bf522c9aef2e80"
+  },
+  "name": "Stanley cup",
+  "description": "Stanley cup",
+  "basePrice": 19500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/stanley_cup/1769093856765_WhatsApp Image 2026-01-21 at 15.29.37.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:37.087Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:37.087Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae253bf522c9aef2e83"
+  },
+  "name": "Sweetheart Pack",
+  "description": "Sweetheart Pack",
+  "basePrice": 25000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69722cbab55fa56b7e5e4b10"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/sweetheart_pack/1769093857435_WhatsApp Image 2026-01-21 at 16.14.44.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/sweetheart_pack/1769093857776_WhatsApp Image 2026-01-21 at 16.14.45 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/sweetheart_pack/1769093858097_WhatsApp Image 2026-01-21 at 16.14.45.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:38.422Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:38.422Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae353bf522c9aef2e86"
+  },
+  "name": "Work table",
+  "description": "Work table",
+  "basePrice": 14500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/work_table/1769093858765_WhatsApp Image 2026-01-21 at 15.29.34.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:39.084Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:39.084Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae753bf522c9aef2e89"
+  },
+  "name": "big boyz - money boquet",
+  "description": "big boyz - money boquet",
+  "basePrice": 170000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6972003bb55fa56b7e5e4b0b"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093859428_WhatsApp Image 2026-01-21 at 16.03.46.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093860011_WhatsApp Image 2026-01-21 at 16.14.36 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093860671_WhatsApp Image 2026-01-21 at 16.14.38.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093861263_WhatsApp Image 2026-01-22 at 11.39.51.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093861608_WhatsApp Image 2026-01-22 at 11.39.52.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/big_boyz___money_boquet/1769093862017_WhatsApp Video 2026-01-21 at 16.03.47.mp4"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "bundles",
+        "values": [
+          {
+            "label": "₦100,000 bundle - ₦500 notes",
+            "value": "100000_500",
+            "priceModifier": 0
+          },
+          {
+            "label": "₦150,000 bundle - ₦500 notes",
+            "value": "150000_500",
+            "priceModifier": 100000
+          },
+          {
+            "label": "₦200,000 bundle - ₦500 notes",
+            "value": "200000_500",
+            "priceModifier": 170000
+          },
+          {
+            "label": "₦200,000 bundle - ₦1,000 notes",
+            "value": "200000_1000",
+            "priceModifier": 130000
+          },
+          {
+            "label": "₦500,000 bundle - ₦1,000 notes",
+            "value": "500000_1000",
+            "priceModifier": 480000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f9"
+    },
+    {
+      "$oid": "696bb78faca35414ca4947f3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:43.087Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:43.087Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae853bf522c9aef2e8c"
+  },
+  "name": "customized journal",
+  "description": "customized journal",
+  "basePrice": 12000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_journal/1769093863623_WhatsApp Image 2026-01-21 at 16.03.42.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_journal/1769093863982_WhatsApp Image 2026-01-21 at 16.15.18.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f9"
+    },
+    {
+      "$oid": "696bb78faca35414ca4947f3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:44.333Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:44.333Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723ae953bf522c9aef2e8f"
+  },
+  "name": "dollar boquet",
+  "description": "Glamorous $25 boquet",
+  "basePrice": 65000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6972003bb55fa56b7e5e4b0b"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/dollar_boquet/1769093864703_WhatsApp Image 2026-01-21 at 16.03.48.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f9"
+    },
+    {
+      "$oid": "696bb78faca35414ca4947f3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:45.296Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:45.296Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723aea53bf522c9aef2e92"
+  },
+  "name": "faux flower",
+  "description": "faux flower",
+  "basePrice": 32000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "697209a2b55fa56b7e5e4b0e"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/faux_flower/1769093865646_WhatsApp Image 2026-01-21 at 16.03.47.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f9"
+    },
+    {
+      "$oid": "696bb78faca35414ca4947f3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:46.092Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:46.092Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723aea53bf522c9aef2e95"
+  },
+  "name": "hubstar gift set",
+  "description": "hubstar gift set",
+  "basePrice": 24500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/hubstar_gift_set/1769093866451_WhatsApp Image 2026-01-21 at 15.29.34.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:46.824Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:46.824Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723aed53bf522c9aef2e98"
+  },
+  "name": "money boquet",
+  "description": "money boquet",
+  "basePrice": 45000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6972003bb55fa56b7e5e4b0b"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_boquet/1769093867156_WhatsApp Image 2026-01-21 at 16.03.46.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_boquet/1769093867716_WhatsApp Image 2026-01-21 at 16.14.36 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_boquet/1769093868269_WhatsApp Image 2026-01-21 at 16.14.36.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_boquet/1769093868808_WhatsApp Image 2026-01-21 at 16.14.38.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "bundles",
+        "values": [
+          {
+            "label": "₦25,000 bundle - ₦500 notes",
+            "value": "25000_500",
+            "priceModifier": 0
+          },
+          {
+            "label": "₦30,000 bundle - ₦500 notes",
+            "value": "30000_500",
+            "priceModifier": 15000
+          },
+          {
+            "label": "₦50,000 bundle - ₦500 notes",
+            "value": "50000_500",
+            "priceModifier": 40000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:57:49.340Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:57:49.340Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723b54bee2dbe3153d523e"
+  },
+  "name": "Chocolate treat with balloon",
+  "description": "Chocolate treat with balloon",
+  "basePrice": 35000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/chocolate_treat_with_balloon/1769093969215_WhatsApp Image 2026-01-21 at 16.03.42.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:59:32.405Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:59:32.405Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69723b55bee2dbe3153d5241"
+  },
+  "name": "Scented Candles",
+  "description": "Scented Candles",
+  "basePrice": 9500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093972599_WhatsApp Image 2026-01-21 at 16.15.16 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093973624_WhatsApp Image 2026-01-21 at 16.15.16.jpeg"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-22T14:59:33.931Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-22T14:59:33.931Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d392b7787e55975e79c"
+  },
+  "name": "$100 dollar boquet",
+  "description": "$100 money boquet. 100 pieces - $1",
+  "basePrice": 230000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6972003bb55fa56b7e5e4b0b"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/_100_dollar_boquet/1769364788336_WhatsApp Image 2026-01-24 at 14.10.39.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/_100_dollar_boquet/1769364790786_WhatsApp Video 2026-01-24 at 15.17.28.mp4"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:13:13.834Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:13:13.834Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d3f2b7787e55975e79f"
+  },
+  "name": "150k room decor",
+  "description": "150k room decor",
+  "basePrice": 165000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976372d86d10ab880a93fb8"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/150k_room_decor/1769364794060_WhatsApp Video 2026-01-24 at 14.07.20.mp4"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:13:19.211Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:13:19.211Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d502b7787e55975e7a2"
+  },
+  "name": "200k room decor",
+  "description": "200k room decor",
+  "basePrice": 210000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976372d86d10ab880a93fb8"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200k_room_decor/1769364799435_WhatsApp Image 2026-01-24 at 14.10.35.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200k_room_decor/1769364802067_WhatsApp Image 2026-01-24 at 14.10.37.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/200k_room_decor/1769364803235_WhatsApp Video 2026-01-24 at 14.08.03.mp4"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    ""
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:13:36.643Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:13:36.643Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d5a2b7787e55975e7a5"
+  },
+  "name": "250k room decor",
+  "description": "250k room decor",
+  "basePrice": 235000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976372d86d10ab880a93fb8"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/250k_room_decor/1769364816835_WhatsApp Image 2026-01-24 at 14.10.34.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/250k_room_decor/1769364819284_WhatsApp Video 2026-01-24 at 14.07.00.mp4"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    ""
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:13:46.533Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:13:46.533Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d5c2b7787e55975e7a8"
+  },
+  "name": "6 in 1 cake",
+  "description": "6 in 1 cake",
+  "basePrice": 27500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/6_in_1_cake/1769364826720_WhatsApp Image 2026-01-24 at 08.46.47.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f6"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:13:48.531Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:13:48.531Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d7f2b7787e55975e7ae"
+  },
+  "name": "Customied Jerseys",
+  "description": "Customied Jerseys",
+  "basePrice": 21500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364833150_WhatsApp Image 2026-01-24 at 08.16.39.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364837286_WhatsApp Image 2026-01-24 at 08.16.42.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364840553_WhatsApp Image 2026-01-24 at 08.17.04.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364846455_WhatsApp Image 2026-01-24 at 08.17.05.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364848891_WhatsApp Image 2026-01-24 at 08.17.07.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364850430_WhatsApp Image 2026-01-24 at 08.17.12.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364853569_WhatsApp Image 2026-01-24 at 08.17.14.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364857293_WhatsApp Image 2026-01-24 at 08.21.24 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364858938_WhatsApp Image 2026-01-24 at 08.21.24 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364860395_WhatsApp Image 2026-01-24 at 08.21.24.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364862360_WhatsApp Image 2026-01-24 at 08.21.25.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:14:23.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:14:23.648Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765d9c2b7787e55975e7b7"
+  },
+  "name": "Photo boquet",
+  "description": "Photo boquet",
+  "basePrice": 30000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/photo_boquet/1769364887885_WhatsApp Image 2026-01-21 at 21.42.46.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/photo_boquet/1769364890216_WhatsApp Image 2026-01-21 at 21.42.47.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "Pictures Count",
+        "values": [
+          {
+            "label": "10-20 pictures",
+            "value": "10_20_pics",
+            "priceModifier": 0
+          },
+          {
+            "label": "20-50 pictures",
+            "value": "20_50_pics",
+            "priceModifier": 10000
+          },
+          {
+            "label": "50-70 pictures",
+            "value": "50_70_pics",
+            "priceModifier": 20000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:14:52.750Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:14:52.750Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765da02b7787e55975e7ba"
+  },
+  "name": "Scented Faux flower per stem",
+  "description": "Scented Faux flower per stem",
+  "basePrice": 4000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "697209a2b55fa56b7e5e4b0e"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_faux_flower_per_stem/1769364892965_WhatsApp Image 2026-01-24 at 14.59.26.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:14:56.027Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:14:56.027Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765da22b7787e55975e7bd"
+  },
+  "name": "The \"Cupid’s Choice\" Collection",
+  "description": "6 iches two layers",
+  "basePrice": 28500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the__cupid_s_choice__collection/1769364896235_WhatsApp Image 2026-01-23 at 21.58.27.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:14:58.336Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:14:58.336Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765da42b7787e55975e7c0"
+  },
+  "name": "The \"Picture Perfect\" Pink Box",
+  "description": "The \"Picture Perfect\" Pink Box",
+  "basePrice": 35000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the__picture_perfect__pink_box/1769364898517_WhatsApp Image 2026-01-24 at 08.46.57.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:00.988Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:00.988Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765da62b7787e55975e7c3"
+  },
+  "name": "The Rose & Red Classic",
+  "description": "The Rose & Red Classic. 6 iches two layers",
+  "basePrice": 38500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the_rose___red_classic/1769364901168_WhatsApp Image 2026-01-23 at 21.52.40.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:02.167Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:02.167Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765da92b7787e55975e7c6"
+  },
+  "name": "The Ruby Ruffle Heart",
+  "description": "6 iches two layers",
+  "basePrice": 28000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the_ruby_ruffle_heart/1769364902343_WhatsApp Image 2026-01-23 at 21.52.39.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:05.254Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:05.254Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765dab2b7787e55975e7c9"
+  },
+  "name": "The Tall Macaron Drip",
+  "description": "The Tall Macaron Drip",
+  "basePrice": 45000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the_tall_macaron_drip/1769364905469_WhatsApp Image 2026-01-23 at 21.52.39 (1).jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:07.458Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:07.458Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765dad2b7787e55975e7cc"
+  },
+  "name": "The White \"Coquette\" Heart",
+  "description": "6 iches two layers",
+  "basePrice": 28000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/the_white__coquette__heart/1769364907656_WhatsApp Image 2026-01-23 at 21.52.38.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    "696bb78faca35414ca4947f6"
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:09.326Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:09.326Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765db82b7787e55975e7cf"
+  },
+  "name": "customized newspaper",
+  "description": "customized newspaper",
+  "basePrice": 18500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_newspaper/1769364909516_WhatsApp Image 2026-01-24 at 15.03.18.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_newspaper/1769364912535_WhatsApp Image 2026-01-24 at 15.08.14.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_newspaper/1769364915624_WhatsApp Image 2026-01-24 at 15.10.02.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:15:20.477Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:15:20.477Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765e392b7787e55975e7d2"
+  },
+  "name": "digital video frame",
+  "description": "digital video frame",
+  "basePrice": 145000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/digital_video_frame/1769364920722_WhatsApp Video 2026-01-24 at 14.50.36.mp4",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/digital_video_frame/1769365045434_WhatsApp Video 2026-01-24 at 14.51.31.mp4"
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:17:29.188Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:17:29.188Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765e3a2b7787e55975e7d5"
+  },
+  "name": "framed photo",
+  "description": "Premium glass framed photo - perfect for preserving your precious memories",
+  "basePrice": 19000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "69723795b55fa56b7e5e4b1f"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049551_WhatsApp Image 2026-01-24 at 14.53.12.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049904_ebbge58ii7u9f7sizwzp (1).jpg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "size",
+        "values": [
+          {
+            "label": "8×10 inches",
+            "value": "8x10",
+            "priceModifier": 0
+          },
+          {
+            "label": "10×12 inches",
+            "value": "10x12",
+            "priceModifier": 3000
+          },
+          {
+            "label": "12×16 inches",
+            "value": "12x16",
+            "priceModifier": 11000
+          },
+          {
+            "label": "16×20 inches",
+            "value": "16x20",
+            "priceModifier": 17000
+          },
+          {
+            "label": "16×24 inches",
+            "value": "16x24",
+            "priceModifier": 23000
+          },
+          {
+            "label": "20×30 inches",
+            "value": "20x30",
+            "priceModifier": 34000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:17:30.231Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:17:30.231Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765e3b2b7787e55975e7d8"
+  },
+  "name": "fresh roses per stem",
+  "description": "fresh roses per stem",
+  "basePrice": 9500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "697209a2b55fa56b7e5e4b0e"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050963_WhatsApp Image 2026-01-24 at 15.02.04.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365051415_WhatsApp Image 2026-01-24 at 15.02.05.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:17:31.917Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:17:31.917Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69765e3d2b7787e55975e7db"
+  },
+  "name": "money tower",
+  "description": "money tower",
+  "basePrice": 50000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6972003bb55fa56b7e5e4b0b"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_tower/1769365052260_WhatsApp Image 2026-01-24 at 14.10.35 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_tower/1769365052812_WhatsApp Image 2026-01-24 at 14.10.35.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/money_tower/1769365053249_WhatsApp Image 2026-01-24 at 14.10.37.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "bundles",
+        "values": [
+          {
+            "label": "₦25,000 bundle - ₦500 notes",
+            "value": "25000_500",
+            "priceModifier": 0
+          },
+          {
+            "label": "₦30,000 bundle - ₦500 notes",
+            "value": "30000_500",
+            "priceModifier": 15000
+          },
+          {
+            "label": "₦50,000 bundle - ₦500 notes",
+            "value": "50000_500",
+            "priceModifier": 40000
+          },
+          {
+            "label": "₦300,000 bundle - ₦1,000 notes",
+            "value": "300000_1000",
+            "priceModifier": 530000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-25T18:17:33.789Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T18:17:33.789Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69766ed082045df59d693068"
+  },
+  "name": "private dinner setup",
+  "description": "Delicious assortment of Nigerian chops and grilled proteins - perfect for celebrations",
+  "basePrice": 16000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/private_dinner_setup/1769369275266_WhatsApp Video 2026-01-24 at 14.08.43.mp4"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "package",
+        "values": [
+          {
+            "label": "Small Box (5 spring rolls, 5 samosa, 10 puff puff, 2 chicken)",
+            "value": "small",
+            "priceModifier": 0
+          },
+          {
+            "label": "Medium Box (8 spring rolls, 8 samosa, 15 puff puff, 4 chicken, 2 beef)",
+            "value": "medium",
+            "priceModifier": 14000
+          },
+          {
+            "label": "Large Box (12 spring rolls, 12 samosa, 20 puff puff, 6 chicken, 4 beef)",
+            "value": "large",
+            "priceModifier": 32000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f6"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T19:28:16.643Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T19:28:16.643Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69767271e70c771ba3d4cd41"
+  },
+  "name": "Chicken Chops Platter",
+  "description": "Delicious assortment of Nigerian chops and grilled proteins - perfect for celebrations",
+  "basePrice": 16000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/chicken_chops_platter/1769370222599_WhatsApp Image 2026-01-24 at 08.56.55.jpeg"
+  ],
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "package",
+        "values": [
+          {
+            "label": "Small Box (5 spring rolls, 5 samosa, 10 puff puff, 2 chicken)",
+            "value": "small",
+            "priceModifier": 0
+          },
+          {
+            "label": "Medium Box (8 spring rolls, 8 samosa, 15 puff puff, 4 chicken, 2 beef)",
+            "value": "medium",
+            "priceModifier": 14000
+          },
+          {
+            "label": "Large Box (12 spring rolls, 12 samosa, 20 puff puff, 6 chicken, 4 beef)",
+            "value": "large",
+            "priceModifier": 32000
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f6"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T19:43:45.731Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T19:43:45.731Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69767276e70c771ba3d4cd44"
+  },
+  "name": "Food Platter",
+  "description": "Flexible pricing, depending on your food choices at checkout",
+  "basePrice": 30000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/food_platter/1769370225954_WhatsApp Image 2026-01-24 at 08.56.55 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/food_platter/1769370227291_WhatsApp Video 2026-01-24 at 09.06.09.mp4"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f6"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T19:43:50.993Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T19:43:50.993Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69767277e70c771ba3d4cd47"
+  },
+  "name": "Odogwu Banquet Tray",
+  "description": "Flexible pricing, depending on your food choices at checkout",
+  "basePrice": 140000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6976425086d10ab880a93fba"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/odogwu_banquet_tray/1769370231198_WhatsApp Image 2026-01-24 at 09.12.50.jpeg"
+  ],
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [
+    {
+      "$oid": "696bb78faca35414ca4947f6"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-25T19:43:51.706Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-25T19:43:51.706Z"
+  },
+  "__v": 0
+}]

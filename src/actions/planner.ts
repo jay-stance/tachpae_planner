@@ -6,6 +6,7 @@ import Category from '@/models/Category';
 import Product from '@/models/Product';
 import Service from '@/models/Service';
 import Addon from '@/models/Addon';
+import Bundle from '@/models/Bundle';
 import { getActiveEvent } from './event';
 import { unstable_cache } from 'next/cache';
 import mongoose from 'mongoose';
@@ -26,7 +27,7 @@ export const getPlanningData = unstable_cache(
         const products = await Product.find({ 
             event: event._id, 
             isActive: true 
-        }).populate('category').lean();
+        }).populate('category').populate('tags').lean();
 
         const services = await Service.find({ 
             event: event._id, 
@@ -38,6 +39,11 @@ export const getPlanningData = unstable_cache(
             event: event._id, 
             isActive: true 
         }).lean();
+
+        const bundles = await Bundle.find({ 
+            event: event._id, 
+            isActive: true 
+        }).populate('products').lean();
 
         const allCities = await City.find({ 
             _id: { $in: event.cities },
@@ -51,6 +57,7 @@ export const getPlanningData = unstable_cache(
             products: JSON.parse(JSON.stringify(products)),
             services: JSON.parse(JSON.stringify(services)),
             addons: JSON.parse(JSON.stringify(addons)),
+            bundles: JSON.parse(JSON.stringify(bundles)),
         };
     },
     ['planning-data'], 
@@ -64,7 +71,7 @@ export const getProductsByIds = async (ids: string[]) => {
     const products = await Product.find({ 
         _id: { $in: validIds },
         isActive: true 
-    }).populate('category').lean();
+    }).populate('category').populate('tags').lean();
     
     return JSON.parse(JSON.stringify(products));
 };

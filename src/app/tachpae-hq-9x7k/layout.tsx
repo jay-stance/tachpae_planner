@@ -13,7 +13,9 @@ import {
   Sparkles,
   LogOut,
   Menu,
-  X
+  X,
+  Tag,
+  Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -21,6 +23,8 @@ const navItems = [
   { name: 'Dashboard', href: '/tachpae-hq-9x7k', icon: LayoutDashboard },
   { name: 'Products', href: '/tachpae-hq-9x7k/products', icon: Package },
   { name: 'Categories', href: '/tachpae-hq-9x7k/categories', icon: Tags },
+  { name: 'Tags', href: '/tachpae-hq-9x7k/tags', icon: Tag },
+  { name: 'Bundles', href: '/tachpae-hq-9x7k/bundles', icon: Gift },
   { name: 'Services', href: '/tachpae-hq-9x7k/services', icon: Sparkles },
   { name: 'Orders', href: '/tachpae-hq-9x7k/orders', icon: ShoppingCart },
   { name: 'Events', href: '/tachpae-hq-9x7k/events', icon: Calendar },

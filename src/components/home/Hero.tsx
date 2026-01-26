@@ -78,10 +78,21 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
-            className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-12 font-medium"
+            className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8 font-medium leading-relaxed"
         >
-          Plan Less. Celebrate More.
+          We help you plan and deliver romantic Valentine surprises in Lagos, Ibadan, PH & Abeokuta — stress-free.
         </motion.p>
+
+        {/* Trust Proof - Moved above CTAs */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="flex items-center justify-center gap-2 mb-8 text-sm text-yellow-500/90 font-medium tracking-wide"
+        >
+           <span>★★★★★</span>
+           <span className="text-white/80">Trusted by 5,000+ Celebrants</span>
+        </motion.div>
 
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -91,7 +102,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         >
           <Button 
             size="lg" 
-            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-[85%] !md:w-full sm:w-auto border-0" 
+            className="rounded-full text-base md:text-lg h-12 md:h-14 px-8 md:px-10 text-white shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer w-[85%] !md:w-full sm:w-auto border-0 bg-[lambda(135deg,var(--tachpae-primary)0%,var(--tachpae-primary-light)100%)] shadow-[0_8px_32px_rgba(53,20,245,0.4)]"
             style={{ 
               background: 'linear-gradient(135deg, var(--tachpae-primary) 0%, var(--tachpae-primary-light) 100%)',
               boxShadow: '0 8px 32px rgba(53, 20, 245, 0.4)'
@@ -115,11 +126,6 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             Send Be My Val Link <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>
-      </div>
-
-      {/* Trust Badge */}
-      <div className="absolute bottom-8 text-center text-sm text-white/30 font-medium tracking-widest uppercase">
-        Trusted by 5,000+ Celebrants across 4 Cities
       </div>
     </div>
   );
