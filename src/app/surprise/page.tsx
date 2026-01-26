@@ -3,14 +3,26 @@ import { CartProvider } from '@/context/CartContext';
 import { getCityBySlug } from '@/actions/city';
 import SurpriseFlow from '@/components/surprise/SurpriseFlow';
 
+import Addon from '@/models/Addon';
+import dbConnect from '@/lib/db';
+
+async function getSurpriseAddon() {
+  await dbConnect();
+  const addon = await Addon.findOne({ slug: 'surprise-yourself', isActive: true });
+  return addon ? addon.toObject() : null;
+}
+
 async function SurpriseContent({ citySlug }: { citySlug: string | null }) {
   console.log('SurpriseContent rendering for citySlug:', citySlug);
   const city = citySlug ? await getCityBySlug(citySlug) : null;
-  console.log('City found:', city?.name);
+  const surpriseAddon = await getSurpriseAddon();
   
+  // Use DB config or fallback if missing (though script should have fixed it)
+  const questionnaireConfig = surpriseAddon?.config?.questionnaireSchema;
+
   return (
     <CartProvider cityId={city?._id?.toString()}>
-      <SurpriseFlow />
+      <SurpriseFlow config={questionnaireConfig} />
     </CartProvider>
   );
 }

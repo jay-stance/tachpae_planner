@@ -17,8 +17,8 @@ export interface IOrder extends Document {
   };
   
   items: {
-    type: 'PRODUCT' | 'SERVICE';
-    referenceId: mongoose.Types.ObjectId; // Original Product/Service ID
+    type: 'PRODUCT' | 'SERVICE' | 'ADDON';
+    referenceId: mongoose.Types.ObjectId | string; // Original Product/Service/Addon ID
     name: string;
     quantity: number;
     priceAtPurchase: number;
@@ -33,6 +33,8 @@ export interface IOrder extends Document {
     bookingTime?: string;
   }[];
 
+  subTotal: number;
+  serviceFee: number;
   totalAmount: number;
   status: OrderStatus;
   paymentProof?: string; // URL to payment proof if uploaded
@@ -44,9 +46,9 @@ const OrderSchema: Schema = new Schema({
   orderId: { type: String, required: true, unique: true },
   customer: {
     name: { type: String, required: true },
-    email: { type: String },
+    email: { type: String }, // Optional
     phone: { type: String, required: true },
-    whatsapp: { type: String },
+    whatsapp: { type: String }, // Optional (we map from phone usually)
     secondaryPhone: { type: String },
     address: { type: String, required: true },
     city: { type: String, required: true },
@@ -54,7 +56,7 @@ const OrderSchema: Schema = new Schema({
   },
   items: [
     {
-      type: { type: String, enum: ['PRODUCT', 'SERVICE'], required: true },
+      type: { type: String, enum: ['PRODUCT', 'SERVICE', 'ADDON'], required: true },
       referenceId: { type: String, required: true },
       name: { type: String, required: true },
       quantity: { type: Number, required: true },
@@ -66,6 +68,8 @@ const OrderSchema: Schema = new Schema({
       bookingTime: { type: String },
     }
   ],
+  subTotal: { type: Number, required: true },
+  serviceFee: { type: Number, required: true },
   totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['PENDING', 'PAID', 'FULFILLED', 'CANCELLED'], default: 'PENDING' },
   paymentProof: { type: String },

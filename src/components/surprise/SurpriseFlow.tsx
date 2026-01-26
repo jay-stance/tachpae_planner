@@ -38,10 +38,20 @@ const iconMap: Record<string, React.ReactNode> = {
   bath: <Bath className="w-5 h-5" />,
 };
 
-export default function SurpriseFlow() {
+interface SurpriseFlowProps {
+  config?: any;
+}
+
+export default function SurpriseFlow({ config }: SurpriseFlowProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addItem } = useCart();
+
+  // Use config from DB or fallback
+  const data = config || QUESTIONNAIRE;
+  
+  // Find the hero question from the questions array (DB schema) or use direct property (old schema fallback)
+  const heroQuestion = data.questions?.find((q: any) => q.id === 'hero-vibe') || data.heroQuestion;
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -77,10 +87,14 @@ export default function SurpriseFlow() {
   };
 
   const handleComplete = () => {
-    const selectedPrice = QUESTIONNAIRE.prices.find(p => p.value === formData.price);
+    const selectedPrice = data.prices?.find((p: any) => p.value === formData.price);
     
+    // We prefer using the actual DB ID if available (data._id), otherwise slug
+    const referenceId = data._id || 'surprise-yourself';
+
     addItem({
-      productId: 'surprise-yourself',
+      productId: referenceId,
+      type: 'ADDON',
       productName: `Self-Love Box (${selectedPrice?.description || formData.priceLabel})`,
       basePrice: formData.price,
       quantity: 1,
@@ -146,16 +160,16 @@ export default function SurpriseFlow() {
                     <Gift className="w-10 h-10 text-white" />
                   </div>
                   <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
-                    {QUESTIONNAIRE.title.split(' ').slice(0, 2).join(' ')} <br/>
+                    {data.title?.split(' ').slice(0, 2).join(' ')} <br/>
                     <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-secondary))' }}>
-                      {QUESTIONNAIRE.title.split(' ').slice(2).join(' ')}
+                      {data.title?.split(' ').slice(2).join(' ')}
                     </span>
                   </h1>
-                  <p className="text-white/60 font-medium">{QUESTIONNAIRE.subtitle}</p>
+                  <p className="text-white/60 font-medium">{data.subtitle}</p>
                 </div>
 
                 <div className="space-y-3">
-                  {QUESTIONNAIRE.prices.map((p) => (
+                  {data.prices?.map((p: any) => (
                     <motion.button
                       key={p.value}
                       onClick={() => handlePriceSelect(p.value, p.label)}
@@ -188,12 +202,12 @@ export default function SurpriseFlow() {
                   <button onClick={handleBack} className="text-white/40 hover:text-white/70 text-sm font-medium flex items-center gap-2">
                     <ArrowLeft className="w-4 h-4" /> Back
                   </button>
-                  <h1 className="text-2xl md:text-3xl font-black text-white">{QUESTIONNAIRE.heroQuestion.label}</h1>
-                  <p className="text-white/50 font-medium">{QUESTIONNAIRE.heroQuestion.description}</p>
+                  <h1 className="text-2xl md:text-3xl font-black text-white">{heroQuestion?.label}</h1>
+                  <p className="text-white/50 font-medium">{heroQuestion?.description}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  {QUESTIONNAIRE.heroQuestion.options.map((opt) => (
+                  {heroQuestion?.options?.map((opt: any) => (
                     <motion.button
                       key={opt.value}
                       onClick={() => handleVibeSelect(opt.value, opt.label)}

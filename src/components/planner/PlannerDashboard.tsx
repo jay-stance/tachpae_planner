@@ -96,6 +96,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     
     addItem({
       productId: selectedProduct._id,
+      type: 'PRODUCT',
       productName: selectedProduct.name,
       productImage: getFirstImage(selectedProduct.mediaGallery) || selectedProduct.mediaGallery?.[0],
       basePrice: config.totalPrice || selectedProduct.basePrice,
@@ -112,6 +113,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     setLogisticsAgreed(true);
     addItem({
       productId: 'logistics-fee',
+      type: 'SERVICE',
       productName: 'Custom Logistics Handling Fee',
       basePrice: 2000,
       quantity: 1,

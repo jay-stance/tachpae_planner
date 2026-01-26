@@ -75,8 +75,10 @@ export default function WishlistDisplay({ products, items }: WishlistDisplayProp
     clearCart();
     wishlistItems.forEach(item => {
       if (item) {
+        const isSurprise = item.id === 'surprise-box' || item.id === 'surprise-yourself';
         addItem({
           productId: item.id,
+          type: isSurprise ? 'ADDON' : 'PRODUCT',
           productName: item.name,
           productImage: item.image || undefined,
           basePrice: item.price,

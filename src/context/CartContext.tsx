@@ -11,6 +11,7 @@ export interface CartItem {
   variantSelection: Record<string, any>;
   customizationData: Record<string, any>;
   totalPrice: number;
+  type: 'PRODUCT' | 'SERVICE' | 'ADDON';
 }
 
 interface CartContextType {
@@ -59,7 +60,8 @@ export function CartProvider({ children, cityId }: { children: React.ReactNode, 
 
   const addItem = useCallback((item: Omit<CartItem, 'totalPrice'>) => {
     const totalPrice = item.basePrice * item.quantity;
-    const newItem: CartItem = { ...item, totalPrice };
+    const itemType = item.type || 'PRODUCT';
+    const newItem: CartItem = { ...item, totalPrice, type: itemType };
     
     setItems(prev => {
       // Check if product already exists (by productId)

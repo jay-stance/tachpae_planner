@@ -64,10 +64,11 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
           eventId: event?._id,
           customer: {
             ...formData,
+            whatsapp: formData.phone, // Map phone to whatsapp as per UI label
             city: city.name
           },
           items: items.map(item => ({
-            type: 'PRODUCT', // Support services later if needed
+            type: item.type || 'PRODUCT', // Use type from cart, default to PRODUCT for legacy items
             referenceId: item.productId,
             name: item.productName,
             quantity: item.quantity,
