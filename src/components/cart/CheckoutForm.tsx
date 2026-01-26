@@ -96,8 +96,20 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       message += `\n*Order Items:*\n`;
       items.forEach(item => {
         message += `- ${item.productName} (x${item.quantity}) - ₦${item.totalPrice.toLocaleString()}\n`;
-        if (Object.keys(item.variantSelection).length > 0) {
-          message += `  _Variants: ${JSON.stringify(item.variantSelection)}_\n`;
+        // Format Variants
+        if (item.variantSelection && Object.keys(item.variantSelection).length > 0) {
+          Object.values(item.variantSelection).forEach((variant: any) => {
+             if (variant?.label) {
+                message += `  • ${variant.label}\n`;
+             }
+          });
+        }
+        
+        // Format Customization
+        if (item.customizationData && Object.keys(item.customizationData).length > 0) {
+           Object.entries(item.customizationData).forEach(([key, value]) => {
+              message += `  • ${key}: ${value}\n`;
+           });
         }
       });
       
