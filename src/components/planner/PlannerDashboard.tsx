@@ -56,7 +56,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [showLogisticsModal, setShowLogisticsModal] = useState(false);
   const [logisticsAgreed, setLogisticsAgreed] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<any>(categories[0] || null);
+  const [activeCategory, setActiveCategory] = useState<any>({ _id: 'bundles', name: 'Bundles' });
   const [activeFilter, setActiveFilter] = useState<string>('all');
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';

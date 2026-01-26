@@ -524,6 +524,18 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
                                 <Heart className="w-12 h-12 text-white fill-white" />
                             </motion.div>
                             
+                            <button 
+                                onClick={async () => {
+                                    setUploading();
+                                    await respondToProposal(proposal._id as unknown as string, 'ACCEPTED', {});
+                                    setDone();
+                                    setStage('SUBMITTED');
+                                }}
+                                className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                            
                             <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
                             <p className="text-white/60 mb-6">
                                 Make {proposal.proposerName}'s day even more special by sending a quick reaction video!
