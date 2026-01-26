@@ -58,13 +58,13 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
-  // Read search params using hook? Or use window if strict client? 
-  // Next.js useSearchParams is better.
   const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const [cartView, setCartView] = React.useState<'cart' | 'checkout'>('cart');
 
   // Auto-open cart if ?openCart=true
   React.useEffect(() => {
     if (searchParams?.get('openCart') === 'true') {
+      setCartView('cart');
       setCartOpen(true);
       // Clean up URL
       const newUrl = window.location.pathname;
@@ -624,7 +624,12 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         </div>
       </div>
 
-      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} city={city} />
+      <CartDrawer 
+        open={cartOpen} 
+        onOpenChange={setCartOpen} 
+        city={city} 
+        defaultView={cartView}
+      />
     </div>
   );
 }

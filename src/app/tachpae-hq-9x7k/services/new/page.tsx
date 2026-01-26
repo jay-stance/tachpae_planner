@@ -123,7 +123,7 @@ export default function NewServicePage() {
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               placeholder="Describe the experience..."
-              className="min-h-[100px] bg-white/5 border-white/10 text-white rounded-xl placeholder:text-white/30"
+              className="min-h-[100px] bg-white/5 border-white/10 text-white rounded-xl placeholder:text-white/30 placeholder:text-opacity-10"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Heart, Copy, ArrowRight, Check, History, ExternalLink, Mail, User, XCircle, Sparkles, Video, Gift } from 'lucide-react';
+import { Heart, Copy, ArrowRight, ArrowLeft, Check, History, ExternalLink, Mail, User, XCircle, Sparkles, Video, Gift } from 'lucide-react';
 import { createProposal, getProposalsByDeviceId } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -140,7 +140,19 @@ export default function CreateProposal() {
         <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.2 }} />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 pointer-events-none" style={{ background: 'var(--tachpae-secondary)', opacity: 0.15 }} />
 
-        <div className="relative z-10 w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* Home Button */}
+        <div className="absolute top-4 left-4 z-50">
+          <Link href="/">
+            <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10 gap-2 pl-2 pr-4 transition-all">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                <ArrowLeft className="w-4 h-4" />
+              </div>
+              <span className="font-bold">Home</span>
+            </Button>
+          </Link>
+        </div>
+
+        <div className="relative z-10 w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mt-12 md:mt-0">
              
              {/* Left: Main Action Card */}
              <motion.div
@@ -209,7 +221,7 @@ export default function CreateProposal() {
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Your Romantic Message</label>
                                     <textarea 
-                                        className="flex min-h-[140px] w-full rounded-xl border border-input bg-background px-3 py-3 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="flex min-h-[140px] w-full rounded-xl border border-input bg-background px-3 py-3 text-sm ring-offset-background placeholder:text-opacity-10  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 "
                                         placeholder="Will you be my Valentine? I promise to..."
                                         value={formData.message}
                                         onChange={(e) => setFormData({...formData, message: e.target.value})}

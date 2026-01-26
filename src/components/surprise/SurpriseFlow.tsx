@@ -91,7 +91,7 @@ export default function SurpriseFlow() {
         heroVibe: formData.heroVibe,
         heroVibeLabel: formData.heroVibeLabel,
         hates: formData.hates,
-        noteToSelf: formData.noteToSelf,
+        aboutYourself: formData.noteToSelf,
         priceTier: selectedPrice?.description
       },
     });
@@ -250,7 +250,7 @@ export default function SurpriseFlow() {
               </motion.div>
             )}
 
-            {/* STEP 4: Note to Self */}
+            {/* STEP 4: Tell us about yourself */}
             {step === 4 && (
               <motion.div 
                 key="step4"
@@ -263,23 +263,23 @@ export default function SurpriseFlow() {
                   <button onClick={handleBack} className="text-white/40 hover:text-white/70 text-sm font-medium flex items-center gap-2">
                     <ArrowLeft className="w-4 h-4" /> Back
                   </button>
-                  <h1 className="text-2xl md:text-3xl font-black text-white">A Note to <span style={{ color: 'var(--tachpae-secondary)' }}>Yourself</span></h1>
-                  <p className="text-white/50 font-medium">Write a message for your card. Remind yourself how amazing you are. 💕</p>
+                  <h1 className="text-2xl md:text-3xl font-black text-white">Tell us a little about <span style={{ color: 'var(--tachpae-secondary)' }}>Yourself</span></h1>
+                  <p className="text-white/50 font-medium">Help us curate the perfect experience for you. What are your vibes? What makes you smile?</p>
                 </div>
 
                 <Textarea 
-                  placeholder="You're doing great, sweetie..."
-                  className="min-h-[150px] rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-white/30 p-6 text-lg focus:border-white/30"
+                  placeholder="I love minimalism, soft jazz, and scented candles..."
+                  className="min-h-[150px] rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-white/30 placeholder:text-opacity-30 p-6 text-lg focus:border-white/30"
                   value={formData.noteToSelf}
                   onChange={(e) => setFormData({ ...formData, noteToSelf: e.target.value })}
                 />
 
                 <Button 
-                  onClick={handleNext}
+                  onClick={handleComplete}
                   className="w-full h-14 rounded-2xl text-white text-lg font-bold flex items-center justify-center gap-2"
                   style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-accent))' }}
                 >
-                  <Sparkles className="w-5 h-5" /> Treat Myself
+                  <Sparkles className="w-5 h-5" /> Add to Cart
                 </Button>
               </motion.div>
             )}

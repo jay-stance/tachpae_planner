@@ -10,11 +10,21 @@ interface CartDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   city?: any;
+  defaultView?: 'cart' | 'checkout';
 }
 
-export default function CartDrawer({ open, onOpenChange, city }: CartDrawerProps) {
+export default function CartDrawer({ open, onOpenChange, city, defaultView = 'cart' }: CartDrawerProps) {
   const { items, itemCount, totalAmount, removeItem, updateQuantity, clearCart } = useCart();
-  const [view, setView] = useState<'cart' | 'checkout'>('cart');
+  const [view, setView] = useState<'cart' | 'checkout'>(defaultView);
+
+  // Update effect to respect prop change if needed, OR just on open?
+  // Actually, we should sync view with defaultView when it opens? 
+  // But defaultView comes from parent.
+  React.useEffect(() => {
+    if (open) {
+        setView(defaultView);
+    }
+  }, [open, defaultView]);
 
   // Reset view when drawer closes
   const handleOpenChange = (newOpen: boolean) => {

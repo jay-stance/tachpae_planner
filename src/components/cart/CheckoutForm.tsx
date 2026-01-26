@@ -148,12 +148,12 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
 
             <div className="space-y-1.5">
               <Label htmlFor="address">Delivery Address (within {city.name})</Label>
-              <Textarea id="address" name="address" required placeholder="No 12, Example Street..." value={formData.address} onChange={handleInputChange} />
+              <Textarea className='placeholder:text-opacity-10' id="address" name="address" required placeholder="No 12, Example Street..." value={formData.address} onChange={handleInputChange} />
             </div>
 
             <div className="space-y-1.5">
               <Label htmlFor="customMessage">Special Instructions / Custom Message</Label>
-              <Textarea id="customMessage" name="customMessage" placeholder="Any special requests?" value={formData.customMessage} onChange={handleInputChange} />
+              <Textarea className='placeholder:text-opacity-10' id="customMessage" name="customMessage" placeholder="Any special requests?" value={formData.customMessage} onChange={handleInputChange} />
             </div>
           </div>
         </div>
