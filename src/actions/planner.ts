@@ -29,6 +29,8 @@ export const getPlanningData = unstable_cache(
             isActive: true,
             isBundle: { $ne: true }, // Exclude bundles from regular products
             $or: [
+                { locations: { $exists: false } },
+                { locations: { $eq: null } },
                 { locations: { $size: 0 } }, // Available everywhere
                 { locations: city._id }      // Available in this city
             ]
@@ -51,6 +53,8 @@ export const getPlanningData = unstable_cache(
             isBundle: true,
             isActive: true,
             $or: [
+                { locations: { $exists: false } },
+                { locations: { $eq: null } },
                 { locations: { $size: 0 } },
                 { locations: city._id }
             ]
