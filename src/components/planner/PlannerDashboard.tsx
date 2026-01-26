@@ -820,7 +820,16 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
       {/* Product Configurator Modal */}
       <Dialog open={!!selectedProduct} onOpenChange={(open) => !open && setSelectedProduct(null)}>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden bg-white rounded-[2.5rem] border-0 shadow-3xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden bg-white rounded-[2.5rem] border-0 shadow-3xl [&>button]:hidden">
+          <div className="absolute top-4 right-4 z-50">
+            <button 
+              className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center gap-2 active:scale-95 text-sm"
+              onClick={() => setSelectedProduct(null)}
+            >
+              <X className="w-4 h-4" />
+              <span>Close</span>
+            </button>
+          </div>
           <DialogHeader className="sr-only">
             <DialogTitle>Customize {selectedProduct?.name}</DialogTitle>
           </DialogHeader>

@@ -90,10 +90,11 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
             onClick={() => setLightboxOpen(false)}
           >
             <button 
-              className="absolute top-4 right-4 p-4 text-white hover:text-gray-300 transition-colors z-50"
+              className="absolute top-6 right-6 px-4 py-2 bg-white text-gray-900 rounded-full font-bold shadow-xl hover:bg-gray-100 transition-all z-50 flex items-center gap-2 active:scale-95"
               onClick={() => setLightboxOpen(false)}
             >
-              <X className="w-8 h-8" />
+              <X className="w-5 h-5" />
+              <span>Close</span>
             </button>
 
             <div 
