@@ -49,7 +49,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { city, categories, products, services, addons = [], bundles = [] } = data;
-  const { itemCount, totalAmount, addItem, getShareableLink } = useCart();
+  const { itemCount, totalAmount, addItem, getShareableLink, items } = useCart();
   const { event } = useEvent();
   
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -682,15 +682,24 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                        
                        {/* Add to Cart */}
                        <div className="mt-auto">
-                         <Button 
-                           onClick={(e) => {
-                             e.stopPropagation();
-                             handleBundleAddToCart(bundle);
-                           }}
-                           className="w-full h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg"
-                         >
-                           Add Bundle to Cart
-                         </Button>
+                         {items.some((i: any) => i.productId === bundle._id) ? (
+                           <Button 
+                             disabled
+                             className="w-full h-12 rounded-2xl bg-green-500 text-white font-bold shadow-none opacity-100 flex items-center justify-center gap-2"
+                           >
+                             <CheckCircle className="w-5 h-5" /> Added to Cart
+                           </Button>
+                         ) : (
+                           <Button 
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleBundleAddToCart(bundle);
+                             }}
+                             className="w-full h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg"
+                           >
+                             Add Bundle to Cart
+                           </Button>
+                         )}
                        </div>
                      </div>
                    </div>

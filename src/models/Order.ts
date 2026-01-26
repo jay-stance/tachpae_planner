@@ -17,7 +17,7 @@ export interface IOrder extends Document {
   };
   
   items: {
-    type: 'PRODUCT' | 'SERVICE' | 'ADDON';
+    type: 'PRODUCT' | 'SERVICE' | 'ADDON' | 'BUNDLE';
     referenceId: mongoose.Types.ObjectId | string; // Original Product/Service/Addon ID
     name: string;
     quantity: number;
@@ -56,7 +56,7 @@ const OrderSchema: Schema = new Schema({
   },
   items: [
     {
-      type: { type: String, enum: ['PRODUCT', 'SERVICE', 'ADDON'], required: true },
+      type: { type: String, enum: ['PRODUCT', 'SERVICE', 'ADDON', 'BUNDLE'], required: true },
       referenceId: { type: String, required: true },
       name: { type: String, required: true },
       quantity: { type: Number, required: true },

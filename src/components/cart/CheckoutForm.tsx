@@ -97,7 +97,8 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       items.forEach(item => {
         message += `- ${item.productName} (x${item.quantity}) - ₦${item.totalPrice.toLocaleString()}\n`;
         // Format Variants
-        if (item.variantSelection && Object.keys(item.variantSelection).length > 0) {
+
+        if (item.variantSelection) {
           Object.values(item.variantSelection).forEach((variant: any) => {
              if (variant?.label) {
                 message += `  • ${variant.label}\n`;
@@ -146,7 +147,7 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex-1 space-y-4 pb-20">
+      <form onSubmit={handleSubmit} className="flex-1 space-y-4 pb-64">
         <div className="space-y-4">
           <div className="grid grid-cols-1 gap-4">
             <div className="space-y-1.5">

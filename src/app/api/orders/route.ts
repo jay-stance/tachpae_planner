@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 // Validation Schema
 const OrderItemSchema = z.object({
-  type: z.enum(['PRODUCT', 'SERVICE', 'ADDON']),
+  type: z.enum(['PRODUCT', 'SERVICE', 'ADDON', 'BUNDLE']),
   referenceId: z.string(),
   quantity: z.number().min(1),
   // Optional complex fields
