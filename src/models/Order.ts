@@ -44,9 +44,9 @@ const OrderSchema: Schema = new Schema({
   orderId: { type: String, required: true, unique: true },
   customer: {
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String },
     phone: { type: String, required: true },
-    whatsapp: { type: String, required: true },
+    whatsapp: { type: String },
     secondaryPhone: { type: String },
     address: { type: String, required: true },
     city: { type: String, required: true },
@@ -55,7 +55,7 @@ const OrderSchema: Schema = new Schema({
   items: [
     {
       type: { type: String, enum: ['PRODUCT', 'SERVICE'], required: true },
-      referenceId: { type: Schema.Types.ObjectId, required: true },
+      referenceId: { type: String, required: true },
       name: { type: String, required: true },
       quantity: { type: Number, required: true },
       priceAtPurchase: { type: Number, required: true },

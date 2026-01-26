@@ -23,9 +23,9 @@ const CreateOrderSchema = z.object({
   eventId: z.string(),
   customer: z.object({
     name: z.string().min(2),
-    email: z.string().email(),
+    email: z.string().email().or(z.literal('')), // Allow empty if we want, or just standard email
     phone: z.string().min(10),
-    whatsapp: z.string().min(10),
+    // whatsapp: z.string().min(10).optional(), // Removed strict requirement
     address: z.string().min(5),
     city: z.string(),
     secondaryPhone: z.string().optional(),

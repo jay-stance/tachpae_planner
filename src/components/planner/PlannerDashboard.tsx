@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -45,6 +45,7 @@ interface PlannerDashboardProps {
 
 export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { city, categories, products, services, addons = [] } = data;
   const { itemCount, addItem, getShareableLink } = useCart();
   const { event } = useEvent();
@@ -58,19 +59,19 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  // const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const [cartView, setCartView] = React.useState<'cart' | 'checkout'>('cart');
 
   // Auto-open cart if ?openCart=true
   React.useEffect(() => {
     if (searchParams?.get('openCart') === 'true') {
-      setCartView('cart');
+      setCartView('checkout');
       setCartOpen(true);
       // Clean up URL
       const newUrl = window.location.pathname;
       window.history.replaceState({}, '', newUrl);
     }
-  }, []);
+  }, [searchParams]);
 
   // Toast on location change
   React.useEffect(() => {
