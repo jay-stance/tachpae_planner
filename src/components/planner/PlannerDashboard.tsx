@@ -57,7 +57,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [logisticsAgreed, setLogisticsAgreed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeCategory, setActiveCategory] = useState<any>(categories[0] || null);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'under25k' | 'luxury' | 'popular'>('all');
+  const [activeFilter, setActiveFilter] = useState<string>('all');
 
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
 
@@ -84,6 +84,34 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       });
     }
   }, [city?.name]);
+
+  // Sort categories by local relevance
+  const sortedCategories = React.useMemo(() => {
+    if (!city?._id || !categories || !products) return categories;
+
+    return [...categories].sort((a, b) => {
+      // Calculate scores: +1 for every product in this category that explicitly matches this city location
+      const getScore = (catId: string) => {
+        let score = 0;
+        const catProds = products.filter((p: any) => (p.category?._id || p.category) === catId);
+        
+        catProds.forEach((p: any) => {
+          // If product explicitly targets this city (not just global/empty locations)
+          if (p.locations && p.locations.includes(city._id)) {
+            score += 10; // High weight for location-specific
+          } else if (!p.locations || p.locations.length === 0) {
+            score += 1; // Default visibility
+          }
+        });
+        return score;
+      };
+
+      const scoreA = getScore(a._id);
+      const scoreB = getScore(b._id);
+      
+      return scoreB - scoreA; // Descending order
+    });
+  }, [categories, products, city?._id]);
 
   const getProductsByCategory = (catId: string) => products.filter((p: any) => 
     (p.category?._id || p.category) === catId
@@ -159,40 +187,25 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     toast.success("Bundle added to cart! 🎁");
   };
 
-  const getFilteredProducts = () => {
-    // For "Gifts" tab, show all products across categories (not specials/experiences)
-    let prods = activeCategory?._id === 'gifts' 
-      ? products 
-      : activeCategory?._id === 'specials' || activeCategory?._id === 'bundles'
-        ? [] 
-        : getProductsByCategory(activeCategory?._id);
-    
-    // Apply tag-based filters
-    if (activeFilter === 'under25k') {
-      prods = prods.filter((p: any) => p.basePrice <= 25000); // Changed to <= and included basePrice check
-    } else if (activeFilter === 'luxury') {
-      // Check string tags for 'luxury' or 'grand-gesture', or high price
-      prods = prods.filter((p: any) => 
-        p.tags?.includes('luxury') || 
-        p.tags?.includes('grand-gesture') || 
-        p.tierLabel === 'grandGesture' ||
-        p.basePrice >= 80000 // Adjusted threshold
-      );
-    } else if (activeFilter === 'popular') {
-      // Check string tags for 'popular' or 'best-seller'
-      prods = prods.filter((p: any) => p.tags?.includes('popular') || p.tags?.includes('best-seller'));
-    }
-    
-    return prods;
-  };
 
-  const filteredProducts = getFilteredProducts();
+
+  const shouldShowProduct = (p: any) => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'budget') return p.basePrice <= 25000;
+    if (activeFilter === 'luxury') {
+      return p.tags?.includes('luxury') || 
+             p.tags?.includes('grand-gesture') || 
+             p.tierLabel === 'grandGesture' ||
+             p.basePrice >= 80000;
+    }
+    return p.tags?.includes(activeFilter);
+  };
 
   return (
     <div className="w-full min-h-screen bg-white pb-24 md:pb-32">
       <Header className="border-b border-gray-100" variant="light" />
       <div className="container mx-auto px-3 md:px-4 py-3 md:py-12">
-        {/* Header */}
+
         <header className="mb-6 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="space-y-2 md:space-y-3">
             <div className="flex items-center gap-2 md:gap-3">
@@ -316,32 +329,49 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         </div>
 
         {/* Smart Filters */}
+        {/* Dynamic Tag Filters */}
         {activeCategory?._id !== 'specials' && activeCategory?._id !== 'experiences' && activeCategory?._id !== 'bundles' && (
-          <div className="mb-8 flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-2 duration-500 delay-100">
+          <div className="mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex gap-2 animate-in fade-in slide-in-from-top-2 duration-500 delay-100 min-w-max px-1">
              <button 
                onClick={() => setActiveFilter('all')}
-               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border", activeFilter === 'all' ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
+               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border whitespace-nowrap", activeFilter === 'all' ? "bg-gray-900 text-white border-gray-900 shadow-md" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
              >
                All Items
              </button>
-             <button 
-               onClick={() => setActiveFilter('popular')}
-               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'popular' ? "bg-rose-100 text-rose-700 border-rose-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
-             >
-               🔥 Best Sellers
-             </button>
-             <button 
-               onClick={() => setActiveFilter('under25k')}
-               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'under25k' ? "bg-green-100 text-green-700 border-green-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
-             >
-               💰 Under ₦25k
-             </button>
-             <button 
-               onClick={() => setActiveFilter('luxury')}
-               className={cn("px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1", activeFilter === 'luxury' ? "bg-purple-100 text-purple-700 border-purple-200" : "bg-white text-gray-500 border-gray-200 hover:border-gray-300")}
-             >
-               💎 Luxury Picks
-             </button>
+             
+             {['popular', 'budget', 'luxury', 'romantic', 'for-her', 'for-him', 'self-love', 'unique', 'personalized'].map((tag) => {
+                // Determine styling based on tag
+               const isActive = activeFilter === tag;
+               let styleClass = "bg-white text-gray-500 border-gray-200 hover:border-gray-300";
+               let activeClass = "bg-gray-900 text-white border-gray-900";
+               let icon = "🏷️";
+               let label = tag.charAt(0).toUpperCase() + tag.slice(1).replace('-', ' ');
+
+               if (tag === 'popular') { icon = "🔥"; label="Best Sellers"; if(isActive) activeClass = "bg-rose-500 text-white border-rose-500"; }
+               else if (tag === 'budget') { icon = "💰"; label="Under ₦25k"; if(isActive) activeClass = "bg-green-500 text-white border-green-500"; }
+               else if (tag === 'luxury') { icon = "💎"; label="Luxury Picks"; if(isActive) activeClass = "bg-purple-600 text-white border-purple-600"; }
+               else if (tag === 'romantic') { icon = "💕"; if(isActive) activeClass = "bg-pink-500 text-white border-pink-500"; }
+               else if (tag === 'for-her') { icon = "👸"; if(isActive) activeClass = "bg-rose-400 text-white border-rose-400"; }
+               else if (tag === 'for-him') { icon = "🧔"; if(isActive) activeClass = "bg-blue-600 text-white border-blue-600"; }
+               else if (tag === 'self-love') { icon = "✨"; if(isActive) activeClass = "bg-yellow-500 text-white border-yellow-500"; }
+               else if (tag === 'unique') { icon = "🦄"; if(isActive) activeClass = "bg-indigo-500 text-white border-indigo-500"; }
+               else if (tag === 'personalized') { icon = "✍️"; if(isActive) activeClass = "bg-teal-500 text-white border-teal-500"; }
+
+               return (
+                 <button 
+                   key={tag}
+                   onClick={() => setActiveFilter(tag)}
+                   className={cn(
+                     "px-4 py-2 rounded-full text-xs font-bold transition-all border flex items-center gap-1.5 whitespace-nowrap", 
+                     isActive ? (activeClass + " shadow-md scale-105") : styleClass
+                   )}
+                 >
+                   <span>{icon}</span> {label}
+                 </button>
+               );
+             })}
+            </div>
           </div>
         )}
 
@@ -546,7 +576,11 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                  {bundles.map((bundle: any) => (
-                   <div key={bundle._id} className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col">
+                   <div 
+                     key={bundle._id} 
+                     className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col cursor-pointer"
+                     onClick={() => handleProductClick(bundle)}
+                   >
                      {/* Image Header with multi-image carousel */}
                      <div className="h-56 relative bg-gray-100 overflow-hidden">
                        {/* Show grid of product images */}
@@ -607,7 +641,10 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                        {/* Add to Cart */}
                        <div className="mt-auto">
                          <Button 
-                           onClick={() => handleBundleAddToCart(bundle)}
+                           onClick={(e) => {
+                             e.stopPropagation();
+                             handleBundleAddToCart(bundle);
+                           }}
                            className="w-full h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg"
                          >
                            Add Bundle to Cart
@@ -659,8 +696,8 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
             </div>
           ) : (
             <div className="space-y-8 md:space-y-16 pb-8 md:pb-12">
-              {categories.map((cat: any) => {
-                const catProducts = getProductsByCategory(cat._id);
+              {sortedCategories.map((cat: any) => {
+                const catProducts = getProductsByCategory(cat._id).filter(shouldShowProduct);
                 if (catProducts.length === 0) return null;
                 return (
                   <section key={cat._id} className="space-y-4 md:space-y-8">
@@ -835,19 +872,21 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
           {/* VIEW CART BUTTON */}
           <Button 
             onClick={() => setCartOpen(true)}
-            className="h-12 md:h-16 px-4 md:px-10 bg-gray-900 hover:bg-black text-white rounded-2xl md:rounded-3xl shadow-2xl flex items-center gap-2 md:gap-4 transition-all active:scale-95 group"
+            className="h-16 md:h-20 px-6 md:px-12 bg-gray-900 hover:bg-black text-white rounded-2xl md:rounded-[2rem] shadow-2xl flex items-center gap-3 md:gap-5 transition-all active:scale-95 group"
           >
             <div className="relative">
-              <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
+              <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" />
               {itemCount > 0 && (
-                <span className="absolute -top-1.5 md:-top-2 -right-1.5 md:-right-2 bg-rose-600 text-white text-[9px] md:text-[10px] font-black min-w-[16px] md:min-w-[20px] h-[16px] md:h-[20px] rounded-full flex items-center justify-center shadow-lg border-2 border-gray-900 animate-in zoom-in-50">
+                <span className="absolute -top-1.5 md:-top-2 -right-1.5 md:-right-2 bg-rose-600 text-white text-[10px] md:text-xs font-black min-w-[20px] md:min-w-[24px] h-[20px] md:h-[24px] rounded-full flex items-center justify-center shadow-lg border-2 border-gray-900 animate-in zoom-in-50">
                   {itemCount}
                 </span>
               )}
             </div>
             <div className="text-left">
-              <div className="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-60">Total: ₦{totalAmount.toLocaleString()}</div>
-              <div className="text-sm md:text-lg font-black leading-none">You're creating something special ❤️</div>
+              <div className="text-[10px] md:text-xs font-black uppercase tracking-widest opacity-60">Total: ₦{totalAmount.toLocaleString()}</div>
+              <div className="text-lg md:text-2xl font-black leading-none flex items-center gap-2">
+                View Cart <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
             </div>
           </Button>
         </div>
