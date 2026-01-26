@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { IProposal } from '@/models/Proposal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download } from 'lucide-react';
+import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
