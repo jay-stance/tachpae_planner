@@ -26,8 +26,13 @@ export const getPlanningData = unstable_cache(
 
         const products = await Product.find({ 
             event: event._id, 
-            isActive: true 
-        }).populate('category').populate('tags').lean();
+            isActive: true,
+            isBundle: { $ne: true }, // Exclude bundles from regular products
+            $or: [
+                { locations: { $size: 0 } }, // Available everywhere
+                { locations: city._id }      // Available in this city
+            ]
+        }).populate('category').lean();
 
         const services = await Service.find({ 
             event: event._id, 
@@ -40,10 +45,16 @@ export const getPlanningData = unstable_cache(
             isActive: true 
         }).lean();
 
-        const bundles = await Bundle.find({ 
+        // Fetch bundles from Product model where isBundle = true
+        const bundles = await Product.find({ 
             event: event._id, 
-            isActive: true 
-        }).populate('products').lean();
+            isBundle: true,
+            isActive: true,
+            $or: [
+                { locations: { $size: 0 } },
+                { locations: city._id }
+            ]
+        }).lean();
 
         const allCities = await City.find({ 
             _id: { $in: event.cities },

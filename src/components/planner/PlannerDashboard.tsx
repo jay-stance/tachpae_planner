@@ -150,8 +150,8 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       productId: bundle._id,
       type: 'BUNDLE',
       productName: bundle.name,
-      productImage: bundle.mediaGallery?.[0] || bundle.products?.[0]?.mediaGallery?.[0],
-      basePrice: bundle.bundlePrice,
+      productImage: bundle.mediaGallery?.[0] || bundle.bundleItems?.[0]?.productImage || '', // Fallback safely
+      basePrice: bundle.basePrice,
       quantity: 1,
       variantSelection: {},
       customizationData: {},
@@ -160,14 +160,27 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   };
 
   const getFilteredProducts = () => {
-    let prods = activeCategory?._id === 'specials' ? [] : getProductsByCategory(activeCategory?._id);
+    // For "Gifts" tab, show all products across categories (not specials/experiences)
+    let prods = activeCategory?._id === 'gifts' 
+      ? products 
+      : activeCategory?._id === 'specials' || activeCategory?._id === 'bundles'
+        ? [] 
+        : getProductsByCategory(activeCategory?._id);
     
+    // Apply tag-based filters
     if (activeFilter === 'under25k') {
-      prods = prods.filter((p: any) => p.basePrice < 25000);
+      prods = prods.filter((p: any) => p.basePrice <= 25000); // Changed to <= and included basePrice check
     } else if (activeFilter === 'luxury') {
-      prods = prods.filter((p: any) => p.tags?.some((t: any) => t.slug === 'luxury-pick' || t.slug === 'grand-gesture') || p.basePrice > 50000);
+      // Check string tags for 'luxury' or 'grand-gesture', or high price
+      prods = prods.filter((p: any) => 
+        p.tags?.includes('luxury') || 
+        p.tags?.includes('grand-gesture') || 
+        p.tierLabel === 'grandGesture' ||
+        p.basePrice >= 80000 // Adjusted threshold
+      );
     } else if (activeFilter === 'popular') {
-      prods = prods.filter((p: any) => p.tags?.some((t: any) => t.slug === 'most-popular' || t.slug === 'best-seller'));
+      // Check string tags for 'popular' or 'best-seller'
+      prods = prods.filter((p: any) => p.tags?.includes('popular') || p.tags?.includes('best-seller'));
     }
     
     return prods;
@@ -533,62 +546,71 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                  {bundles.map((bundle: any) => (
-                   <div key={bundle._id} className="group bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col">
-                     {/* Image Header */}
-                     <div className="h-64 relative bg-gray-100 overflow-hidden">
-                       {bundle.mediaGallery?.[0] ? (
-                         <Image src={bundle.mediaGallery[0]} alt={bundle.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                       ) : (
-                         <div className="w-full h-full flex items-center justify-center text-6xl">🎁</div>
-                       )}
+                   <div key={bundle._id} className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col">
+                     {/* Image Header with multi-image carousel */}
+                     <div className="h-56 relative bg-gray-100 overflow-hidden">
+                       {/* Show grid of product images */}
+                       <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5">
+                         {bundle.mediaGallery?.slice(0, 4).map((img: string, idx: number) => (
+                           <div key={idx} className={`relative overflow-hidden ${bundle.mediaGallery.length === 1 ? 'col-span-2 row-span-2' : bundle.mediaGallery.length === 2 ? 'row-span-2' : bundle.mediaGallery.length === 3 && idx === 0 ? 'row-span-2' : ''}`}>
+                             <Image src={img} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                           </div>
+                         ))}
+                         {(!bundle.mediaGallery || bundle.mediaGallery.length === 0) && (
+                           <div className="col-span-2 row-span-2 flex items-center justify-center text-6xl bg-rose-50">🎁</div>
+                         )}
+                       </div>
                        
-                       {/* Savings Badge */}
-                       {bundle.savings > 0 && (
-                         <div className="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-xs font-black rounded-full shadow-lg">
-                           SAVE ₦{bundle.savings.toLocaleString()}
-                         </div>
-                       )}
+                       {/* Bundle Category Badge */}
+                       <div className="absolute top-3 left-3 px-3 py-1 bg-rose-600 text-white text-[10px] font-black rounded-full uppercase tracking-wider shadow-lg">
+                         {bundle.bundleCategory === 'couples' ? '💖 Couples' :
+                          bundle.bundleCategory === 'for-her' ? '🌸 For Her' :
+                          bundle.bundleCategory === 'for-him' ? '🧔 For Him' :
+                          bundle.bundleCategory === 'self-love' ? '💛 Self-Love' : '🎁 Bundle'}
+                       </div>
                        
-                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
-                       
-                       <div className="absolute bottom-4 left-6 right-6">
-                         <h3 className="text-2xl font-black text-white leading-tight mb-1">{bundle.name}</h3>
-                         <p className="text-white/80 text-sm line-clamp-2">{bundle.description}</p>
+                       {/* Price Badge */}
+                       <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-lg">
+                         <span className="text-lg font-black text-rose-600">₦{bundle.basePrice.toLocaleString()}</span>
                        </div>
                      </div>
                      
                      {/* Content */}
-                     <div className="p-6 flex-1 flex flex-col">
-                       <div className="mb-6 space-y-3">
-                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Includes {bundle.products?.length} items:</p>
-                         <div className="flex -space-x-3 overflow-hidden py-1">
-                           {bundle.products?.map((prod: any, idx: number) => (
-                             <div key={prod._id} className="relative w-12 h-12 rounded-full border-2 border-white shadow-md bg-gray-50 overflow-hidden" title={prod.name}>
-                               {prod.mediaGallery?.[0] ? (
-                                 <Image src={prod.mediaGallery[0]} alt="" fill className="object-cover" />
-                               ) : (
-                                 <div className="w-full h-full flex items-center justify-center text-xs">📦</div>
-                               )}
+                     <div className="p-5 flex-1 flex flex-col">
+                       <h3 className="text-xl font-black text-gray-900 mb-2">{bundle.name}</h3>
+                       <p className="text-gray-500 text-sm mb-4 line-clamp-2">{bundle.description}</p>
+                       
+                       {/* Included Items with proper display */}
+                       <div className="mb-5 space-y-2">
+                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">What's Inside:</p>
+                         <div className="flex flex-wrap gap-2">
+                           {bundle.bundleItems?.map((item: any, idx: number) => (
+                             <div 
+                               key={idx} 
+                               className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100"
+                               title={item.productName}
+                             >
+                               {/* Show image if available in mediaGallery by index */}
+                               <div className="w-6 h-6 rounded-full bg-rose-100 overflow-hidden flex items-center justify-center flex-shrink-0">
+                                 {bundle.mediaGallery?.[idx] ? (
+                                   <Image src={bundle.mediaGallery[idx]} alt="" width={24} height={24} className="object-cover" />
+                                 ) : (
+                                   <span className="text-[10px]">🎁</span>
+                                 )}
+                               </div>
+                               <span className="text-xs font-semibold text-gray-700 truncate max-w-[120px]">{item.productName}</span>
                              </div>
                            ))}
-                           {bundle.products?.length > 4 && (
-                             <div className="w-12 h-12 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
-                               +{bundle.products.length - 4}
-                             </div>
-                           )}
                          </div>
                        </div>
                        
-                       <div className="mt-auto flex items-center justify-between gap-4">
-                         <div>
-                            <span className="block text-xs text-gray-400 font-bold line-through">₦{(bundle.originalValue || bundle.bundlePrice * 1.1).toLocaleString()}</span>
-                            <span className="text-2xl font-black text-rose-600">₦{bundle.bundlePrice.toLocaleString()}</span>
-                         </div>
+                       {/* Add to Cart */}
+                       <div className="mt-auto">
                          <Button 
                            onClick={() => handleBundleAddToCart(bundle)}
-                           className="flex-1 h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg shadow-gray-200"
+                           className="w-full h-12 rounded-2xl bg-gray-900 hover:bg-rose-600 text-white font-bold transition-colors shadow-lg"
                          >
-                           Add to Cart
+                           Add Bundle to Cart
                          </Button>
                        </div>
                      </div>
@@ -686,19 +708,44 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
                               return (
                                 <>
-                                  <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start">
-                                    {product.tags?.map((tag: any) => (
-                                      <span 
-                                        key={tag._id} 
-                                        className="px-2 py-0.5 rounded text-[10px] font-bold shadow-sm backdrop-blur-md border border-white/20 whitespace-nowrap"
-                                        style={{ background: tag.color, color: 'white' }}
-                                      >
-                                        {tag.icon} {tag.name}
-                                      </span>
-                                    ))}
-                                    {product.microBenefits?.slice(0, 1).map((benefit: string, idx: number) => (
-                                      <span key={idx} className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/90 text-gray-700 shadow-sm border border-gray-100 whitespace-nowrap">
-                                        ✨ {benefit}
+                                  <div className="absolute top-2 left-2 z-10 flex flex-wrap gap-1.5 items-start max-w-[90%]">
+                                    {/* Show up to 3 tags with stylish badges */}
+                                    {product.tags?.slice(0, 3).map((tag: string, idx: number) => {
+                                      // Map tags to colors and icons
+                                      const tagStyles: Record<string, { bg: string, text: string, icon: string, border: string }> = {
+                                        'popular': { bg: 'rgba(254, 242, 242, 0.9)', text: '#dc2626', icon: '🔥', border: '#fecaca' },
+                                        'luxury': { bg: 'rgba(250, 245, 255, 0.9)', text: '#7e22ce', icon: '💎', border: '#e9d5ff' },
+                                        'romantic': { bg: 'rgba(253, 242, 248, 0.9)', text: '#db2777', icon: '💕', border: '#fbcfe8' },
+                                        'for-her': { bg: 'rgba(255, 241, 242, 0.9)', text: '#e11d48', icon: '👸', border: '#fda4af' },
+                                        'for-him': { bg: 'rgba(239, 246, 255, 0.9)', text: '#2563eb', icon: '👔', border: '#bfdbfe' },
+                                        'budget': { bg: 'rgba(240, 253, 244, 0.9)', text: '#16a34a', icon: '💰', border: '#bbf7d0' },
+                                        'self-love': { bg: 'rgba(255, 251, 235, 0.9)', text: '#d97706', icon: '✨', border: '#fde68a' },
+                                        'couples': { bg: 'rgba(255, 241, 242, 0.9)', text: '#be123c', icon: '💑', border: '#fda4af' },
+                                        'bundle': { bg: 'rgba(236, 254, 255, 0.9)', text: '#0891b2', icon: '�', border: '#a5f3fc' },
+                                      };
+                                      
+                                      const style = tagStyles[tag] || { bg: 'rgba(243, 244, 246, 0.9)', text: '#4b5563', icon: '🏷️', border: '#e5e7eb' };
+                                      
+                                      return (
+                                        <span 
+                                          key={idx} 
+                                          className="px-2 py-1 rounded-lg text-[10px] font-bold shadow-sm backdrop-blur-md border flex items-center gap-1"
+                                          style={{ 
+                                            background: style.bg, 
+                                            color: style.text,
+                                            borderColor: style.border 
+                                          }}
+                                        >
+                                          <span>{style.icon}</span>
+                                          <span className="uppercase tracking-tight">{tag.replace(/-/g, ' ')}</span>
+                                        </span>
+                                      );
+                                    })}
+                                    
+                                    {/* Show Micro Benefit if slots available */}
+                                    {product.microBenefits?.slice(0, Math.max(0, 3 - (product.tags?.length || 0))).map((benefit: string, idx: number) => (
+                                      <span key={`mb-${idx}`} className="px-2 py-1 rounded-lg text-[10px] font-bold bg-white/90 text-gray-700 shadow-sm border border-gray-100 whitespace-nowrap flex items-center gap-1">
+                                        <span className="text-yellow-500">✨</span> {benefit}
                                       </span>
                                     ))}
                                   </div>

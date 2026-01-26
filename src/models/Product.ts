@@ -9,9 +9,18 @@ export interface IProduct extends Document {
   mediaGallery: string[]; // URLs of images/videos
   
   // CRO Tags for filtering and display
-  tags: mongoose.Types.ObjectId[]; // References to Tag model
+  tags: string[]; // e.g., ['popular', 'romantic', 'luxury', 'for-her', 'for-him']
   tierLabel?: 'entry' | 'popular' | 'grandGesture';
   microBenefits?: string[]; // e.g., ["Fast Delivery", "Premium Quality"]
+  
+  // Bundle fields
+  isBundle?: boolean;
+  bundleCategory?: 'couples' | 'for-her' | 'for-him' | 'self-love';
+  bundleItems?: {
+    productId: mongoose.Types.ObjectId;
+    productName: string;
+    quantity: number;
+  }[];
   
   // Dynamic Configuration for SKUs
   variantsConfig: {
@@ -64,9 +73,18 @@ const ProductSchema: Schema = new Schema({
   mediaGallery: [{ type: String }],
   
   // CRO fields
-  tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
+  tags: [{ type: String }], // Simple string array
   tierLabel: { type: String, enum: ['entry', 'popular', 'grandGesture'], default: null },
   microBenefits: [{ type: String }],
+  
+  // Bundle fields
+  isBundle: { type: Boolean, default: false },
+  bundleCategory: { type: String, enum: ['couples', 'for-her', 'for-him', 'self-love'], default: null },
+  bundleItems: [{
+    productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+    productName: { type: String },
+    quantity: { type: Number, default: 1 }
+  }],
   
   variantsConfig: { type: Schema.Types.Mixed, default: { options: [] } },
   customizationSchema: { type: Schema.Types.Mixed, default: { steps: [] } },
