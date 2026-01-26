@@ -125,7 +125,10 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       // 3. Clear Cart and Redirect
       clearCart();
       onSuccess();
-      window.open(whatsappUrl, '_blank');
+      
+      // Use location.href instead of window.open to avoid popup blockers
+      // This ensures the redirect works reliably across all devices
+      window.location.href = whatsappUrl;
       
     } catch (error: any) {
       alert(error.message || 'Something went wrong. Please try again.');

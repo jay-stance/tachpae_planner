@@ -297,7 +297,7 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden font-sans" style={{ background: 'var(--tachpae-bg-dark)' }}>
+    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-start md:justify-center relative overflow-x-hidden font-sans py-12 md:py-0" style={{ background: 'var(--tachpae-bg-dark)' }}>
         
         {/* Ambient Orbs */}
         <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.25 }} />

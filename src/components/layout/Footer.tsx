@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Image 
               src="https://www.tachpae.com/assets/logo-CR8FPQ-p.png" 
               alt="Tachpae Logo" 
@@ -28,7 +28,7 @@ export default function Footer() {
               className="object-contain"
             />
             <span className="text-xl font-bold tracking-tight text-white">Tachpae</span>
-          </div>
+          </Link>
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
