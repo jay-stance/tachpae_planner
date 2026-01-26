@@ -18,7 +18,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import { toast } from 'sonner';
-
+import { sendEvent } from '@/lib/analytics';
 // Helper to detect video URLs
 const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
 
@@ -45,6 +45,7 @@ interface PlannerDashboardProps {
 }
 
 export default function PlannerDashboard({ data }: PlannerDashboardProps) {
+  // ... (existing hooks)
   const router = useRouter();
   const searchParams = useSearchParams();
   const { city, categories, products, services, addons = [], bundles = [] } = data;
@@ -58,8 +59,26 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [copied, setCopied] = useState(false);
   const [activeCategory, setActiveCategory] = useState<any>({ _id: 'bundles', name: 'Bundles' });
   const [activeFilter, setActiveFilter] = useState<string>('all');
-
+  
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
+  React.useEffect(() => {
+    if (activeCategory?._id) {
+      sendEvent({
+        action: 'view_item_list',
+        category: 'Navigation',
+        label: activeCategory.name || activeCategory._id
+      });
+    }
+  }, [activeCategory]);
+
+
+
+  // Track Cart Open
+  const openCart = () => {
+    sendEvent({ action: 'view_cart', category: 'Interaction', label: 'Cart Drawer' });
+    setCartOpen(true);
+  };
+
 
   // const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const [cartView, setCartView] = React.useState<'cart' | 'checkout'>('cart');
@@ -118,11 +137,26 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   );
 
   const handleProductClick = (product: any) => {
+    sendEvent({
+      action: 'select_item',
+      category: product.isBundle ? 'Bundle' : 'Product',
+      label: product.name,
+      value: product.basePrice,
+      items: [{ item_id: product._id, item_name: product.name }]
+    });
     setSelectedProduct(product);
   };
 
   const handleAddToCart = (config: any) => {
     if (!selectedProduct) return;
+    
+    sendEvent({
+      action: 'add_to_cart',
+      category: 'Product',
+      label: selectedProduct.name,
+      value: config.totalPrice || selectedProduct.basePrice,
+      items: [{ item_id: selectedProduct._id, item_name: selectedProduct.name }]
+    });
     
     addItem({
       productId: selectedProduct._id,
@@ -174,6 +208,14 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   };
 
   const handleBundleAddToCart = (bundle: any) => {
+    sendEvent({
+      action: 'add_to_cart',
+      category: 'Bundle',
+      label: bundle.name,
+      value: bundle.basePrice,
+      items: [{ item_id: bundle._id, item_name: bundle.name }]
+    });
+
     addItem({
       productId: bundle._id,
       type: 'BUNDLE',
@@ -880,7 +922,10 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         <div className="max-w-5xl mx-auto flex items-center justify-between pointer-events-auto">
           {/* VIEW CART BUTTON */}
           <Button 
-            onClick={() => setCartOpen(true)}
+            onClick={() => {
+              sendEvent({ action: 'view_cart', category: 'Interaction', label: 'Floating Button' });
+              setCartOpen(true);
+            }}
             className="h-16 md:h-20 px-6 md:px-12 bg-gray-900 hover:bg-black text-white rounded-2xl md:rounded-[2rem] shadow-2xl flex items-center gap-3 md:gap-5 transition-all active:scale-95 group"
           >
             <div className="relative">
@@ -910,3 +955,5 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     </div>
   );
 }
+
+

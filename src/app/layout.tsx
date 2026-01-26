@@ -7,6 +7,7 @@ import { CartProvider } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/layout/Footer';
 import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -103,6 +104,9 @@ export default async function RootLayout({
           <WhatsAppIcon />
           <Toaster richColors position="top-center" />
           <Analytics />
+          {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+          )}
         </EventProvider>
       </body>
     </html>

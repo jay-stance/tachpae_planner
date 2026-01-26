@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { Trash2, ShoppingBag, Plus, Minus, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import CheckoutForm from './CheckoutForm';
+import { sendEvent } from '@/lib/analytics';
 
 interface CartDrawerProps {
   open: boolean;
@@ -130,7 +131,10 @@ export default function CartDrawer({ open, onOpenChange, city, defaultView = 'ca
                 <span className="text-rose-600">₦{totalAmount.toLocaleString()}</span>
               </div>
               <Button 
-                onClick={() => setView('checkout')}
+                onClick={() => {
+                  sendEvent({ action: 'begin_checkout', category: 'Ecommerce', label: 'Cart Drawer', value: totalAmount });
+                  setView('checkout');
+                }}
                 className="w-full h-14 text-lg bg-rose-600 hover:bg-rose-700 shadow-lg shadow-rose-200 rounded-xl font-bold"
               >
                 Proceed to Checkout
