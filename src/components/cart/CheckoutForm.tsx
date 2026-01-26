@@ -24,7 +24,6 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
     name: '',
     email: '',
     phone: '',
-    whatsapp: '',
     secondaryPhone: '',
     address: '',
     customMessage: ''
@@ -36,6 +35,21 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  /* Service Fee Logic:
+     0 - 50k: 2,500
+     50k - 100k: 3,500
+     ... +1000 for every 50k
+  */
+  const calculateServiceFee = (subtotal: number) => {
+    if (subtotal <= 0) return 0;
+    const brackets = Math.floor((subtotal - 1) / 50000);
+    return 2500 + (brackets * 1000);
+  };
+
+  const serviceFee = calculateServiceFee(totalAmount); 
+  const finalTotal = totalAmount + serviceFee;
+  const [showFeeInfo, setShowFeeInfo] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +75,7 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
             variantSelection: item.variantSelection,
             customizationData: item.customizationData
           })),
-          totalAmount
+          totalAmount: finalTotal // Send final total including fee
         })
       });
 
@@ -73,8 +87,8 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       let message = `*NEW ORDER - ${orderId}*\n\n`;
       message += `*Customer Details:*\n`;
       message += `- Name: ${formData.name}\n`;
-      message += `- Phone: ${formData.phone}\n`;
-      message += `- WhatsApp: ${formData.whatsapp}\n`;
+      message += `- Phone (WhatsApp): ${formData.phone}\n`;
+      if (formData.secondaryPhone) message += `- Alt Phone: ${formData.secondaryPhone}\n`;
       message += `- Address: ${formData.address}, ${city.name}\n`;
       if (formData.customMessage) message += `- Message: ${formData.customMessage}\n`;
       
@@ -86,7 +100,9 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
         }
       });
       
-      message += `\n*Total Amount: ₦${totalAmount.toLocaleString()}*\n\n`;
+      message += `\n*Subtotal: ₦${totalAmount.toLocaleString()}*\n`;
+      message += `*Service Fee: ₦${serviceFee.toLocaleString()}*\n`;
+      message += `*TOTAL AMOUNT: ₦${finalTotal.toLocaleString()}*\n\n`;
       message += `_This order was placed on Tachpae Planner._`;
 
       const encodedMessage = encodeURIComponent(message);
@@ -127,23 +143,13 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">Phone Number (WhatsApp)</Label>
                 <Input id="phone" name="phone" required placeholder="080..." value={formData.phone} onChange={handleInputChange} />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="whatsapp">WhatsApp Number</Label>
-                <Input id="whatsapp" name="whatsapp" required placeholder="080..." value={formData.whatsapp} onChange={handleInputChange} />
+                <Label htmlFor="secondaryPhone">Alternative Phone (Optional)</Label>
+                <Input id="secondaryPhone" name="secondaryPhone" placeholder="080..." value={formData.secondaryPhone} onChange={handleInputChange} />
               </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" name="email" type="email" required placeholder="john@example.com" value={formData.email} onChange={handleInputChange} />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="secondaryPhone">Alternative Phone (Optional)</Label>
-              <Input id="secondaryPhone" name="secondaryPhone" placeholder="080..." value={formData.secondaryPhone} onChange={handleInputChange} />
             </div>
 
             <div className="space-y-1.5">
@@ -159,11 +165,32 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
         </div>
 
         {/* Floating Action Bar */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm text-gray-500">Order Total</span>
-            <span className="text-xl font-bold text-rose-600">₦{totalAmount.toLocaleString()}</span>
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t space-y-3">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm text-gray-500">
+                <span>Subtotal</span>
+                <span>₦{totalAmount.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center gap-1 cursor-pointer" onClick={() => setShowFeeInfo(!showFeeInfo)}>
+                    <span>Service Fee</span>
+                    <div className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center text-[10px] font-serif italic text-gray-500">i</div>
+                </div>
+                <span>₦{serviceFee.toLocaleString()}</span>
+            </div>
+            
+            {showFeeInfo && (
+                <div className="text-[10px] text-gray-400 bg-gray-50 p-2 rounded-lg leading-relaxed animate-in fade-in zoom-in-95">
+                    To ensure a seamless experience, we charge a small service fee based on your order volume. This covers handling, logistics support, and dedicated coordination.
+                </div>
+            )}
+
+            <div className="flex items-center justify-between text-lg font-bold pt-2 border-t border-dashed">
+                <span className="text-gray-900">Total</span>
+                <span className="text-rose-600">₦{finalTotal.toLocaleString()}</span>
+            </div>
           </div>
+
           <div className="flex gap-3">
             <Button type="button" variant="outline" onClick={onBack} disabled={loading} className="px-6 rounded-xl">
               Back
