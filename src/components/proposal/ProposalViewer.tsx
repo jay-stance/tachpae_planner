@@ -14,13 +14,13 @@ import UpsellProducts from './UpsellProducts';
 import ShareCard from './ShareCard';
 
 const INTRO_TEXTS = [
-    "Someone thinks about you a lot...",
-    "A special message from the stars...",
-    "Close your eyes, make a wish...",
-    "Love is just a click away...",
-    "You are someone's favorite person...",
-    "A little bird told me...",
-    "Prepare for butterflies..."
+    "Somebody's head is swelling because of you... 🙈❤️",
+    "Your own 'God When' moment is finally here... 🥺✨",
+    "Forget breakfast, someone wants to serve you love... 🥞🥰",
+    "Oya hold your chest, something sweet is coming... 💓🍬",
+    "See the person that cannot sleep because of you... 👀🌙",
+    "Someone wants to stress you with enjoyment... 😌🦋",
+    "You are the main character in someone's story... 🎬🌟"
 ];
 
 // Moved outside to prevent re-mounting on every progress update
@@ -83,12 +83,13 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     }));
   }, []);
 
-  const rejectionOptions = [
-    "I'm focusing on my career 💼",
-    "I'm allergic to love 🤧",
-    "My cat said no 🐱",
-    "Ask me again in 5 business days 📅",
-    "I'm actually an alien 👽"
+
+const rejectionOptions = [
+    "I'm already in a serious talking stage 🌚🔒",
+    "I thought we were just vibing? 🤡💀",
+    "My heart is currently on Airplane Mode ✈️📵",
+    "You are like a brother/sister to me 😂💔",
+    "We don't match... respectfully 🧢👀"
   ];
 
   const handleOpenEnvelope = () => {
