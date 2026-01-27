@@ -12,9 +12,10 @@ interface ShareCardProps {
   onClose: () => void;
   status?: 'ACCEPTED' | 'REJECTED';
   rejectionReason?: string;
+  perspective?: 'responder' | 'sender'; // NEW: sender POV shows "They said YES/NO"
 }
 
-export default function ShareCard({ proposerName, partnerName, message, isOpen, onClose, status = 'ACCEPTED', rejectionReason }: ShareCardProps) {
+export default function ShareCard({ proposerName, partnerName, message, isOpen, onClose, status = 'ACCEPTED', rejectionReason, perspective = 'responder' }: ShareCardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [generating, setGenerating] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -32,23 +33,29 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
     canvas.width = 1080;
     canvas.height = 1920;
 
-    // Create gradient background
+    // Create gradient background based on status
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, '#0A0A12');
-    gradient.addColorStop(0.5, '#1a1a3e');
-    gradient.addColorStop(1, '#0A0A12');
+    if (status === 'REJECTED') {
+      gradient.addColorStop(0, '#0f172a');
+      gradient.addColorStop(0.5, '#1e293b');
+      gradient.addColorStop(1, '#0f172a');
+    } else {
+      gradient.addColorStop(0, '#0A0A12');
+      gradient.addColorStop(0.5, '#1a1a3e');
+      gradient.addColorStop(1, '#0A0A12');
+    }
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Add decorative circles
     ctx.beginPath();
     ctx.arc(200, 300, 300, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(53, 20, 245, 0.15)';
+    ctx.fillStyle = status === 'REJECTED' ? 'rgba(71, 85, 105, 0.2)' : 'rgba(53, 20, 245, 0.15)';
     ctx.fill();
 
     ctx.beginPath();
     ctx.arc(880, 1600, 400, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 0, 128, 0.1)';
+    ctx.fillStyle = status === 'REJECTED' ? 'rgba(100, 116, 139, 0.15)' : 'rgba(255, 0, 128, 0.1)';
     ctx.fill();
 
     // Heart icon area
@@ -64,11 +71,24 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
       ctx.textAlign = 'center';
       ctx.fillText('💔', 540, 530);
 
-      // "I said NO" text
-      ctx.font = 'bold 90px Arial';
+      // Main headline based on perspective
+      ctx.font = 'bold 80px Arial';
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
-      ctx.fillText('I said NO', 540, 720);
+      if (perspective === 'sender') {
+        ctx.fillText('They said NO', 540, 720);
+      } else {
+        ctx.fillText('I said NO', 540, 720);
+      }
+      
+      // Subtext for rejection - meme-worthy
+      ctx.font = 'bold 36px Arial';
+      ctx.fillStyle = '#94a3b8';
+      if (perspective === 'sender') {
+        ctx.fillText(`${partnerName} rejected me... 😭`, 540, 790);
+      } else {
+        ctx.fillText(`to ${proposerName}'s proposal`, 540, 790);
+      }
     } else {
       const heartGradient = ctx.createLinearGradient(420, 380, 660, 620);
       heartGradient.addColorStop(0, '#3514F5');
@@ -81,17 +101,25 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
       ctx.textAlign = 'center';
       ctx.fillText('💕', 540, 530);
 
-      // "I said YES!" text
+      // Main headline based on perspective
       ctx.font = 'bold 90px Arial';
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
-      ctx.fillText('I said YES!', 540, 720);
+      if (perspective === 'sender') {
+        ctx.fillText('They said YES!', 540, 720);
+      } else {
+        ctx.fillText('I said YES!', 540, 720);
+      }
     }
 
-    // Proposer name
+    // Partner/Proposer name subtitle
     ctx.font = 'bold 50px Arial';
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.fillText(`to ${proposerName}'s proposal`, 540, 800);
+    if (perspective === 'sender') {
+      ctx.fillText(`My proposal to ${partnerName}`, 540, 850);
+    } else {
+      ctx.fillText(`to ${proposerName}'s proposal`, 540, 850);
+    }
 
     // Decorative line
     ctx.beginPath();

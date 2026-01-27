@@ -89,7 +89,7 @@ const rejectionOptions = [
     "I thought we were just vibing? 🤡💀",
     "My heart is currently on Airplane Mode ✈️📵",
     "You are like a brother/sister to me 😂💔",
-    "We don't match... respectfully 🧢👀"
+    "We don't match... respectfully 👀"
   ];
 
   const handleOpenEnvelope = () => {
@@ -292,13 +292,28 @@ const rejectionOptions = [
                <p className="text-white/30 text-xs">
                  💝 Trusted by lovers across Nigeria
                </p>
-             </motion.div>
+              </motion.div>
+              
+              {/* Back to Home */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2 }}
+                className="mt-6 flex justify-center"
+              >
+                <button
+                  onClick={() => window.location.href = '/'}
+                  className="px-6 py-3 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-all text-sm font-medium"
+                >
+                  ← Back to Home
+                </button>
+              </motion.div>
           </div>
       );
   }
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-start md:justify-center relative overflow-x-hidden font-sans py-12 md:py-0" style={{ background: 'var(--tachpae-bg-dark)' }}>
+    <div className="min-h-[100dvh] w-full flex items-center justify-center relative overflow-x-hidden font-sans py-12 md:py-0" style={{ background: 'var(--tachpae-bg-dark)' }}>
         
         {/* Ambient Orbs */}
         <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none" style={{ background: 'var(--tachpae-primary)', opacity: 0.25 }} />

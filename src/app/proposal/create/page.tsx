@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import ResponseReveal from '@/components/proposal/ResponseReveal';
+import ShareCard from '@/components/proposal/ShareCard';
 
 export default function CreateProposal() {
   const router = useRouter();
@@ -32,6 +34,11 @@ export default function CreateProposal() {
   const [generatedLink, setGeneratedLink] = useState('');
   const [copied, setCopied] = useState(false);
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
+  
+  // Response Reveal Experience
+  const [revealedIds, setRevealedIds] = useState<Set<string>>(new Set());
+  const [activeReveal, setActiveReveal] = useState<any | null>(null);
+  const [showShareCard, setShowShareCard] = useState(false);
 
   // Helper to detect video URLs
   const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
@@ -347,7 +354,11 @@ export default function CreateProposal() {
                       <p className="text-sm text-gray-400">Your sent proposals will appear here.</p>
                     </div>
                   ) : (
-                    previousProposals.map((prop, i) => (
+                    previousProposals.map((prop, i) => {
+                      const isRevealed = revealedIds.has(prop._id) || prop.status === 'PENDING';
+                      const hasResponse = prop.status !== 'PENDING';
+                      
+                      return (
                       <motion.div 
                         key={prop._id}
                         initial={{ opacity: 0, y: 10 }}
@@ -356,38 +367,49 @@ export default function CreateProposal() {
                       >
                         <Card className={cn(
                           "border-0 shadow-lg overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:-translate-y-1",
+                          !hasResponse ? "bg-white border-l-4 border-amber-400" :
+                          !isRevealed ? "bg-gradient-to-br from-purple-50 to-indigo-100 border-l-4 border-purple-400" :
                           prop.status === 'ACCEPTED' ? "bg-gradient-to-br from-rose-50 to-pink-100 border-l-4 border-rose-500" :
-                          prop.status === 'REJECTED' ? "bg-gradient-to-br from-slate-50 to-gray-200 border-l-4 border-slate-400" :
-                          "bg-white border-l-4 border-amber-400"
+                          "bg-gradient-to-br from-slate-50 to-gray-200 border-l-4 border-slate-400"
                         )}>
                           <div className="p-5 flex items-start justify-between relative overflow-hidden">
                             {/* Ambient background icons */}
                             <div className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:scale-110 transition-transform duration-700 pointer-events-none">
-                              {prop.status === 'ACCEPTED' ? <Heart className="w-32 h-32 fill-rose-500" /> : 
-                               prop.status === 'REJECTED' ? <XCircle className="w-32 h-32 fill-slate-500" /> : 
-                               <Mail className="w-32 h-32 fill-amber-500" />}
+                              {!hasResponse ? <Mail className="w-32 h-32 fill-amber-500" /> :
+                               !isRevealed ? <Sparkles className="w-32 h-32 fill-purple-500" /> :
+                               prop.status === 'ACCEPTED' ? <Heart className="w-32 h-32 fill-rose-500" /> : 
+                               <XCircle className="w-32 h-32 fill-slate-500" />}
                             </div>
 
                             <div className="flex flex-col relative z-10 grow mr-4">
                               <div className="flex items-center gap-2 mb-1">
-                                {prop.status === 'ACCEPTED' ? (
-                                  <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
-                                ) : prop.status === 'REJECTED' ? (
-                                  <XCircle className="w-3 h-3 text-slate-400" />
-                                ) : (
+                                {!hasResponse ? (
                                   <Sparkles className="w-3 h-3 text-amber-500" />
+                                ) : !isRevealed ? (
+                                  <motion.div
+                                    animate={{ scale: [1, 1.2, 1] }}
+                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                  >
+                                    <Mail className="w-3 h-3 text-purple-500" />
+                                  </motion.div>
+                                ) : prop.status === 'ACCEPTED' ? (
+                                  <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
+                                ) : (
+                                  <XCircle className="w-3 h-3 text-slate-400" />
                                 )}
                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                  {prop.status === 'ACCEPTED' ? "A Romantic Success" : 
-                                   prop.status === 'REJECTED' ? "A Quiet Moment" : 
-                                   "Sent with Hope"}
+                                  {!hasResponse ? "Sent with Hope" : 
+                                   !isRevealed ? "Response Received! ✨" :
+                                   prop.status === 'ACCEPTED' ? "A Romantic Success" : 
+                                   "A Quiet Moment"}
                                 </span>
                               </div>
                               
                               <h4 className="text-sm font-bold text-gray-800 mb-0.5">
-                                {prop.status === 'ACCEPTED' ? "Forever Yours, " : 
-                                 prop.status === 'REJECTED' ? "In Retrospect, " : 
-                                 "A Special Invite for "}{prop.partnerName}
+                                {!hasResponse ? "A Special Invite for " : 
+                                 !isRevealed ? "Message for " :
+                                 prop.status === 'ACCEPTED' ? "Forever Yours, " : 
+                                 "In Retrospect, "}{prop.partnerName}
                               </h4>
                               
                               <p className="text-xs text-gray-500 italic line-clamp-2 leading-relaxed mb-3">
@@ -395,14 +417,22 @@ export default function CreateProposal() {
                               </p>
 
                               <div className="flex items-center gap-3">
-                                <div className={cn(
-                                  "text-[10px] font-bold px-2 py-0.5 rounded-full border",
-                                  prop.status === 'ACCEPTED' ? "bg-rose-500/10 border-rose-200 text-rose-600" :
-                                  prop.status === 'REJECTED' ? "bg-slate-500/10 border-slate-200 text-slate-600" :
-                                  "bg-amber-500/10 border-amber-200 text-amber-600"
-                                )}>
-                                  {prop.status}
-                                </div>
+                                {/* Show status badge only if revealed or pending */}
+                                {(isRevealed || !hasResponse) && (
+                                  <div className={cn(
+                                    "text-[10px] font-bold px-2 py-0.5 rounded-full border",
+                                    prop.status === 'ACCEPTED' ? "bg-rose-500/10 border-rose-200 text-rose-600" :
+                                    prop.status === 'REJECTED' ? "bg-slate-500/10 border-slate-200 text-slate-600" :
+                                    "bg-amber-500/10 border-amber-200 text-amber-600"
+                                  )}>
+                                    {prop.status}
+                                  </div>
+                                )}
+                                {!isRevealed && hasResponse && (
+                                  <div className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-purple-500/10 border-purple-200 text-purple-600">
+                                    Tap to reveal!
+                                  </div>
+                                )}
                                 <span className="text-[10px] text-gray-400 flex items-center gap-1">
                                   <History className="w-2.5 h-2.5" />
                                   {new Date(prop.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
@@ -411,19 +441,34 @@ export default function CreateProposal() {
                             </div>
 
                             <div className="flex flex-col gap-2 relative z-10">
-                              <Button 
-                                size="icon" 
-                                variant="outline" 
-                                className="w-9 h-9 rounded-full bg-white/50 backdrop-blur-sm border-gray-100 shadow-sm hover:bg-white hover:text-rose-500 transition-colors"
-                                onClick={() => window.open(`${window.location.origin}/proposal/${prop._id}`, '_blank')}
-                                title="View Page"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                              </Button>
+                              {/* View Response button for unrevealed responses */}
+                              {hasResponse && !isRevealed ? (
+                                <motion.div
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  <Button 
+                                    className="h-10 px-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold text-xs shadow-lg"
+                                    onClick={() => setActiveReveal(prop)}
+                                  >
+                                    View Response 💌
+                                  </Button>
+                                </motion.div>
+                              ) : (
+                                <Button 
+                                  size="icon" 
+                                  variant="outline" 
+                                  className="w-9 h-9 rounded-full bg-white/50 backdrop-blur-sm border-gray-100 shadow-sm hover:bg-white hover:text-rose-500 transition-colors"
+                                  onClick={() => window.open(`${window.location.origin}/proposal/${prop._id}`, '_blank')}
+                                  title="View Page"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                </Button>
+                              )}
                             </div>
                           </div>
 
-                          {prop.status === 'ACCEPTED' ? (
+                          {isRevealed && prop.status === 'ACCEPTED' ? (
                             <div className="bg-rose-500/5 px-5 py-3 border-t border-rose-100 flex flex-col gap-3 relative z-10">
                               {prop.reactionVideoUrl ? (
                                 <>
@@ -472,7 +517,7 @@ export default function CreateProposal() {
                                 </div>
                               )}
                             </div>
-                          ) : prop.status === 'REJECTED' ? (
+                          ) : isRevealed && prop.status === 'REJECTED' ? (
                             <div className="bg-slate-100/50 px-5 py-3 border-t border-slate-200 flex flex-col gap-1 relative z-10">
                               <div className="flex items-center gap-2 mb-1">
                                 <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center">
@@ -509,11 +554,47 @@ export default function CreateProposal() {
                           )}
                         </Card>
                       </motion.div>
-                    ))
+                    )})
                   )}
                 </div>
              </motion.div>
         </div>
+        
+        {/* Response Reveal Modal */}
+        {activeReveal && (
+          <ResponseReveal
+            isOpen={!!activeReveal}
+            onClose={() => {
+              // Mark as revealed and close
+              setRevealedIds(prev => new Set([...prev, activeReveal._id]));
+              setActiveReveal(null);
+            }}
+            status={activeReveal.status}
+            partnerName={activeReveal.partnerName}
+            proposerName={activeReveal.proposerName || formData.proposerName}
+            rejectionReason={activeReveal.rejectionReason}
+            reactionVideoUrl={activeReveal.reactionVideoUrl}
+            onShareClick={() => {
+              setRevealedIds(prev => new Set([...prev, activeReveal._id]));
+              setShowShareCard(true);
+            }}
+          />
+        )}
+        
+        {/* Share Card Modal */}
+        <ShareCard
+          proposerName={activeReveal?.proposerName || formData.proposerName || 'You'}
+          partnerName={activeReveal?.partnerName || 'Partner'}
+          message={activeReveal?.message || ''}
+          isOpen={showShareCard}
+          onClose={() => {
+            setShowShareCard(false);
+            setActiveReveal(null);
+          }}
+          status={activeReveal?.status === 'REJECTED' ? 'REJECTED' : 'ACCEPTED'}
+          rejectionReason={activeReveal?.rejectionReason}
+          perspective="sender"
+        />
     </div>
   );
 }
