@@ -36,13 +36,33 @@ export default function CreateProposal() {
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
   
   // Response Reveal Experience
-  const [revealedIds, setRevealedIds] = useState<Set<string>>(new Set());
+  const [revealedIds, setRevealedIds] = useState<Set<string>>(() => {
+    // Initialize from localStorage
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('tachpae_revealed_proposals');
+      if (stored) {
+        try {
+          return new Set(JSON.parse(stored));
+        } catch {
+          return new Set();
+        }
+      }
+    }
+    return new Set();
+  });
   const [activeReveal, setActiveReveal] = useState<any | null>(null);
   const [showShareCard, setShowShareCard] = useState(false);
 
   // Helper to detect video URLs
   const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
   const getFirstImage = (mediaGallery: string[] = []) => mediaGallery.find(url => !isVideoUrl(url)) || null;
+
+  // Persist revealed IDs to localStorage
+  useEffect(() => {
+    if (revealedIds.size > 0) {
+      localStorage.setItem('tachpae_revealed_proposals', JSON.stringify([...revealedIds]));
+    }
+  }, [revealedIds]);
 
   // Initialize Device ID and Fetch History
   useEffect(() => {
