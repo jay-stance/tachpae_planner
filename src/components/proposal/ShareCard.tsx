@@ -76,7 +76,7 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       if (perspective === 'sender') {
-        ctx.fillText('They said NO', 540, 720);
+        ctx.fillText(`${partnerName} said NO`, 540, 720);
       } else {
         ctx.fillText('I said NO', 540, 720);
       }
@@ -106,7 +106,7 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       if (perspective === 'sender') {
-        ctx.fillText('They said YES!', 540, 720);
+        ctx.fillText(`${partnerName} said YES!`, 540, 720);
       } else {
         ctx.fillText('I said YES!', 540, 720);
       }

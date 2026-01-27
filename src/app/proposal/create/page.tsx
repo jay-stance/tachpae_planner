@@ -516,6 +516,19 @@ export default function CreateProposal() {
                                   <span className="text-[11px] text-rose-800 font-medium">✨ Accepted, but no video reaction yet.</span>
                                 </div>
                               )}
+                              
+                              {/* Share Love Story Button */}
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="h-8 px-4 border-rose-200 text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-bold w-full mt-2"
+                                onClick={() => {
+                                  setActiveReveal(prop);
+                                  setShowShareCard(true);
+                                }}
+                              >
+                                Share Love Story 💕
+                              </Button>
                             </div>
                           ) : isRevealed && prop.status === 'REJECTED' ? (
                             <div className="bg-slate-100/50 px-5 py-3 border-t border-slate-200 flex flex-col gap-1 relative z-10">
@@ -528,6 +541,19 @@ export default function CreateProposal() {
                               <p className="text-[11px] text-slate-500 italic pl-8">
                                 "{prop.rejectionReason || "No message left, but hope remains."}"
                               </p>
+                              
+                              {/* Share Story Button */}
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="h-8 px-4 border-slate-300 text-slate-600 hover:bg-slate-100 rounded-lg text-xs font-bold w-full mt-2"
+                                onClick={() => {
+                                  setActiveReveal(prop);
+                                  setShowShareCard(true);
+                                }}
+                              >
+                                Share Story 💔
+                              </Button>
                             </div>
                           ) : (
                             <div className="bg-amber-50/30 px-5 py-3 border-t border-amber-100 flex items-center justify-between relative z-10">

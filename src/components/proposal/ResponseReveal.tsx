@@ -238,7 +238,7 @@ export default function ResponseReveal({
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    {isAccepted ? 'They said YES!' : 'They said no...'}
+                    {isAccepted ? `${partnerName} said YES!` : `${partnerName} said no...`}
                   </motion.h2>
                   
                   <motion.p 
