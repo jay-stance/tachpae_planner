@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,22 @@ import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import { toast } from 'sonner';
 import { sendEvent } from '@/lib/analytics';
+// Modal System
+import {
+  CityTrustModal,
+  SendYourItemModal,
+  UpsellModal,
+  ValentineLinkModal,
+} from '@/components/modals';
+import {
+  initializeVisitTracking,
+  shouldShowModal,
+  recordModalShown,
+  recordModalDismissed,
+  trackAction,
+  getModalHistory,
+} from '@/lib/modalOrchestrator';
+import { getComplementaryProducts, filterExistingProducts } from '@/lib/complementaryProducts';
 // Helper to detect video URLs
 const isVideoUrl = (url: string) => /\.(mp4|webm|ogg|mov)$/i.test(url);
 
@@ -60,7 +76,132 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const [activeCategory, setActiveCategory] = useState<any>({ _id: 'bundles', name: 'Bundles' });
   const [activeFilter, setActiveFilter] = useState<string>('all');
   
+  // Modal states
+  const [showCityTrustModal, setShowCityTrustModal] = useState(false);
+  const [showSendYourItemModal, setShowSendYourItemModal] = useState(false);
+  const [showUpsellModal, setShowUpsellModal] = useState(false);
+  const [showValentineLinkModal, setShowValentineLinkModal] = useState(false);
+  const [upsellProductName, setUpsellProductName] = useState('');
+  const [upsellRecommendations, setUpsellRecommendations] = useState<any[]>([]);
+  const [visitInfo, setVisitInfo] = useState({ visitCount: 1, isFirstVisit: true });
+  const scrollCountRef = useRef(0);
+  const hasShownSendYourItemRef = useRef(false);
+  const previousItemCountRef = useRef(0);
+  
   const primaryColor = event?.themeConfig?.primaryColor || '#e11d48';
+
+  // Initialize modal tracking on mount
+  useEffect(() => {
+    const { visitCount, isFirstVisit } = initializeVisitTracking();
+    setVisitInfo({ visitCount, isFirstVisit });
+    
+    // Show Valentine Link modal on second+ visit (after a delay)
+    if (visitCount >= 2 && shouldShowModal('valentine_link')) {
+      const timer = setTimeout(() => {
+        if (shouldShowModal('valentine_link')) {
+          recordModalShown('valentine_link');
+          setShowValentineLinkModal(true);
+        }
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // City Trust Modal - trigger after city loads on first visit
+  useEffect(() => {
+    if (city?.name && visitInfo.isFirstVisit && shouldShowModal('city_trust')) {
+      // Small delay to let page render first
+      const timer = setTimeout(() => {
+        if (shouldShowModal('city_trust')) {
+          trackAction('city_selected');
+          recordModalShown('city_trust');
+          setShowCityTrustModal(true);
+        }
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [city?.name, visitInfo.isFirstVisit]);
+
+  // Scroll detection for Send Your Item Modal
+  useEffect(() => {
+    if (hasShownSendYourItemRef.current) return;
+    
+    const handleScroll = () => {
+      scrollCountRef.current += 1;
+      
+      // Trigger after 3 significant scrolls
+      if (scrollCountRef.current >= 3 && !hasShownSendYourItemRef.current) {
+        if (shouldShowModal('send_your_item')) {
+          hasShownSendYourItemRef.current = true;
+          recordModalShown('send_your_item');
+          setShowSendYourItemModal(true);
+        }
+      }
+    };
+
+    // Debounced scroll handler
+    let scrollTimeout: NodeJS.Timeout;
+    const debouncedScroll = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScroll, 200);
+    };
+
+    window.addEventListener('scroll', debouncedScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', debouncedScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+  // Upsell Modal - detect first cart add
+  useEffect(() => {
+    // Detect when item count goes from 0 to 1 (first add)
+    if (previousItemCountRef.current === 0 && itemCount === 1 && items.length > 0) {
+      const addedItem = items[0];
+      
+      if (shouldShowModal('upsell')) {
+        // Get complementary products
+        const complementaryIds = getComplementaryProducts(addedItem.productId);
+        const availableIds = filterExistingProducts(complementaryIds, items.map(i => i.productId));
+        
+        // Find product details from our products data
+        const recommendations = availableIds
+          .map(id => products.find((p: any) => p._id === id))
+          .filter(Boolean)
+          .slice(0, 3)
+          .map((p: any) => ({
+            id: p._id,
+            name: p.name,
+            price: p.basePrice,
+            image: p.mediaGallery?.[0] || '',
+          }));
+
+        if (recommendations.length > 0) {
+          setUpsellProductName(addedItem.productName);
+          setUpsellRecommendations(recommendations);
+          recordModalShown('upsell');
+          setShowUpsellModal(true);
+        }
+      }
+    }
+    previousItemCountRef.current = itemCount;
+  }, [itemCount, items, products]);
+
+  // Handle upsell product add
+  const handleUpsellAdd = useCallback((product: { id: string; name: string; price: number; image: string }) => {
+    addItem({
+      productId: product.id,
+      type: 'PRODUCT',
+      productName: product.name,
+      productImage: product.image,
+      basePrice: product.price,
+      quantity: 1,
+      variantSelection: {},
+      customizationData: {},
+    });
+    toast.success(`${product.name} added!`);
+  }, [addItem]);
+
   React.useEffect(() => {
     if (activeCategory?._id) {
       sendEvent({
@@ -960,6 +1101,60 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         onOpenChange={setCartOpen} 
         city={city} 
         defaultView={cartView}
+      />
+
+      {/* Conversion Modals */}
+      <CityTrustModal
+        isOpen={showCityTrustModal}
+        onClose={() => setShowCityTrustModal(false)}
+        onDismiss={() => {
+          recordModalDismissed('city_trust');
+          setShowCityTrustModal(false);
+        }}
+        cityName={city?.name || 'your city'}
+      />
+
+      <SendYourItemModal
+        isOpen={showSendYourItemModal}
+        onClose={() => setShowSendYourItemModal(false)}
+        onDismiss={() => {
+          recordModalDismissed('send_your_item');
+          setShowSendYourItemModal(false);
+        }}
+        onLearnMore={() => {
+          // Navigate to specials or open logistics modal
+          setActiveCategory({ _id: 'specials', name: 'Specials' });
+        }}
+      />
+
+      <UpsellModal
+        isOpen={showUpsellModal}
+        onClose={() => setShowUpsellModal(false)}
+        onDismiss={() => {
+          recordModalDismissed('upsell');
+          setShowUpsellModal(false);
+        }}
+        addedProductName={upsellProductName}
+        recommendations={upsellRecommendations}
+        onAddProduct={handleUpsellAdd}
+        addedProductIds={items.map(i => i.productId)}
+      />
+
+      <ValentineLinkModal
+        isOpen={showValentineLinkModal}
+        onClose={() => setShowValentineLinkModal(false)}
+        onDismiss={() => {
+          recordModalDismissed('valentine_link');
+          setShowValentineLinkModal(false);
+        }}
+        onCreateLink={(partnerName, message) => {
+          // Track the event
+          sendEvent({
+            action: 'modal_cta_click',
+            category: 'Valentine Link',
+            label: `Created for: ${partnerName}`
+          });
+        }}
       />
     </div>
   );

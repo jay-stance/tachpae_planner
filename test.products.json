@@ -26,7 +26,17 @@
   "updatedAt": {
     "$date": "2026-01-21T23:00:11.616Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -58,7 +68,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:10.002Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -88,7 +108,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:13.859Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -123,7 +153,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:19.980Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -156,7 +196,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:21.879Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -187,7 +237,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:23.146Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Jaw-Dropping"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -219,7 +279,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:24.613Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Budget Friendly",
+    "Gift Wrapped"
+  ],
+  "tags": [
+    "budget",
+    "popular",
+    "couples"
+  ],
+  "tierLabel": "entry"
 },
 {
   "_id": {
@@ -268,7 +338,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:25.971Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Budget Friendly",
+    "Gift Wrapped"
+  ],
+  "tags": [
+    "budget",
+    "popular",
+    "couples"
+  ],
+  "tierLabel": "entry"
 },
 {
   "_id": {
@@ -315,7 +395,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:28.231Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Popular Choice",
+    "Premium Quality"
+  ],
+  "tags": [
+    "popular",
+    "romantic",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -344,7 +434,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:28.824Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Unique",
+    "Trending"
+  ],
+  "tags": [
+    "popular",
+    "unique",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -401,7 +501,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:30.584Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Popular Choice",
+    "Premium Quality"
+  ],
+  "tags": [
+    "popular",
+    "romantic",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -456,7 +566,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:31.713Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Popular Choice",
+    "Premium Quality"
+  ],
+  "tags": [
+    "popular",
+    "romantic",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -487,7 +607,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:39.845Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Unique",
+    "Trending"
+  ],
+  "tags": [
+    "popular",
+    "unique",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -531,7 +661,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:44.317Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Popular Choice",
+    "Premium Quality"
+  ],
+  "tags": [
+    "popular",
+    "romantic",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -584,7 +724,17 @@
   "updatedAt": {
     "$date": "2026-01-21T22:41:44.860Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Popular Choice",
+    "Premium Quality"
+  ],
+  "tags": [
+    "popular",
+    "romantic",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -614,7 +764,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:24.019Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Self-Care",
+    "Trendy"
+  ],
+  "tags": [
+    "for-her",
+    "self-love",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -644,7 +804,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:25.066Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -674,7 +843,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:26.034Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -704,7 +882,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:26.952Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -734,7 +921,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:27.873Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -764,7 +960,14 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:29.291Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Quality Gift"
+  ],
+  "tags": [
+    "other"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -797,7 +1000,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:29.936Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -832,7 +1044,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:31.256Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Curated Bundle",
+    "Best Value"
+  ],
+  "tags": [
+    "bundle",
+    "popular",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -867,7 +1089,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:32.612Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Curated Bundle",
+    "Best Value"
+  ],
+  "tags": [
+    "bundle",
+    "popular",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -897,7 +1129,14 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:33.714Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Quality Gift"
+  ],
+  "tags": [
+    "other"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -930,7 +1169,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:34.348Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "For Him",
+    "Quality"
+  ],
+  "tags": [
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -960,7 +1208,14 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:36.419Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Quality Gift"
+  ],
+  "tags": [
+    "other"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -990,7 +1245,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:37.087Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Self-Care",
+    "Trendy"
+  ],
+  "tags": [
+    "for-her",
+    "self-love",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1025,7 +1290,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:38.422Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Curated Bundle",
+    "Best Value"
+  ],
+  "tags": [
+    "bundle",
+    "popular",
+    "couples"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1055,7 +1330,14 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:39.084Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Quality Gift"
+  ],
+  "tags": [
+    "other"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1131,7 +1413,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:43.087Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Premium"
+  ],
+  "tags": [
+    "luxury",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1169,7 +1460,18 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:44.333Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Personalized",
+    "Unique Gift"
+  ],
+  "tags": [
+    "romantic",
+    "personalized",
+    "for-her",
+    "for-him"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1209,7 +1511,16 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:45.296Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Premium"
+  ],
+  "tags": [
+    "luxury",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1249,7 +1560,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:46.092Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Classic Romance",
+    "Fresh"
+  ],
+  "tags": [
+    "romantic",
+    "for-her",
+    "popular"
+  ],
+  "tierLabel": "entry"
 },
 {
   "_id": {
@@ -1279,7 +1600,14 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:46.824Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Quality Gift"
+  ],
+  "tags": [
+    "other"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1336,7 +1664,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:57:49.340Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Most Requested",
+    "Viral Gift"
+  ],
+  "tags": [
+    "popular",
+    "for-him",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1369,7 +1707,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:59:32.405Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Delicious",
+    "Fresh"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "experience"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1403,7 +1751,17 @@
   "updatedAt": {
     "$date": "2026-01-22T14:59:33.931Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Self-Care",
+    "Trendy"
+  ],
+  "tags": [
+    "for-her",
+    "self-love",
+    "popular"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1437,7 +1795,16 @@
   "updatedAt": {
     "$date": "2026-01-25T18:13:13.834Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Grand Gesture",
+    "Premium"
+  ],
+  "tags": [
+    "luxury",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1470,7 +1837,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:13:19.211Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Full Setup",
+    "Memorable"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1507,7 +1884,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:13:36.643Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Full Setup",
+    "Memorable"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1543,7 +1930,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:13:46.533Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Full Setup",
+    "Memorable"
+  ],
+  "tags": [
+    "luxury",
+    "romantic",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -1577,7 +1974,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:13:48.531Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1617,7 +2024,18 @@
   "updatedAt": {
     "$date": "2026-01-25T18:14:23.648Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Personalized",
+    "Unique Gift"
+  ],
+  "tags": [
+    "romantic",
+    "personalized",
+    "for-her",
+    "for-him"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1672,7 +2090,18 @@
   "updatedAt": {
     "$date": "2026-01-25T18:14:52.750Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Personalized",
+    "Unique Gift"
+  ],
+  "tags": [
+    "romantic",
+    "personalized",
+    "for-her",
+    "for-him"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1702,7 +2131,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:14:56.027Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Classic Romance",
+    "Fresh"
+  ],
+  "tags": [
+    "romantic",
+    "for-her",
+    "popular"
+  ],
+  "tierLabel": "entry"
 },
 {
   "_id": {
@@ -1734,7 +2173,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:14:58.336Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1766,7 +2215,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:00.988Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1798,7 +2257,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:02.167Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1830,7 +2299,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:05.254Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1862,7 +2341,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:07.458Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1894,7 +2383,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:09.326Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Freshly Made",
+    "Valentine Theme"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1926,7 +2425,18 @@
   "updatedAt": {
     "$date": "2026-01-25T18:15:20.477Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Personalized",
+    "Unique Gift"
+  ],
+  "tags": [
+    "romantic",
+    "personalized",
+    "for-her",
+    "for-him"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -1960,7 +2470,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:17:29.188Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Premium Tech",
+    "Memorable"
+  ],
+  "tags": [
+    "luxury",
+    "for-him",
+    "for-her"
+  ],
+  "tierLabel": "grandGesture"
 },
 {
   "_id": {
@@ -2030,7 +2550,18 @@
   "updatedAt": {
     "$date": "2026-01-25T18:17:30.231Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Personalized",
+    "Unique Gift"
+  ],
+  "tags": [
+    "romantic",
+    "personalized",
+    "for-her",
+    "for-him"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -2062,7 +2593,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:17:31.917Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Classic Romance",
+    "Fresh"
+  ],
+  "tags": [
+    "romantic",
+    "for-her",
+    "popular"
+  ],
+  "tierLabel": "entry"
 },
 {
   "_id": {
@@ -2123,7 +2664,17 @@
   "updatedAt": {
     "$date": "2026-01-25T18:17:33.789Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Most Requested",
+    "Viral Gift"
+  ],
+  "tags": [
+    "popular",
+    "for-him",
+    "for-her"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -2181,7 +2732,17 @@
   "updatedAt": {
     "$date": "2026-01-25T19:28:16.643Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Delicious",
+    "Fresh"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "experience"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -2239,7 +2800,17 @@
   "updatedAt": {
     "$date": "2026-01-25T19:43:45.731Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Delicious",
+    "Fresh"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "experience"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -2274,7 +2845,17 @@
   "updatedAt": {
     "$date": "2026-01-25T19:43:50.993Z"
   },
-  "__v": 0
+  "__v": 0,
+  "microBenefits": [
+    "Delicious",
+    "Fresh"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "experience"
+  ],
+  "tierLabel": "popular"
 },
 {
   "_id": {
@@ -2307,6 +2888,1179 @@
   },
   "updatedAt": {
     "$date": "2026-01-25T19:43:51.706Z"
+  },
+  "__v": 0,
+  "microBenefits": [
+    "Delicious",
+    "Fresh"
+  ],
+  "tags": [
+    "popular",
+    "couples",
+    "experience"
+  ],
+  "tierLabel": "popular"
+},
+{
+  "_id": {
+    "$oid": "6977b1757a295ce1a802c8f9"
+  },
+  "name": "ILoveU Box",
+  "description": "An affordable Valentine gift box for students and first-time couples. Includes: 25cm Teddy Bear, Scented Candle, Fresh Roses (2 stems), Valentine Gift Box.",
+  "basePrice": 39000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/25cm_teddy_bear/1769035283348_WhatsApp Image 2026-01-21 at 13.15.35 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093972599_WhatsApp Image 2026-01-21 at 16.15.16 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "budget",
+    "couples",
+    "popular"
+  ],
+  "tierLabel": "entry",
+  "microBenefits": [
+    "Perfect Starter",
+    "Gift Wrapped"
+  ],
+  "isBundle": true,
+  "bundleCategory": "couples",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "69715614b42b07874767e9b9"
+      },
+      "productName": "25cm teddy bear",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723b55bee2dbe3153d5241"
+      },
+      "productName": "Scented Candles",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:53.360Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:53.360Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1757a295ce1a802c8fc"
+  },
+  "name": "Sweet Love Box",
+  "description": "A simple and romantic Valentine box for everyday gifting. Includes: Medium Teddy Bear, Scented Candle, Fresh Roses (2 stems), Valentine Gift Box.",
+  "basePrice": 53000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035290788_WhatsApp Image 2026-01-21 at 13.15.38 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093972599_WhatsApp Image 2026-01-21 at 16.15.16 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "popular",
+    "couples",
+    "romantic"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Most Popular",
+    "Romantic"
+  ],
+  "isBundle": true,
+  "bundleCategory": "couples",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "6971561bb42b07874767e9c8"
+      },
+      "productName": "medium teddy bear",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723b55bee2dbe3153d5241"
+      },
+      "productName": "Scented Candles",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:53.608Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:53.608Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1757a295ce1a802c8ff"
+  },
+  "name": "True Love Box",
+  "description": "A memory-filled Valentine box for emotional and meaningful gifting. Includes: Love Heart Medium Teddy Bear, Framed Photo, Fresh Roses (3 stems), Valentine Gift Box.",
+  "basePrice": 72000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/love_heart_medium_teddy_bear/1769035289008_WhatsApp Image 2026-01-21 at 13.15.39.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049551_WhatsApp Image 2026-01-24 at 14.53.12.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "popular",
+    "couples",
+    "romantic",
+    "personalized"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Personalized",
+    "Memorable"
+  ],
+  "isBundle": true,
+  "bundleCategory": "couples",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "6971561ab42b07874767e9c5"
+      },
+      "productName": "love heart medium teddy bear",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3a2b7787e55975e7d5"
+      },
+      "productName": "framed photo",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:53.814Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:53.814Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1767a295ce1a802c902"
+  },
+  "name": "Forever Us Box",
+  "description": "A premium Valentine box for serious relationships and anniversaries. Includes: Medium Teddy Bear, Faux Flower Arrangement, Framed Photo, Fresh Roses (3 stems), Valentine Gift Box.",
+  "basePrice": 102000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035290788_WhatsApp Image 2026-01-21 at 13.15.38 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/faux_flower/1769093865646_WhatsApp Image 2026-01-21 at 16.03.47.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049551_WhatsApp Image 2026-01-24 at 14.53.12.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "luxury",
+    "couples",
+    "romantic"
+  ],
+  "tierLabel": "grandGesture",
+  "microBenefits": [
+    "Premium",
+    "Anniversary Perfect"
+  ],
+  "isBundle": true,
+  "bundleCategory": "couples",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "6971561bb42b07874767e9c8"
+      },
+      "productName": "medium teddy bear",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723aea53bf522c9aef2e92"
+      },
+      "productName": "faux flower",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3a2b7787e55975e7d5"
+      },
+      "productName": "framed photo",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:54.030Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:54.030Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1767a295ce1a802c905"
+  },
+  "name": "Soft Life Babe Box",
+  "description": "A stylish and aesthetic Valentine box for modern girlfriends. Includes: Stanley Cup, Scented Candle, Faux Flower Arrangement, Valentine Gift Box.",
+  "basePrice": 60000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/stanley_cup/1769093856765_WhatsApp Image 2026-01-21 at 15.29.37.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093972599_WhatsApp Image 2026-01-21 at 16.15.16 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/faux_flower/1769093865646_WhatsApp Image 2026-01-21 at 16.03.47.jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "for-her",
+    "trendy",
+    "self-love"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Trendy",
+    "Aesthetic"
+  ],
+  "isBundle": true,
+  "bundleCategory": "for-her",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "69723ae153bf522c9aef2e80"
+      },
+      "productName": "Stanley cup",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723b55bee2dbe3153d5241"
+      },
+      "productName": "Scented Candles",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723aea53bf522c9aef2e92"
+      },
+      "productName": "faux flower",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:54.219Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:54.219Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1767a295ce1a802c908"
+  },
+  "name": "Fine Girl in Love Box",
+  "description": "A romantic Valentine box for girlfriends who love flowers and memories. Includes: Medium Teddy Bear, Fresh Roses (3 stems), Photo Bouquet (10–20 photos), Valentine Gift Box.",
+  "basePrice": 82000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/medium_teddy_bear/1769035290788_WhatsApp Image 2026-01-21 at 13.15.38 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/photo_boquet/1769364887885_WhatsApp Image 2026-01-21 at 21.42.46.jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "for-her",
+    "romantic",
+    "personalized"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Personalized",
+    "Romantic"
+  ],
+  "isBundle": true,
+  "bundleCategory": "for-her",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "6971561bb42b07874767e9c8"
+      },
+      "productName": "medium teddy bear",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765d9c2b7787e55975e7b7"
+      },
+      "productName": "Photo boquet",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:54.418Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:54.418Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1767a295ce1a802c90b"
+  },
+  "name": "Queen Treatment Box",
+  "description": "A luxury Valentine box for wives, fiancées and premium gifting. Includes: 120cm Teddy Bear, Faux Flower Arrangement, Large Framed Photo, Fresh Roses (3 stems), Valentine Gift Box.",
+  "basePrice": 150000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/120cm_teddy/1769035274088_WhatsApp Image 2026-01-21 at 13.15.51.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/faux_flower/1769093865646_WhatsApp Image 2026-01-21 at 16.03.47.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049551_WhatsApp Image 2026-01-24 at 14.53.12.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/fresh_roses_per_stem/1769365050615_WhatsApp Image 2026-01-24 at 15.02.04 (1).jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "for-her",
+    "luxury",
+    "grand-gesture"
+  ],
+  "tierLabel": "grandGesture",
+  "microBenefits": [
+    "Grand Gesture",
+    "Premium"
+  ],
+  "isBundle": true,
+  "bundleCategory": "for-her",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "6971560fb42b07874767e9b0"
+      },
+      "productName": "120cm teddy",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723aea53bf522c9aef2e92"
+      },
+      "productName": "faux flower",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3a2b7787e55975e7d5"
+      },
+      "productName": "framed photo",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3b2b7787e55975e7d8"
+      },
+      "productName": "fresh roses per stem",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:54.640Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:54.640Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1767a295ce1a802c90e"
+  },
+  "name": "My Man Box",
+  "description": "A thoughtful Valentine box combining fashion and personal memories. Includes: Chelsea Men Set, 3-in-1 VSA Perfume, Framed Photo, Valentine Gift Box.",
+  "basePrice": 57000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/chelsea_men_set/1769093847297_WhatsApp Image 2026-01-21 at 15.29.37.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/3in1_vsa_perfume/1769093845421_WhatsApp Image 2026-01-21 at 15.29.38.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/framed_photo/1769365049551_WhatsApp Image 2026-01-24 at 14.53.12.jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "for-him",
+    "popular"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "For Him",
+    "Stylish"
+  ],
+  "isBundle": true,
+  "bundleCategory": "for-him",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "69723ad753bf522c9aef2e64"
+      },
+      "productName": "Chelsea Men Set",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723ad653bf522c9aef2e5e"
+      },
+      "productName": "3in1 VSA Perfume",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765e3a2b7787e55975e7d5"
+      },
+      "productName": "framed photo",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:54.834Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:54.834Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1777a295ce1a802c911"
+  },
+  "name": "Boss Guy Box",
+  "description": "A bold Valentine box for men who love gadgets and fashion. Includes: Smart Watch, Customized Jersey, Perfume, Valentine Gift Box.",
+  "basePrice": 70000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/80_suit_extreme_smart_watch/1769093846362_WhatsApp Image 2026-01-21 at 15.29.35.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customied_jerseys/1769364833150_WhatsApp Image 2026-01-24 at 08.16.39.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/3in1_vsa_perfume/1769093845421_WhatsApp Image 2026-01-21 at 15.29.38.jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "for-him",
+    "luxury",
+    "tech"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Tech Lover",
+    "Bold"
+  ],
+  "isBundle": true,
+  "bundleCategory": "for-him",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "69723ad653bf522c9aef2e61"
+      },
+      "productName": "80 Suit Extreme Smart Watch",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69765d7f2b7787e55975e7ae"
+      },
+      "productName": "Customied Jerseys",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723ad653bf522c9aef2e5e"
+      },
+      "productName": "3in1 VSA Perfume",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:55.023Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:55.023Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6977b1777a295ce1a802c914"
+  },
+  "name": "Self-Love Box",
+  "description": "A self-care Valentine box for singles and personal gifting. Includes: Scented Candle, Faux Flower Arrangement, Customized Journal, Valentine Gift Box, Affirmation Card.",
+  "basePrice": 53000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6977b1747a295ce1a802c8f5"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/scented_candles/1769093972599_WhatsApp Image 2026-01-21 at 16.15.16 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/faux_flower/1769093865646_WhatsApp Image 2026-01-21 at 16.03.47.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/customized_journal/1769093863623_WhatsApp Image 2026-01-21 at 16.03.42.jpeg"
+  ],
+  "tags": [
+    "bundle",
+    "self-love",
+    "for-her",
+    "self-care"
+  ],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Self-Care",
+    "Treat Yourself"
+  ],
+  "isBundle": true,
+  "bundleCategory": "self-love",
+  "bundleItems": [
+    {
+      "productId": {
+        "$oid": "69723b55bee2dbe3153d5241"
+      },
+      "productName": "Scented Candles",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723aea53bf522c9aef2e92"
+      },
+      "productName": "faux flower",
+      "quantity": 1
+    },
+    {
+      "productId": {
+        "$oid": "69723ae853bf522c9aef2e8c"
+      },
+      "productName": "customized journal",
+      "quantity": 1
+    }
+  ],
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "createdAt": {
+    "$date": "2026-01-26T18:24:55.595Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-26T18:24:55.595Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6978a10a2b9d7f1eaebe5413"
+  },
+  "name": "Heart Aesthetic Candle",
+  "description": "A stylish heart-shaped candle with a waffle-textured design, perfect for décor, gifting, and creating a warm cozy vibe in any space.",
+  "basePrice": 7000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971eabc910acf78421c4033"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/cb1d635d-c81f-4b90-b940-b48db8323097.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/cf9f820c-316c-4095-bdfe-7bd8d1b6edd6.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": "popular",
+  "microBenefits": [
+    "Best gift for her"
+  ],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          {
+            "label": "Pink",
+            "value": "Purple",
+            "priceModifier": 0
+          }
+        ]
+      }
+    ]
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-27T11:27:06.675Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-27T11:27:06.675Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f59a2e097364f58fc568"
+  },
+  "name": "100ml red diamond ",
+  "description": "Genie touch perfume 25ml",
+  "basePrice": 4500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/100ml_red_diamond_/1769600408098_WhatsApp Image 2026-01-23 at 16.58.25.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:10.091Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:10.091Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f59d2e097364f58fc56b"
+  },
+  "name": "4 in 1 Set",
+  "description": "4 in 1 Set",
+  "basePrice": 12500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/4_in_1_set/1769600410455_WhatsApp Image 2026-01-22 at 11.00.35 (1).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/4_in_1_set/1769600411277_WhatsApp Image 2026-01-22 at 11.00.35 (2).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/4_in_1_set/1769600411859_WhatsApp Image 2026-01-22 at 11.00.35 (3).jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/4_in_1_set/1769600412415_WhatsApp Image 2026-01-22 at 11.00.35.jpeg",
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/4_in_1_set/1769600412963_WhatsApp Image 2026-01-22 at 11.00.36.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:13.510Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:13.510Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f59e2e097364f58fc56e"
+  },
+  "name": "Aventos blue for him ",
+  "description": "Aventos blue for him ",
+  "basePrice": 24500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/aventos_blue_for_him_/1769600413876_WhatsApp Image 2026-01-22 at 09.09.42.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:14.444Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:14.444Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f59f2e097364f58fc571"
+  },
+  "name": "Genie touch perfume",
+  "description": "100ml red diamond",
+  "basePrice": 10500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/genie_touch_perfume/1769600414807_WhatsApp Image 2026-01-23 at 17.05.36.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:15.506Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:15.506Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a02e097364f58fc574"
+  },
+  "name": "Haramain Detour Exclusif Noir ",
+  "description": "Haramain Detour Exclusif Noir ",
+  "basePrice": 52000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/haramain_detour_exclusif_noir_/1769600415849_WhatsApp Image 2026-01-23 at 16.48.11.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:16.410Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:16.410Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a12e097364f58fc579"
+  },
+  "name": "Opulent oud by lattafa ",
+  "description": "Opulent oud by lattafa   100ml",
+  "basePrice": 23000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/opulent_oud_by_lattafa_/1769600416934_WhatsApp Image 2026-01-23 at 16.48.59.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:17.503Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:17.503Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a22e097364f58fc57c"
+  },
+  "name": "Qaed Al fursan ",
+  "description": "Qaed Al fursan ",
+  "basePrice": 24500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/qaed_al_fursan_/1769600417848_WhatsApp Image 2026-01-22 at 09.08.50.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:18.425Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:18.425Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a32e097364f58fc57f"
+  },
+  "name": "Supremacy not only intense ",
+  "description": "Supremacy not only intense ",
+  "basePrice": 85000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/supremacy_not_only_intense_/1769600418771_WhatsApp Image 2026-01-22 at 09.11.00.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:19.342Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:19.342Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a42e097364f58fc582"
+  },
+  "name": "Vintage Radio  - 4 in 1 Set",
+  "description": "Vintage Radio   Lattafa pride set 4 in 1  Content; 100ml perfume  Mini perfume 20ml  5ml atomizer  200ml body spray",
+  "basePrice": 55000,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/vintage_radio____4_in_1_set/1769600419680_WhatsApp Image 2026-01-23 at 16.40.09.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:20.300Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:20.300Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6979f5a52e097364f58fc585"
+  },
+  "name": "vintage radio by lattafa ",
+  "description": "100ml red diamond",
+  "basePrice": 10500,
+  "event": {
+    "$oid": "696bb790aca35414ca4947fc"
+  },
+  "category": {
+    "$oid": "6971f4667bf57dc4f8325aab"
+  },
+  "mediaGallery": [
+    "https://tachpae-planner-upload.s3.us-east-2.amazonaws.com/products/vintage_radio_by_lattafa_/1769600420694_WhatsApp Image 2026-01-23 at 17.01.41.jpeg"
+  ],
+  "tags": [],
+  "tierLabel": null,
+  "microBenefits": [],
+  "isBundle": false,
+  "bundleCategory": null,
+  "variantsConfig": {
+    "options": []
+  },
+  "customizationSchema": {
+    "steps": []
+  },
+  "videoConfig": null,
+  "isActive": true,
+  "locations": [],
+  "bundleItems": [],
+  "createdAt": {
+    "$date": "2026-01-28T11:40:21.082Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-28T11:40:21.082Z"
   },
   "__v": 0
 }]

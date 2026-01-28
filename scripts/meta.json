@@ -1,21 +1,13 @@
 {
-   "basePrice": 16000,
-   "description": "Delicious assortment of Nigerian chops and grilled proteins - perfect for celebrations",
-  "category": "6976425086d10ab880a93fba",
+   "basePrice": 10500,
+   "description": "100ml red diamond ",
+  "category": "6971f4667bf57dc4f8325aab",
   "event": "696bb790aca35414ca4947fc",
   "isActive": true,
   
 "variantsConfig": {
     "options": [
-      {
-        "name": "package",
-        "values": [
-          { "label": "Small Box (5 spring rolls, 5 samosa, 10 puff puff, 2 chicken)", "value": "small", "priceModifier": 0 },
-          { "label": "Medium Box (8 spring rolls, 8 samosa, 15 puff puff, 4 chicken, 2 beef)", "value": "medium", "priceModifier": 14000 },
-          { "label": "Large Box (12 spring rolls, 12 samosa, 20 puff puff, 6 chicken, 4 beef)", "value": "large", "priceModifier": 32000 }
-        ]
-      }
     ]
   },
-  "locations": ["696bb78faca35414ca4947f6"]
+  "locations": []
 }

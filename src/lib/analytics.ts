@@ -9,7 +9,10 @@ type EventName =
   | 'view_item_list'    // Viewing a specific category/list
   | 'select_promotion'  // Clicking specials/banner
   | 'share'             // Sharing wishlist
-  | 'generate_lead';    // Submitting contact form/WhatsApp
+  | 'generate_lead'     // Submitting contact form/WhatsApp
+  | 'modal_view'        // Modal displayed
+  | 'modal_dismiss'     // Modal dismissed
+  | 'modal_cta_click';  // CTA clicked in modal
 
 interface AnalyticsEvent {
   action: EventName;
