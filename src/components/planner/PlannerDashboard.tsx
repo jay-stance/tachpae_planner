@@ -109,13 +109,13 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
   // City Trust Modal - trigger after city loads on first visit
   useEffect(() => {
-    if (city?.name && visitInfo.isFirstVisit && shouldShowModal('city_trust')) {
+    if (city?.name && visitInfo.isFirstVisit) {
       // Small delay to let page render first
       const timer = setTimeout(() => {
         if (shouldShowModal('city_trust')) {
-          trackAction('city_selected');
           recordModalShown('city_trust');
           setShowCityTrustModal(true);
+          console.log('[Modals] Showing City Trust Modal');
         }
       }, 1500);
       return () => clearTimeout(timer);

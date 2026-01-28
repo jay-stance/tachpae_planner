@@ -37,7 +37,7 @@ export const MODAL_CONFIG = {
     maxPerSession: 1,
     showOnVisits: [1], // Only first visit
     cooldownMs: 0,
-    requiresAction: 'city_selected',
+    requiresAction: null, // We trigger directly when city loads
   },
   send_your_item: {
     id: 'send_your_item',
@@ -50,8 +50,8 @@ export const MODAL_CONFIG = {
     id: 'upsell',
     maxPerSession: 1,
     showOnVisits: 'all',
-    cooldownMs: 15000,
-    requiresAction: 'first_cart_add',
+    cooldownMs: 0, // No cooldown - we trigger immediately on cart add
+    requiresAction: null, // We detect cart add directly
   },
   cart_abandonment: {
     id: 'cart_abandonment',
@@ -167,12 +167,15 @@ export function saveSessionState(session: SessionState): void {
  * Initialize visit tracking - call once on page load
  */
 export function initializeVisitTracking(): { visitCount: number; isFirstVisit: boolean } {
+  if (typeof window === 'undefined') {
+    return { visitCount: 1, isFirstVisit: true };
+  }
+
   const history = getModalHistory();
-  const session = getSessionState();
   
-  // Check if this is a new session (no session data exists)
-  const isNewSession = session.sessionStart === 0 || 
-    (Date.now() - session.sessionStart > 30 * 60 * 1000); // 30 min session timeout
+  // Check if session data actually exists in sessionStorage
+  const existingSessionData = sessionStorage.getItem(SESSION_KEY);
+  const isNewSession = !existingSessionData;
   
   if (isNewSession) {
     // Increment visit count for new sessions
@@ -180,7 +183,7 @@ export function initializeVisitTracking(): { visitCount: number; isFirstVisit: b
     history.lastVisitDate = new Date().toISOString();
     saveModalHistory(history);
     
-    // Reset session
+    // Create new session
     const newSession: SessionState = {
       sessionStart: Date.now(),
       modalsShownThisSession: [],
@@ -189,6 +192,10 @@ export function initializeVisitTracking(): { visitCount: number; isFirstVisit: b
       cartHasItems: false,
     };
     saveSessionState(newSession);
+    
+    console.log('[Modal Orchestrator] New session started. Visit count:', history.visitCount);
+  } else {
+    console.log('[Modal Orchestrator] Existing session. Visit count:', history.visitCount);
   }
   
   return {
@@ -270,11 +277,12 @@ export function shouldShowModal(modalId: ModalId): boolean {
   }
   
   // 5. Check required action
-  if (config.requiresAction) {
+  const requiredAction = config.requiresAction;
+  if (requiredAction) {
     // Special case for cart_has_items - check session state
-    if (config.requiresAction === 'cart_has_items') {
+    if (requiredAction === 'cart_has_items') {
       if (!session.cartHasItems) return false;
-    } else if (!history.completedActions.includes(config.requiresAction)) {
+    } else if (!history.completedActions.includes(requiredAction)) {
       return false;
     }
   }

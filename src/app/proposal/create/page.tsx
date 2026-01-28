@@ -474,6 +474,27 @@ export default function CreateProposal() {
                                     View Response 💌
                                   </Button>
                                 </motion.div>
+                              ) : hasResponse && isRevealed ? (
+                                /* Replay Reveal button for already revealed responses */
+                                <div className="flex flex-col gap-1.5">
+                                  <Button 
+                                    variant="outline"
+                                    size="sm"
+                                    className="h-8 px-3 rounded-lg text-xs font-bold border-purple-200 text-purple-600 hover:bg-purple-50"
+                                    onClick={() => setActiveReveal(prop)}
+                                  >
+                                    Replay Reveal 🔁
+                                  </Button>
+                                  <Button 
+                                    size="icon" 
+                                    variant="ghost" 
+                                    className="w-full h-7 rounded-lg text-gray-400 hover:text-rose-500 text-[10px]"
+                                    onClick={() => window.open(`${window.location.origin}/proposal/${prop._id}`, '_blank')}
+                                    title="View Page"
+                                  >
+                                    <ExternalLink className="w-3 h-3 mr-1" /> Open Link
+                                  </Button>
+                                </div>
                               ) : (
                                 <Button 
                                   size="icon" 
