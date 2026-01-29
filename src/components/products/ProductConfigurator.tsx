@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { IProduct } from '@/models/Product';
+import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,7 +11,7 @@ import { useEvent } from '@/context/EventContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductConfiguratorProps {
-  product: IProduct;
+  product: Product;
   onComplete: (configuration: any) => void;
 }
 
@@ -37,15 +37,15 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const steps = product.customizationSchema?.steps || [];
-  const hasVariants = product.variantsConfig?.options?.length > 0;
+  const hasVariants = product.variantsConfig?.options && product.variantsConfig.options.length > 0;
   const hasWizard = steps.length > 0;
   
   // Consolidated Media
   const mediaGallery = product.mediaGallery?.filter(Boolean) || [];
 
   // Video constraints
-  const globalMaxDuration = (product as any).videoConfig?.maxDuration || 10;
-  const globalMaxSize = (product as any).videoConfig?.maxSize || 50;
+  const globalMaxDuration = product.videoConfig?.maxDuration || 10;
+  const globalMaxSize = product.videoConfig?.maxSize || 50;
 
   const handleMediaNav = (direction: 'next' | 'prev') => {
     setIsPlaying(false);
@@ -401,7 +401,7 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
     return (
       <div className="space-y-6 mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Customize your Item</h3>
-        {product.variantsConfig.options.map((option, idx) => (
+        {product.variantsConfig?.options.map((option, idx) => (
           <div key={idx} className="space-y-3">
             <label className="text-sm font-medium text-gray-500">{option.name}</label>
             <div className="flex flex-wrap gap-3">

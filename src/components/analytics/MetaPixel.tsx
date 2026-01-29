@@ -1,21 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 
 const META_PIXEL_ID = '1633410778089845';
 
-/**
- * Meta Pixel base code component
- * Include this in the root layout to track PageView on all pages
- * Now supports SPA navigation tracking
- */
-export default function MetaPixel() {
+function PixelEvents() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Track PageView on route change
   useEffect(() => {
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'PageView');
@@ -23,6 +17,15 @@ export default function MetaPixel() {
     }
   }, [pathname, searchParams]);
 
+  return null;
+}
+
+/**
+ * Meta Pixel base code component
+ * Include this in the root layout to track PageView on all pages
+ * Now supports SPA navigation tracking
+ */
+export default function MetaPixel() {
   return (
     <>
       <Script
@@ -52,6 +55,9 @@ export default function MetaPixel() {
           alt=""
         />
       </noscript>
+      <Suspense fallback={null}>
+        <PixelEvents />
+      </Suspense>
     </>
   );
 }

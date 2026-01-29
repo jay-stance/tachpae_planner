@@ -49,17 +49,28 @@ interface ModalProviderProps {
 }
 
 export function ModalProvider({ children }: ModalProviderProps) {
-  const [activeModal, setActiveModal] = useState<ModalId | null>(null);
-  const [visitCount, setVisitCount] = useState(1);
-  const [isFirstVisit, setIsFirstVisit] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [state, setState] = useState({
+    activeModal: null as ModalId | null,
+    visitCount: 1,
+    isFirstVisit: true,
+    isHydrated: false,
+  });
 
   // Initialize on mount
   useEffect(() => {
-    const { visitCount: count, isFirstVisit: first } = initializeVisitTracking();
-    setVisitCount(count);
-    setIsFirstVisit(first);
-    setIsHydrated(true);
+    const { visitCount, isFirstVisit } = initializeVisitTracking();
+    setState(prev => ({
+      ...prev,
+      visitCount,
+      isFirstVisit,
+      isHydrated: true,
+    }));
+  }, []);
+
+  const { activeModal, visitCount, isFirstVisit, isHydrated } = state;
+
+  const setActiveModal = useCallback((modalId: ModalId | null) => {
+    setState(prev => ({ ...prev, activeModal: modalId }));
   }, []);
 
   const showModal = useCallback((modalId: ModalId): boolean => {

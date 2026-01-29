@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowLeft, Save, Loader2, Plus, Trash2, Upload, X, ImageIcon, Search } from 'lucide-react';
@@ -21,7 +21,7 @@ interface Event {
   name: string;
 }
 
-export default function NewBundlePage() {
+function BundleForm() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -411,5 +411,13 @@ export default function NewBundlePage() {
         </Button>
       </div>
     </div>
+  );
+}
+
+export default function NewBundlePage() {
+  return (
+    <Suspense fallback={<div className="text-white p-8">Loading...</div>}>
+      <BundleForm />
+    </Suspense>
   );
 }

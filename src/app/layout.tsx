@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { getActiveEvent } from '@/actions/event';
@@ -77,18 +77,18 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
-  manifest: '/manifest.json',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
   other: {
-    'theme-color': '#3514F5',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#3514F5',
 };
 
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';

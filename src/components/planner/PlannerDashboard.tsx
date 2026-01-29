@@ -48,15 +48,19 @@ const getFirstVideo = (mediaGallery: string[] = []) => {
   return mediaGallery.find(url => isVideoUrl(url)) || null;
 };
 
+import { Product, Category, Service, City } from '@/types';
+
+// ... (existing imports)
+
 interface PlannerDashboardProps {
   data: {
-    city: any;
-    categories: any[];
-    products: any[];
-    services: any[];
-    addons?: any[];
-    allCities?: any[];
-    bundles?: any[];
+    city: City;
+    categories: Category[];
+    products: Product[];
+    services: Service[];
+    addons?: Product[];
+    allCities?: City[];
+    bundles?: Product[];
   }
 }
 
@@ -68,12 +72,12 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
   const { itemCount, totalAmount, addItem, getShareableLink, items } = useCart();
   const { event } = useEvent();
   
-  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [showLogisticsModal, setShowLogisticsModal] = useState(false);
   const [logisticsAgreed, setLogisticsAgreed] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<any>({ _id: 'bundles', name: 'Bundles' });
+  const [activeCategory, setActiveCategory] = useState<Category>({ _id: 'bundles', name: 'Bundles', slug: 'bundles' });
   const [activeFilter, setActiveFilter] = useState<string>('all');
   
   // Modal states
@@ -253,9 +257,12 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
       // Calculate scores: +1 for every product in this category that explicitly matches this city location
       const getScore = (catId: string) => {
         let score = 0;
-        const catProds = products.filter((p: any) => (p.category?._id || p.category) === catId);
+        const catProds = products.filter((p: Product) => {
+          const pCatId = typeof p.category === 'string' ? p.category : p.category._id;
+          return pCatId === catId;
+        });
         
-        catProds.forEach((p: any) => {
+        catProds.forEach((p: Product) => {
           // If product explicitly targets this city (not just global/empty locations)
           if (p.locations && p.locations.includes(city._id)) {
             score += 10; // High weight for location-specific
@@ -273,11 +280,12 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     });
   }, [categories, products, city?._id]);
 
-  const getProductsByCategory = (catId: string) => products.filter((p: any) => 
-    (p.category?._id || p.category) === catId
-  );
+  const getProductsByCategory = (catId: string) => products.filter((p: Product) => {
+    const pCatId = typeof p.category === 'string' ? p.category : p.category._id;
+    return pCatId === catId;
+  });
 
-  const handleProductClick = (product: any) => {
+  const handleProductClick = (product: Product) => {
     sendEvent({
       action: 'select_item',
       category: product.isBundle ? 'Bundle' : 'Product',
@@ -348,7 +356,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
     }
   };
 
-  const handleBundleAddToCart = (bundle: any) => {
+  const handleBundleAddToCart = (bundle: Product) => {
     sendEvent({
       action: 'add_to_cart',
       category: 'Bundle',
@@ -372,7 +380,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
 
 
 
-  const shouldShowProduct = (p: any) => {
+  const shouldShowProduct = (p: Product) => {
     if (activeFilter === 'all') return true;
     if (activeFilter === 'budget') return p.basePrice <= 25000;
     if (activeFilter === 'luxury') {
@@ -400,7 +408,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                   className="text-[11px] md:text-xs font-bold text-rose-600 bg-transparent focus:outline-none cursor-pointer"
                 >
                   <option value={city.slug}>{city.name}</option>
-                  {data.allCities?.map((c: any) => c.slug !== city.slug && (
+                  {data.allCities?.map((c: City) => c.slug !== city.slug && (
                     <option key={c._id} value={c.slug}>{c.name}</option>
                   ))}
                 </select>
@@ -461,7 +469,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         {/* Categories Tabs */}
         <div className="mb-6 md:mb-12 sticky top-2 md:top-4 z-40 bg-white/90 backdrop-blur-xl p-1 md:p-1.5 rounded-2xl md:rounded-3xl border border-gray-100 md:border-2 md:border-gray-50 shadow-lg md:shadow-xl shadow-gray-100/50 flex flex-nowrap gap-0.5 md:gap-2 w-fit max-w-full overflow-x-auto no-scrollbar">
             <button
-              onClick={() => setActiveCategory({ _id: 'bundles', name: 'Bundles' } as any)}
+              onClick={() => setActiveCategory({ _id: 'bundles', name: 'Bundles', slug: 'bundles' })}
               className={cn(
                 "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
                 activeCategory?._id === 'bundles'
@@ -473,7 +481,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               <Package className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Curated Bundles
             </button>
             <button
-              onClick={() => setActiveCategory({ _id: 'gifts', name: 'Gifts' } as any)}
+              onClick={() => setActiveCategory({ _id: 'gifts', name: 'Gifts', slug: 'gifts' })}
               className={cn(
                 "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
                 (activeCategory?._id === 'gifts' || !['experiences', 'specials', 'bundles'].includes(activeCategory?._id))
@@ -485,7 +493,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
               <Gift className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Gifts
             </button>
                         <button
-              onClick={() => setActiveCategory({ _id: 'specials', name: 'Specials' } as any)}
+              onClick={() => setActiveCategory({ _id: 'specials', name: 'Specials', slug: 'specials' })}
               className={cn(
                 "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
                 activeCategory?._id === 'specials'
@@ -498,7 +506,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
             </button>
 
             <button
-              onClick={() => setActiveCategory({ _id: 'experiences', name: 'Experiences' } as any)}
+              onClick={() => setActiveCategory({ _id: 'experiences', name: 'Experiences', slug: 'experiences' })}
               className={cn(
                 "px-3 md:px-6 py-2 md:py-3 rounded-2xl font-black text-xs md:text-sm transition-all active:scale-95 flex items-center whitespace-nowrap",
                 activeCategory?._id === 'experiences'
@@ -757,10 +765,10 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                  <p className="text-gray-500 font-medium">Why stress? We've combined our best items into perfect bundles to save you time and money.</p>
                </div>
                
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 {bundles.map((bundle: any) => (
-                   <div 
-                     key={bundle._id} 
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                   {bundles.map((bundle: Product) => (
+                     <div 
+                       key={bundle._id} 
                      className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-rose-100/50 transition-all duration-500 flex flex-col cursor-pointer"
                      onClick={() => handleProductClick(bundle)}
                    >
@@ -1162,7 +1170,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
         }}
         onLearnMore={() => {
           // Navigate to specials or open logistics modal
-          setActiveCategory({ _id: 'specials', name: 'Specials' });
+          setActiveCategory({ _id: 'specials', name: 'Specials', slug: 'specials' });
         }}
       />
 
