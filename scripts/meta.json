@@ -1,7 +1,7 @@
 {
-   "basePrice": 10500,
-   "description": "100ml red diamond ",
-  "category": "6971f4667bf57dc4f8325aab",
+   "basePrice": 40000,
+   "description": "Kiss me Cake",
+  "category": "6976425086d10ab880a93fba",
   "event": "696bb790aca35414ca4947fc",
   "isActive": true,
   
@@ -9,5 +9,5 @@
     "options": [
     ]
   },
-  "locations": []
+  "locations": ["696bb78faca35414ca4947f3"]
 }

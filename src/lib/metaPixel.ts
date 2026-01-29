@@ -45,9 +45,12 @@ interface MetaEventParams {
 
 /**
  * Track a Meta Pixel standard event
+ * Handles async loading of fbq with retry mechanism
  */
 export function trackMetaEvent(eventName: MetaEventName, params?: MetaEventParams): void {
-  if (typeof window !== 'undefined' && window.fbq) {
+  if (typeof window === 'undefined') return;
+  
+  const fireEvent = () => {
     try {
       if (params) {
         window.fbq('track', eventName, params);
@@ -58,6 +61,25 @@ export function trackMetaEvent(eventName: MetaEventName, params?: MetaEventParam
     } catch (error) {
       console.error('[Meta Pixel] Failed to track event:', error);
     }
+  };
+
+  // If fbq exists and is ready, fire immediately
+  if (typeof window.fbq === 'function') {
+    fireEvent();
+  } else {
+    // Wait for fbq to load (retry up to 5 times)
+    let attempts = 0;
+    const maxAttempts = 5;
+    const interval = setInterval(() => {
+      attempts++;
+      if (typeof window.fbq === 'function') {
+        clearInterval(interval);
+        fireEvent();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval);
+        console.warn(`[Meta Pixel] fbq not available after ${maxAttempts} attempts for event: ${eventName}`);
+      }
+    }, 200);
   }
 }
 

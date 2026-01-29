@@ -991,35 +991,45 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                               <span className="font-black text-base md:text-xl" style={{ color: primaryColor }}>
                                 ₦{product.basePrice.toLocaleString()}
                               </span>
-                              <Button
-                                size="sm"
-                                className="rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 px-4 h-9"
-                                style={{ backgroundColor: primaryColor, color: 'white' }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  sendEvent({
-                                    action: 'add_to_cart',
-                                    category: 'QuickAdd',
-                                    label: product.name,
-                                    value: product.basePrice,
-                                    items: [{ item_id: product._id, item_name: product.name }]
-                                  });
-                                  
-                                  addItem({
-                                    productId: product._id,
-                                    type: 'PRODUCT',
-                                    productName: product.name,
-                                    productImage: getFirstImage(product.mediaGallery) || product.mediaGallery?.[0],
-                                    basePrice: product.basePrice,
-                                    quantity: 1,
-                                    variantSelection: {},
-                                    customizationData: {},
-                                  });
-                                  toast.success(`${product.name} added!`);
-                                }}
-                              >
-                                Add <Plus className="w-3.5 h-3.5 ml-1 stroke-[3px]" />
-                              </Button>
+                              {items.some((i: any) => i.productId === product._id) ? (
+                                <Button
+                                  size="sm"
+                                  disabled
+                                  className="rounded-full font-bold shadow-none opacity-80 px-4 h-9 bg-green-500 text-white"
+                                >
+                                  Added <CheckCircle className="w-3.5 h-3.5 ml-1" />
+                                </Button>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  className="rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 px-4 h-9"
+                                  style={{ backgroundColor: primaryColor, color: 'white' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    sendEvent({
+                                      action: 'add_to_cart',
+                                      category: 'QuickAdd',
+                                      label: product.name,
+                                      value: product.basePrice,
+                                      items: [{ item_id: product._id, item_name: product.name }]
+                                    }); 
+                                    
+                                    addItem({
+                                      productId: product._id,
+                                      type: 'PRODUCT',
+                                      productName: product.name,
+                                      productImage: getFirstImage(product.mediaGallery) || product.mediaGallery?.[0],
+                                      basePrice: product.basePrice,
+                                      quantity: 1,
+                                      variantSelection: {},
+                                      customizationData: {},
+                                    });
+                                    toast.success(`${product.name} added!`);
+                                  }}
+                                >
+                                  Add <Plus className="w-3.5 h-3.5 ml-1 stroke-[3px]" />
+                                </Button>
+                              )}
                             </div>
                           </CardContent>
                         </Card>
