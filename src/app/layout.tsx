@@ -9,6 +9,7 @@ import Footer from '@/components/layout/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Toaster } from 'sonner';
+import MetaPixel from '@/components/analytics/MetaPixel';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -113,6 +114,7 @@ export default async function RootLayout({
           {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
           )}
+          <MetaPixel />
         </EventProvider>
       </body>
     </html>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { trackAddToCart } from '@/lib/metaPixel';
 
 export interface CartItem {
   productId: string;
@@ -62,6 +63,14 @@ export function CartProvider({ children, cityId }: { children: React.ReactNode, 
     const totalPrice = item.basePrice * item.quantity;
     const itemType = item.type || 'PRODUCT';
     const newItem: CartItem = { ...item, totalPrice, type: itemType };
+    
+    // Track AddToCart event for Meta Pixel
+    trackAddToCart({
+      id: item.productId,
+      name: item.productName,
+      price: item.basePrice,
+      quantity: item.quantity,
+    });
     
     setItems(prev => {
       // Check if product already exists (by productId)

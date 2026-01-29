@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import ResponseReveal from '@/components/proposal/ResponseReveal';
 import ShareCard from '@/components/proposal/ShareCard';
+import { trackLead } from '@/lib/metaPixel';
 
 export default function CreateProposal() {
   const router = useRouter();
@@ -119,6 +120,12 @@ export default function CreateProposal() {
         setGeneratedLink(link);
         setStep(2);
         fetchHistory(deviceId); // Refresh history
+        
+        // Track Lead event for Meta Pixel
+        trackLead({
+          content_name: 'Valentine Proposal',
+          content_category: 'proposal',
+        });
     } catch (error) {
         console.error(error);
         alert("Failed to create proposal. Please try again.");

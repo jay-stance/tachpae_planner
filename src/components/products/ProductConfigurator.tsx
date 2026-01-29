@@ -566,6 +566,20 @@ export default function ProductConfigurator({ product, onComplete }: ProductConf
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+          {/* Product Header */}
+          <div className="mb-6 pb-6 border-b border-gray-100">
+            <h2 className="text-2xl font-black text-gray-900 mb-2">{product.name}</h2>
+            <p className="text-gray-500 text-sm font-medium leading-relaxed">{product.description}</p>
+            <div className="mt-4 flex items-center gap-2">
+               <span className="text-xl font-black" style={{ color: primaryColor }}>₦{product.basePrice.toLocaleString()}</span>
+               {product.tierLabel && (
+                 <span className="px-2 py-1 rounded-lg bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider">
+                   {product.tierLabel}
+                 </span>
+               )}
+            </div>
+          </div>
+
           {/* Phase 1: Variants */}
           {(!hasWizard || currentStep === 0) && renderVariants()}
 

@@ -12,7 +12,7 @@ import ProductConfigurator from '@/components/products/ProductConfigurator';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { useCart } from '@/context/CartContext';
 import { useEvent } from '@/context/EventContext';
-import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle, Filter, X, MapPin, Truck } from 'lucide-react';
+import { ShoppingBag, Gift, Calendar, Heart, Share2, Package, CheckCircle, Sparkles, ArrowRight, Copy, MessageCircle, Filter, X, MapPin, Truck, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -987,10 +987,39 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                           <CardContent className="p-3 md:p-6">
                             <h3 className="font-black text-gray-900 text-sm md:text-lg line-clamp-1">{product.name}</h3>
                             <p className="text-gray-500 text-xs md:text-sm font-medium line-clamp-1 mt-0.5 md:mt-1">{product.description}</p>
-                            <div className="flex justify-between items-center mt-2 md:mt-4">
+                            <div className="flex justify-between items-center mt-2 md:mt-4 gap-2">
                               <span className="font-black text-base md:text-xl" style={{ color: primaryColor }}>
                                 ₦{product.basePrice.toLocaleString()}
                               </span>
+                              <Button
+                                size="sm"
+                                className="rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 px-4 h-9"
+                                style={{ backgroundColor: primaryColor, color: 'white' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  sendEvent({
+                                    action: 'add_to_cart',
+                                    category: 'QuickAdd',
+                                    label: product.name,
+                                    value: product.basePrice,
+                                    items: [{ item_id: product._id, item_name: product.name }]
+                                  });
+                                  
+                                  addItem({
+                                    productId: product._id,
+                                    type: 'PRODUCT',
+                                    productName: product.name,
+                                    productImage: getFirstImage(product.mediaGallery) || product.mediaGallery?.[0],
+                                    basePrice: product.basePrice,
+                                    quantity: 1,
+                                    variantSelection: {},
+                                    customizationData: {},
+                                  });
+                                  toast.success(`${product.name} added!`);
+                                }}
+                              >
+                                Add <Plus className="w-3.5 h-3.5 ml-1 stroke-[3px]" />
+                              </Button>
                             </div>
                           </CardContent>
                         </Card>

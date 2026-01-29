@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,6 +9,7 @@ import { CheckCircle2, ShieldCheck, Truck, MessageSquare, ArrowRight, Loader2 } 
 import { useCart } from '@/context/CartContext';
 import { useEvent } from '@/context/EventContext';
 import { cn } from '@/lib/utils';
+import { trackInitiateCheckout, trackPurchase, trackContact } from '@/lib/metaPixel';
 
 interface CheckoutFormProps {
   onBack: () => void;
@@ -50,6 +51,17 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
   const serviceFee = calculateServiceFee(totalAmount); 
   const finalTotal = totalAmount + serviceFee;
   const [showFeeInfo, setShowFeeInfo] = useState(false);
+
+  // Track InitiateCheckout when user views checkout form
+  useEffect(() => {
+    if (items.length > 0) {
+      trackInitiateCheckout({
+        value: finalTotal,
+        itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+        productIds: items.map(item => item.productId),
+      });
+    }
+  }, []); // Only track once on mount
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,7 +134,18 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/+2347070295596?text=${encodedMessage}`;
 
-      // 3. Clear Cart and Redirect
+      // 3. Track Purchase Event
+      trackPurchase({
+        orderId: orderId,
+        value: finalTotal,
+        itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+        productIds: items.map(item => item.productId),
+      });
+      
+      // Track Contact for WhatsApp redirect
+      trackContact('whatsapp');
+
+      // 4. Clear Cart and Redirect
       clearCart();
       onSuccess();
       
