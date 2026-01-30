@@ -14,6 +14,8 @@ interface UseReactionRecorderResult {
   startRecording: (stream?: MediaStream) => void;
   stopRecording: () => void;
   reset: () => void;
+  lockOrientation: () => Promise<boolean>;
+  unlockOrientation: () => void;
 }
 
 /**
@@ -48,15 +50,12 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     }
 
     try {
-      // FORCE PORTRAIT: On mobile, we must set width < height explicitly
-      // Most mobile browsers ignore aspectRatio constraint
+      // Request camera with good quality settings
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'user',
-          // Portrait mode: width should be LESS than height
-          width: { min: 360, ideal: 720, max: 1080 },
-          height: { min: 640, ideal: 1280, max: 1920 },
-          frameRate: { ideal: 30, max: 30 }
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
         },
         audio: {
           echoCancellation: true,
@@ -64,14 +63,6 @@ export function useReactionRecorder(): UseReactionRecorderResult {
           autoGainControl: true
         },
       });
-
-      // Log actual dimensions to debug orientation issues
-      const videoTrack = mediaStream.getVideoTracks()[0];
-      if (videoTrack) {
-        const settings = videoTrack.getSettings();
-        console.log('[ReactionRecorder] Actual camera dimensions:', settings.width, 'x', settings.height);
-        console.log('[ReactionRecorder] Orientation:', settings.width! > settings.height! ? 'LANDSCAPE' : 'PORTRAIT');
-      }
 
       setStream(mediaStream);
       setStatus('IDLE');
@@ -189,6 +180,61 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     chunksRef.current = [];
   }, [stream, videoUrl]);
 
+  /**
+   * Lock screen orientation to portrait and enter fullscreen
+   * Returns true on success, false if not supported or failed
+   */
+  const lockOrientation = useCallback(async (): Promise<boolean> => {
+    try {
+      // Get a fullscreen element (ideally the recording container)
+      const elem = document.documentElement;
+
+      // Enter fullscreen first (required for orientation lock)
+      if (elem.requestFullscreen) {
+        await elem.requestFullscreen();
+      } else {
+        console.warn('[ReactionRecorder] Fullscreen not supported');
+        return false;
+      }
+
+      // Wait a bit for fullscreen to activate
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Lock to portrait orientation
+      if (screen.orientation && 'lock' in screen.orientation) {
+        await (screen.orientation as any).lock('portrait');
+        console.log('[ReactionRecorder] ✅ Orientation locked to portrait');
+        return true;
+      } else {
+        console.warn('[ReactionRecorder] Screen Orientation API not supported');
+        return false;
+      }
+    } catch (err: any) {
+      console.error('[ReactionRecorder] Failed to lock orientation:', err);
+      return false;
+    }
+  }, []);
+
+  /**
+   * Unlock orientation and exit fullscreen
+   */
+  const unlockOrientation = useCallback(() => {
+    try {
+      // Unlock orientation
+      if (screen.orientation && 'unlock' in screen.orientation) {
+        (screen.orientation as any).unlock();
+        console.log('[ReactionRecorder] Orientation unlocked');
+      }
+
+      // Exit fullscreen
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    } catch (err: any) {
+      console.error('[ReactionRecorder] Failed to unlock orientation:', err);
+    }
+  }, []);
+
   return {
     status,
     videoBlob,
@@ -199,5 +245,7 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     startRecording,
     stopRecording,
     reset,
+    lockOrientation,
+    unlockOrientation,
   };
 }
