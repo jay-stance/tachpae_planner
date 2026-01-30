@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { IProposal } from '@/models/Proposal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X } from 'lucide-react';
+import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
 import { sendEvent } from '@/lib/analytics';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,8 @@ import confetti from 'canvas-confetti';
 import { useVideoCompressor, CompressionStatus } from '@/hooks/useVideoCompressor';
 import UpsellProducts from './UpsellProducts';
 import ShareCard from './ShareCard';
+import ReactionCaptureModal from './ReactionCaptureModal';
+import { useReactionRecorder } from '@/hooks/useReactionRecorder';
 
 const INTRO_TEXTS = [
     "Somebody's head is swelling because of you... 🙈❤️",
@@ -49,6 +51,26 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
   const [showShareCard, setShowShareCard] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Music and Reaction Capture state
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showCaptureModal, setShowCaptureModal] = useState(false);
+  const [isCapturingReaction, setIsCapturingReaction] = useState(false);
+  const liveVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Reaction recorder hook
+  const {
+    status: recorderStatus,
+    stream: recorderStream,
+    videoBlob,
+    videoUrl: recordedVideoUrl,
+    requestPermission,
+    startRecording,
+    stopRecording,
+    reset: resetRecorder,
+  } = useReactionRecorder();
 
   // Prefetch upsell products in background on mount
   useEffect(() => {
@@ -92,6 +114,13 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     }));
   }, []);
 
+  // Wire live video preview to the recorder stream
+  useEffect(() => {
+    if (recorderStream && liveVideoRef.current) {
+      liveVideoRef.current.srcObject = recorderStream;
+    }
+  }, [recorderStream]);
+
 
 const rejectionOptions = [
     "I'm already in a serious talking stage 🌚🔒",
@@ -102,9 +131,69 @@ const rejectionOptions = [
   ];
 
   const handleOpenEnvelope = () => {
+    // Show capture modal first instead of immediately proceeding
+    setShowCaptureModal(true);
+  };
+
+  // Play background music at reduced volume during recording
+  const playMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.volume = isCapturingReaction ? 0.35 : 0.6; // Lower volume if recording
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch((e) => console.log('Audio autoplay blocked:', e));
+    }
+  };
+
+  // Toggle mute
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  // Toggle Play/Pause
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(e => console.log('Play failed:', e));
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  // Handle user allowing camera capture
+  const handleAllowCapture = async () => {
+    const granted = await requestPermission();
+    if (granted) {
+      setIsCapturingReaction(true);
+      startRecording();
+      setShowCaptureModal(false);
+      playMusic();
+      setStage('OPENING');
+      setTimeout(() => {
+        setStage('REVEALED');
+      }, 3000);
+    } else {
+      // Fallback if permission failed (e.g. insecure context)
+      // Just proceed as if they declined
+      handleDeclineCapture();
+      
+      // Optional: alert them why
+      alert("Camera access failed. Proceeding without recording.");
+    }
+  };
+
+  // Handle user declining camera capture
+  const handleDeclineCapture = () => {
+    setShowCaptureModal(false);
+    playMusic();
     setStage('OPENING');
     setTimeout(() => {
-        setStage('REVEALED');
+      setStage('REVEALED');
     }, 3000);
   };
 
@@ -115,6 +204,12 @@ const rejectionOptions = [
         origin: { y: 0.6 },
         colors: ['#3514F5', '#00C2FF', '#FF0080', '#ffffff']
     });
+    
+    // Stop recording if active
+    if (isCapturingReaction) {
+      stopRecording();
+    }
+    
     setStage('ACCEPTED');
 
     // Track acceptance
@@ -126,7 +221,47 @@ const rejectionOptions = [
   };
 
   const handleReject = () => {
+    // Stop recording if active
+    if (isCapturingReaction) {
+      stopRecording();
+    }
     setStage('REJECTED');
+  };
+
+  // Upload the recorded reaction video blob
+  const uploadReactionVideo = async () => {
+    if (!videoBlob) return;
+
+    try {
+      setUploading();
+
+      // Compress if needed (convert to File for compressor)
+      let file = new File([videoBlob], 'reaction.webm', { type: videoBlob.type });
+
+      const compressedBlob = await compressVideo(file);
+      if (compressedBlob) {
+        file = new File([compressedBlob], 'reaction.mp4', { type: 'video/mp4' });
+      }
+
+      // Upload to S3
+      const { uploadUrl, publicUrl } = await getPresignedUploadUrl();
+      await fetch(uploadUrl, {
+        method: 'PUT',
+        body: file,
+        headers: { 'Content-Type': file.type },
+      });
+
+      // Save response
+      await respondToProposal(proposal._id as unknown as string, 'ACCEPTED', { videoUrl: publicUrl });
+      setDone();
+      resetRecorder();
+      setIsCapturingReaction(false);
+      setStage('SUBMITTED');
+    } catch (err) {
+      console.error('Upload failed:', err);
+      alert('Failed to upload video. Please try again.');
+      reset();
+    }
   };
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -577,13 +712,51 @@ const rejectionOptions = [
                             </button>
                             
                             <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
-                            <p className="text-white/60 mb-6">
-                                Make {proposal.proposerName}'s day even more special by sending a quick reaction video!
-                            </p>
-                            
-                            <div className="rounded-xl p-4 mb-6 text-sm text-white/70 border border-white/10" style={{ background: 'rgba(255,255,255,0.03)' }}>
-                                📸 <strong className="text-white">Pro Tip:</strong> Keep it under <strong className="text-white">10 seconds</strong> — short & sweet!
-                            </div>
+
+                            {/* Show recorded video preview if we captured a reaction */}
+                            {recordedVideoUrl ? (
+                              <>
+                                <p className="text-white/60 mb-4 text-sm">
+                                  We caught your reaction! Preview and send it to {proposal.proposerName} 💕
+                                </p>
+                                
+                                {/* Video Preview */}
+                                <div className="relative aspect-[9/16] w-40 mx-auto rounded-2xl overflow-hidden border-2 border-white/20 mb-6">
+                                  <video
+                                    src={recordedVideoUrl}
+                                    className="w-full h-full object-cover"
+                                    controls
+                                    style={{ transform: 'scaleX(-1)' }}
+                                  />
+                                </div>
+
+                                <Button 
+                                    size="lg" 
+                                    className="w-full h-14 text-white rounded-2xl mb-3 gap-2 font-bold text-lg"
+                                    style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
+                                    disabled={isProcessing}
+                                    onClick={uploadReactionVideo}
+                                >
+                                    {isProcessing ? (
+                                      <><Loader2 className="w-5 h-5 animate-spin" /> Sending...</>
+                                    ) : (
+                                      <>Send My Reaction 💕</>
+                                    )}
+                                </Button>
+
+                                <button 
+                                    onClick={() => {
+                                      resetRecorder();
+                                      setIsCapturingReaction(false);
+                                    }}
+                                    className="text-sm text-white/30 hover:text-white/50 transition-colors"
+                                    disabled={isProcessing}
+                                >
+                                    Re-record instead
+                                </button>
+                              </>
+                            ) : (
+                              <>
                             
                             <input 
                                 type="file" 
@@ -615,7 +788,9 @@ const rejectionOptions = [
                                 disabled={isProcessing}
                             >
                                 Skip and send response
-                            </button>
+                                </button>
+                              </>
+                            )}
                         </div>
                     </motion.div>
                 </Container>
@@ -666,6 +841,88 @@ const rejectionOptions = [
              )}
 
         </AnimatePresence>
+
+        {/* Background Music Audio */}
+        <audio
+          ref={audioRef}
+          src="/sounds/romantic-bg.mp3"
+          loop
+          preload="auto"
+        />
+
+        {/* Reaction Capture Modal */}
+        <ReactionCaptureModal
+          isOpen={showCaptureModal}
+          proposerName={proposal.proposerName}
+          stream={recorderStream}
+          isRequesting={recorderStatus === 'REQUESTING'}
+          onAllow={handleAllowCapture}
+          onDecline={handleDeclineCapture}
+        />
+
+        {/* Music Attribution (Subtle) */}
+        {!isMuted && (
+          <div className="fixed bottom-1 right-2 z-30 opacity-30 hover:opacity-100 transition-opacity text-[10px] text-white pointer-events-none">
+             Music by <a href="https://pixabay.com/users/paulyudin-27739282/" target="_blank" rel="noopener noreferrer" className="underline pointer-events-auto">Pavel Bekirov</a> from <a href="https://pixabay.com/" target="_blank" rel="noopener noreferrer" className="underline pointer-events-auto">Pixabay</a>
+          </div>
+        )}
+
+        {/* Live Recording Indicator + Mute/Play Controls */}
+        {stage !== 'ENVELOPE' && (
+          <div className="fixed bottom-4 left-4 right-4 flex items-center justify-between z-40 px-2">
+            <div className="flex items-center gap-2">
+              {/* Play/Pause Toggle */}
+              <button
+                onClick={togglePlay}
+                className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md"
+                aria-label={isPlaying ? 'Pause music' : 'Play music'}
+              >
+                {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white ml-0.5" />}
+              </button>
+
+              {/* Mute Toggle */}
+              <button
+                onClick={toggleMute}
+                className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md"
+                aria-label={isMuted ? 'Unmute music' : 'Mute music'}
+              >
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+            </div>
+
+            {/* Live Recording Badge */}
+            {isCapturingReaction && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-red-500/80 text-white text-xs font-bold"
+              >
+                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                Recording
+              </motion.div>
+            )}
+          </div>
+        )}
+
+        {/* Live Camera Preview (bottom right) */}
+        {isCapturingReaction && recorderStream && (stage === 'OPENING' || stage === 'REVEALED' || stage === 'ACCEPTED') && (
+          <motion.div
+            className="fixed bottom-20 right-4 w-24 h-32 md:w-28 md:h-36 rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl z-50"
+            initial={{ opacity: 0, scale: 0.5, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: 'spring', damping: 15 }}
+          >
+            <video
+              ref={liveVideoRef}
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ transform: 'scaleX(-1)' }}
+            />
+            <div className="absolute inset-0 rounded-2xl ring-2 ring-rose-500/50 ring-inset" />
+          </motion.div>
+        )}
     </div>
   );
 }
