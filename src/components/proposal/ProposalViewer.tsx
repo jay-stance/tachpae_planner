@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
+import { sendEvent } from '@/lib/analytics';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import confetti from 'canvas-confetti';
@@ -65,10 +66,18 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     fetchUpsellProducts();
   }, []);
 
-  // Randomize experience on mount
+  // Randomize experience on mount and track view
   useEffect(() => {
     setIntroText(INTRO_TEXTS[Math.floor(Math.random() * INTRO_TEXTS.length)]);
-  }, []);
+    
+    // Track view event
+    sendEvent({
+      action: 'view_item',
+      category: 'proposal',
+      label: proposal._id as unknown as string,
+      value: 0
+    });
+  }, [proposal._id]);
 
   // Stabilize background particles so they don't jump on every render
   const particles = useMemo(() => {
@@ -107,6 +116,13 @@ const rejectionOptions = [
         colors: ['#3514F5', '#00C2FF', '#FF0080', '#ffffff']
     });
     setStage('ACCEPTED');
+
+    // Track acceptance
+    sendEvent({
+      action: 'proposal_accepted',
+      category: 'proposal',
+      label: proposal._id as unknown as string,
+    });
   };
 
   const handleReject = () => {
@@ -159,6 +175,14 @@ const rejectionOptions = [
       await respondToProposal(proposal._id as unknown as string, 'REJECTED', { reason: rejectionReason });
       setDone();
       setStage('SUBMITTED');
+
+      // Track rejection
+      sendEvent({
+        action: 'proposal_rejected',
+        category: 'proposal',
+        label: proposal._id as unknown as string,
+        item_variant: rejectionReason // Track the reason as variant
+      });
   };
 
   // Memoized button text to reduce re-renders

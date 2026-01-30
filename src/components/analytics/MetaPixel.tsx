@@ -1,19 +1,26 @@
 'use client';
 
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 
-const META_PIXEL_ID = '1633410778089845';
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1633410778089845';
 
 function PixelEvents() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
+    // Skip the first load because the inline script handles it (for reliability)
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'PageView');
-      console.log('[Meta Pixel] Tracked: PageView', pathname);
+      console.log('[Meta Pixel] Tracked: PageView (Route Change)', pathname);
     }
   }, [pathname, searchParams]);
 
@@ -42,7 +49,7 @@ export default function MetaPixel() {
             s.parentNode.insertBefore(t,s)}(window,document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '${META_PIXEL_ID}');
-            // Initial PageView is tracked by the useEffect above on mount
+            fbq('track', 'PageView'); 
           `,
         }}
       />
