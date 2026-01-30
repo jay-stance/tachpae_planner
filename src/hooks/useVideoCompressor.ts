@@ -26,7 +26,11 @@ export function useVideoCompressor() {
         []
     );
 
-    const compressVideo = useCallback(async (file: File): Promise<Blob | null> => {
+    interface CompressOptions {
+        rotateToPortrait?: boolean; // Rotate 90° clockwise if video is landscape
+    }
+
+    const compressVideo = useCallback(async (file: File, options?: CompressOptions): Promise<Blob | null> => {
         // Only run on client
         if (typeof window === 'undefined') {
             console.warn('Compression attempted on server - skipping');
@@ -61,11 +65,21 @@ export function useVideoCompressor() {
                 debouncedSetProgress(Math.round(progress * 100));
             });
 
+            // Build video filter string
+            // If rotateToPortrait is true, we add transpose=1 (90° clockwise)
+            let videoFilter = 'scale=720:-2';  // 720p width, auto height
+            if (options?.rotateToPortrait) {
+                // transpose=1 = 90° clockwise rotation
+                // After rotation, we scale based on new dimensions
+                videoFilter = 'transpose=1,scale=-2:720';  // After rotation, height becomes 720
+                console.log('[Compressor] Applying 90° rotation for portrait output');
+            }
+
             // Faster compression: higher CRF, simpler scaling
             await ffmpeg.exec([
                 '-i', inputName,
                 '-t', '30',
-                '-vf', 'scale=720:-2',  // 720p width, auto height
+                '-vf', videoFilter,
                 '-c:v', 'libx264',
                 '-crf', '23',           // Lower CRF = higher quality (18-28 is good range)
                 '-preset', 'veryfast',

@@ -58,7 +58,9 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showCaptureModal, setShowCaptureModal] = useState(false);
   const [isCapturingReaction, setIsCapturingReaction] = useState(false);
+  const [isVideoLandscape, setIsVideoLandscape] = useState(false);
   const liveVideoRef = useRef<HTMLVideoElement>(null);
+  const previewVideoRef = useRef<HTMLVideoElement>(null);
 
   // Reaction recorder hook
   const {
@@ -114,13 +116,35 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     }));
   }, []);
 
-  // Wire live video preview to the recorder stream
+  // Wire live video preview to the recorder stream and detect orientation
   useEffect(() => {
     if (recorderStream && liveVideoRef.current) {
       liveVideoRef.current.srcObject = recorderStream;
+      
+      // Detect orientation from the video track
+      const videoTrack = recorderStream.getVideoTracks()[0];
+      if (videoTrack) {
+        const settings = videoTrack.getSettings();
+        const isLandscape = (settings.width || 0) > (settings.height || 0);
+        console.log('[LivePreview] Stream dimensions:', settings.width, 'x', settings.height, isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
+        setIsVideoLandscape(isLandscape);
+      }
     }
   }, [recorderStream]);
 
+  // Detect if recorded video is landscape (needs rotation for portrait display)
+  useEffect(() => {
+    if (recordedVideoUrl && previewVideoRef.current) {
+      const video = previewVideoRef.current;
+      const handleLoadedMetadata = () => {
+        const isLandscape = video.videoWidth > video.videoHeight;
+        console.log('[VideoPreview] Dimensions:', video.videoWidth, 'x', video.videoHeight, isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
+        setIsVideoLandscape(isLandscape);
+      };
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      return () => video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    }
+  }, [recordedVideoUrl]);
 
 const rejectionOptions = [
     "I'm already in a serious talking stage 🌚🔒",
@@ -233,10 +257,12 @@ const rejectionOptions = [
     if (!videoBlob) return;
 
     try {
-      // Step 1: Compress (useVideoCompressor will show progress automatically)
+      // Step 1: Compress (with rotation if camera gave landscape)
       let file = new File([videoBlob], 'reaction.webm', { type: videoBlob.type });
 
-      const compressedBlob = await compressVideo(file);
+      const compressedBlob = await compressVideo(file, { 
+        rotateToPortrait: isVideoLandscape  // Rotate 90° if camera recorded in landscape
+      });
       if (compressedBlob) {
         file = new File([compressedBlob], 'reaction.mp4', { type: 'video/mp4' });
       }
@@ -724,11 +750,20 @@ const rejectionOptions = [
                                   We caught your reaction! Preview and send it to {proposal.proposerName} 💕
                                 </p>
                                 
-                                {/* Video Preview */}
-                                <div className="relative aspect-[9/16] w-52 mx-auto rounded-2xl overflow-hidden border-2 border-white/20 mb-6 bg-black">
+                                {/* Video Preview - rotates if camera gave landscape */}
+                                <div 
+                                  className={`relative mx-auto rounded-2xl overflow-hidden border-2 border-white/20 mb-6 bg-black ${
+                                    isVideoLandscape ? 'w-52 aspect-[9/16]' : 'w-52 aspect-[9/16]'
+                                  }`}
+                                >
                                   <video
+                                    ref={previewVideoRef}
                                     src={recordedVideoUrl}
                                     className="w-full h-full object-contain"
+                                    style={isVideoLandscape ? { 
+                                      transform: 'rotate(90deg) scale(1.78)',
+                                      transformOrigin: 'center center'
+                                    } : undefined}
                                     controls
                                     playsInline
                                   />
@@ -922,7 +957,12 @@ const rejectionOptions = [
               muted
               playsInline
               className="w-full h-full object-cover"
-              style={{ transform: 'scaleX(-1)' }}
+              style={{ 
+                transform: isVideoLandscape 
+                  ? 'scaleX(-1) rotate(90deg) scale(1.33)' 
+                  : 'scaleX(-1)',
+                transformOrigin: 'center center'
+              }}
             />
             <div className="absolute inset-0 rounded-2xl ring-2 ring-rose-500/50 ring-inset" />
           </motion.div>

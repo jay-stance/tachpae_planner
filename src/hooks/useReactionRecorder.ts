@@ -48,14 +48,14 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     }
 
     try {
-      // Request camera with flexible constraints - let device pick best resolution
-      // but prefer portrait orientation for selfie videos
+      // FORCE PORTRAIT: On mobile, we must set width < height explicitly
+      // Most mobile browsers ignore aspectRatio constraint
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'user',
-          aspectRatio: { ideal: 9/16 }, // Portrait mode
-          width: { ideal: 1080, max: 1920 },
-          height: { ideal: 1920, max: 1920 },
+          // Portrait mode: width should be LESS than height
+          width: { min: 360, ideal: 720, max: 1080 },
+          height: { min: 640, ideal: 1280, max: 1920 },
           frameRate: { ideal: 30, max: 30 }
         },
         audio: {
@@ -64,6 +64,14 @@ export function useReactionRecorder(): UseReactionRecorderResult {
           autoGainControl: true
         },
       });
+
+      // Log actual dimensions to debug orientation issues
+      const videoTrack = mediaStream.getVideoTracks()[0];
+      if (videoTrack) {
+        const settings = videoTrack.getSettings();
+        console.log('[ReactionRecorder] Actual camera dimensions:', settings.width, 'x', settings.height);
+        console.log('[ReactionRecorder] Orientation:', settings.width! > settings.height! ? 'LANDSCAPE' : 'PORTRAIT');
+      }
 
       setStream(mediaStream);
       setStatus('IDLE');
