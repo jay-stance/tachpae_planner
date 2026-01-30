@@ -233,9 +233,7 @@ const rejectionOptions = [
     if (!videoBlob) return;
 
     try {
-      setUploading();
-
-      // Compress if needed (convert to File for compressor)
+      // Step 1: Compress (useVideoCompressor will show progress automatically)
       let file = new File([videoBlob], 'reaction.webm', { type: videoBlob.type });
 
       const compressedBlob = await compressVideo(file);
@@ -243,7 +241,8 @@ const rejectionOptions = [
         file = new File([compressedBlob], 'reaction.mp4', { type: 'video/mp4' });
       }
 
-      // Upload to S3
+      // Step 2: Upload
+      setUploading();
       const { uploadUrl, publicUrl } = await getPresignedUploadUrl();
       await fetch(uploadUrl, {
         method: 'PUT',
@@ -251,7 +250,7 @@ const rejectionOptions = [
         headers: { 'Content-Type': file.type },
       });
 
-      // Save response
+      // Step 3: Save response
       await respondToProposal(proposal._id as unknown as string, 'ACCEPTED', { videoUrl: publicUrl });
       setDone();
       resetRecorder();
@@ -713,8 +712,6 @@ const rejectionOptions = [
                             
                             <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
 
-                            <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
-
                             {/* Processing State: We were recording but URL isn't ready yet */}
                             {isCapturingReaction && !recordedVideoUrl ? (
                                 <div className="py-12">
@@ -728,12 +725,12 @@ const rejectionOptions = [
                                 </p>
                                 
                                 {/* Video Preview */}
-                                <div className="relative aspect-[9/16] w-40 mx-auto rounded-2xl overflow-hidden border-2 border-white/20 mb-6">
+                                <div className="relative aspect-[9/16] w-52 mx-auto rounded-2xl overflow-hidden border-2 border-white/20 mb-6 bg-black">
                                   <video
                                     src={recordedVideoUrl}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
                                     controls
-                                    style={{ transform: 'scaleX(-1)' }}
+                                    playsInline
                                   />
                                 </div>
 

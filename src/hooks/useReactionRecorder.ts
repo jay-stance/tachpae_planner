@@ -48,9 +48,21 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     }
 
     try {
+      // Request camera with flexible constraints - let device pick best resolution
+      // but prefer portrait orientation for selfie videos
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 1280 } },
-        audio: true,
+        video: { 
+          facingMode: 'user',
+          aspectRatio: { ideal: 9/16 }, // Portrait mode
+          width: { ideal: 1080, max: 1920 },
+          height: { ideal: 1920, max: 1920 },
+          frameRate: { ideal: 30, max: 30 }
+        },
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        },
       });
 
       setStream(mediaStream);
@@ -84,7 +96,14 @@ export function useReactionRecorder(): UseReactionRecorderResult {
       ? 'video/webm'
       : 'video/mp4';
 
-    const recorder = new MediaRecorder(streamToUse, { mimeType });
+    // Set bitrate for better quality and smaller file size
+    const recorderOptions: MediaRecorderOptions = {
+      mimeType,
+      videoBitsPerSecond: 2500000, // 2.5 Mbps for good quality
+      audioBitsPerSecond: 128000,  // 128 kbps audio
+    };
+
+    const recorder = new MediaRecorder(streamToUse, recorderOptions);
 
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
