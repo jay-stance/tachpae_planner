@@ -167,10 +167,10 @@ const rejectionOptions = [
 
   // Handle user allowing camera capture
   const handleAllowCapture = async () => {
-    const granted = await requestPermission();
-    if (granted) {
+    const stream = await requestPermission();
+    if (stream) {
       setIsCapturingReaction(true);
-      startRecording();
+      startRecording(stream);
       setShowCaptureModal(false);
       playMusic();
       setStage('OPENING');
@@ -713,8 +713,15 @@ const rejectionOptions = [
                             
                             <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
 
-                            {/* Show recorded video preview if we captured a reaction */}
-                            {recordedVideoUrl ? (
+                            <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
+
+                            {/* Processing State: We were recording but URL isn't ready yet */}
+                            {isCapturingReaction && !recordedVideoUrl ? (
+                                <div className="py-12">
+                                  <Loader2 className="w-10 h-10 text-white animate-spin mx-auto mb-4" />
+                                  <p className="text-white/70">Finalizing your reaction video...</p>
+                                </div>
+                            ) : recordedVideoUrl ? (
                               <>
                                 <p className="text-white/60 mb-4 text-sm">
                                   We caught your reaction! Preview and send it to {proposal.proposerName} 💕

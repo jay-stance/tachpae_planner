@@ -10,8 +10,8 @@ interface UseReactionRecorderResult {
   videoUrl: string | null;
   stream: MediaStream | null;
   error: string | null;
-  requestPermission: () => Promise<boolean>;
-  startRecording: () => void;
+  requestPermission: () => Promise<MediaStream | null>;
+  startRecording: (stream?: MediaStream) => void;
   stopRecording: () => void;
   reset: () => void;
 }
@@ -35,7 +35,7 @@ export function useReactionRecorder(): UseReactionRecorderResult {
   /**
    * Request camera + microphone permission and return the stream
    */
-  const requestPermission = useCallback(async (): Promise<boolean> => {
+  const requestPermission = useCallback(async (): Promise<MediaStream | null> => {
     setStatus('REQUESTING');
     setError(null);
 
@@ -44,7 +44,7 @@ export function useReactionRecorder(): UseReactionRecorderResult {
       console.error('[ReactionRecorder] MediaDevices API not available (likely insecure context)');
       setError('Camera not supported in this browser or context. Please use HTTPS.');
       setStatus('ERROR');
-      return false;
+      return null;
     }
 
     try {
@@ -55,21 +55,22 @@ export function useReactionRecorder(): UseReactionRecorderResult {
 
       setStream(mediaStream);
       setStatus('IDLE');
-      return true;
+      return mediaStream;
     } catch (err: any) {
       console.error('[ReactionRecorder] Permission denied:', err);
-      // Handle "NotAllowedError" specifically for cleaner UI if needed
       setError(err.message || 'Camera permission denied');
       setStatus('ERROR');
-      return false;
+      return null;
     }
   }, []);
 
   /**
    * Start recording from the active stream
    */
-  const startRecording = useCallback(() => {
-    if (!stream) {
+  const startRecording = useCallback((currentStream?: MediaStream) => {
+    const streamToUse = currentStream || stream;
+    
+    if (!streamToUse) {
       console.error('[ReactionRecorder] No stream available');
       return;
     }
@@ -83,7 +84,7 @@ export function useReactionRecorder(): UseReactionRecorderResult {
       ? 'video/webm'
       : 'video/mp4';
 
-    const recorder = new MediaRecorder(stream, { mimeType });
+    const recorder = new MediaRecorder(streamToUse, { mimeType });
 
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
