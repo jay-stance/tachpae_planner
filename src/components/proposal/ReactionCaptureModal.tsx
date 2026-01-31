@@ -145,7 +145,7 @@ export default function ReactionCaptureModal({
                 disabled={isRequesting}
               >
                 <CameraOff className="w-4 h-4 inline mr-1 opacity-50" />
-                I go just read am first
+                I will just read it first
               </button>
             </div>
           </div>

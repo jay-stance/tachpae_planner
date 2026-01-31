@@ -123,6 +123,15 @@ export default function ProposalViewer({ proposal }: { proposal: IProposal }) {
     }
   }, [recorderStream]);
 
+  // Unlock audio on mount (required for mobile browsers)
+  useEffect(() => {
+    if (audioRef.current) {
+      // Load the audio to prepare it for playback
+      audioRef.current.load();
+      console.log('[Audio] Preloaded for mobile playback');
+    }
+  }, []);
+
 const rejectionOptions = [
     "I'm already in a serious talking stage 🌚🔒",
     "I thought we were just vibing? 🤡💀",
@@ -137,12 +146,31 @@ const rejectionOptions = [
   };
 
   // Play background music at reduced volume during recording
-  const playMusic = () => {
+  const playMusic = async () => {
     if (audioRef.current) {
-      audioRef.current.volume = isCapturingReaction ? 0.35 : 0.6; // Lower volume if recording
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch((e) => console.log('Audio autoplay blocked:', e));
+      try {
+        // Set volume
+        audioRef.current.volume = isCapturingReaction ? 0.35 : 0.6;
+        
+        // Try to play
+        await audioRef.current.play();
+        setIsPlaying(true);
+        console.log('[Audio] ✅ Playback started');
+      } catch (e: any) {
+        console.warn('[Audio] Autoplay blocked:', e.message);
+        
+        // On mobile, audio needs user interaction to unlock
+        // The user already interacted (clicked modal button), so try once more
+        setTimeout(async () => {
+          try {
+            await audioRef.current?.play();
+            setIsPlaying(true);
+            console.log('[Audio] ✅ Retry successful');
+          } catch (retryError) {
+            console.error('[Audio] ❌ Retry failed - user may need to enable sound manually');
+          }
+        }, 100);
+      }
     }
   };
 
