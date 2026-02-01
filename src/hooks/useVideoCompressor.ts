@@ -33,6 +33,13 @@ export function useVideoCompressor() {
             return null;
         }
 
+        // Bypass compression if file is small enough (e.g. < 15MB)
+        // This avoids downloading heavy FFmpeg WASM for quick videos
+        if (file.size < 15 * 1024 * 1024) {
+            console.log('File is small enough (<15MB), skipping compression');
+            return null; // Returning null keeps the original file
+        }
+
         try {
             setStatus('LOADING_CORE');
             setProgress(0);
@@ -61,15 +68,15 @@ export function useVideoCompressor() {
                 debouncedSetProgress(Math.round(progress * 100));
             });
 
-            // Faster compression: higher CRF, simpler scaling
+            // Fast mobile compression settings
             await ffmpeg.exec([
                 '-i', inputName,
                 '-t', '30',
-                '-vf', 'scale=720:-2',  // 720p width, auto height
+                '-vf', 'scale=480:-2',  // 480p is sufficient for reaction bubbles
                 '-c:v', 'libx264',
-                '-crf', '23',           // Lower CRF = higher quality (18-28 is good range)
-                '-preset', 'veryfast',
-                '-tune', 'fastdecode',
+                '-crf', '28',           // Higher CRF = smaller file (28 is good for mobile)
+                '-preset', 'ultrafast', // Fastest encoding speed
+                '-tune', 'zerolatency', // Optimize for streaming/fast start
                 outputName
             ]);
 
@@ -80,7 +87,7 @@ export function useVideoCompressor() {
 
         } catch (error) {
             console.error('Compression Failed', error);
-            setStatus('ERROR');
+            // On error, return null to fall back to original file upload
             return null;
         }
     }, [debouncedSetProgress]);

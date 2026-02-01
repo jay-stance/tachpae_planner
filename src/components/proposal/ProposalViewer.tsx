@@ -268,8 +268,10 @@ const rejectionOptions = [
     if (!videoBlob) return;
 
     try {
-      // Step 1: Compress
-      let file = new File([videoBlob], 'reaction.webm', { type: videoBlob.type });
+      // Step 1: Compress (or bypass if small)
+      // Detect correct extension likely from mime type
+      const ext = videoBlob.type.includes('mp4') ? 'mp4' : 'webm';
+      let file = new File([videoBlob], `reaction.${ext}`, { type: videoBlob.type });
 
       const compressedBlob = await compressVideo(file);
       if (compressedBlob) {
@@ -496,9 +498,10 @@ const rejectionOptions = [
               >
                 <button
                   onClick={() => window.location.href = '/'}
-                  className="px-6 py-3 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-all text-sm font-medium"
+                  className="px-8 py-4 rounded-full text-white font-bold bg-white/10 hover:bg-white/20 hover:scale-105 transition-all text-base flex items-center gap-2 border border-white/10 shadow-lg"
                 >
-                  ← Back to Home
+                  <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
+                  Create Your Own Proposal
                 </button>
               </motion.div>
           </div>

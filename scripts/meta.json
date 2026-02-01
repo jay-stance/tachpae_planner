@@ -1,7 +1,7 @@
 {
-   "basePrice": 165000,
-   "description": "Marry Me' Package",
-  "category": "6976425086d10ab880a93fba",
+   "basePrice": 10000,
+   "description": "Queen Primer - Refresh",
+  "category": "6971eabc910acf78421c4033",
   "event": "696bb790aca35414ca4947fc",
   "isActive": true,
   
@@ -9,5 +9,5 @@
     "options": [
     ]
   },
-  "locations": ["696bb78faca35414ca4947f3"]
+  "locations": []
 }

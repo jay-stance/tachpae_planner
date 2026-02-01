@@ -98,8 +98,8 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     // Set bitrate for better quality and smaller file size
     const recorderOptions: MediaRecorderOptions = {
       mimeType,
-      videoBitsPerSecond: 2500000, // 2.5 Mbps for good quality
-      audioBitsPerSecond: 128000,  // 128 kbps audio
+      videoBitsPerSecond: 1000000, // 1 Mbps is enough for a face reaction
+      audioBitsPerSecond: 96000,   // 96 kbps audio
     };
 
     const recorder = new MediaRecorder(streamToUse, recorderOptions);

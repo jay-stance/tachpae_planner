@@ -293,7 +293,24 @@ export default function ShareCard({ proposerName, partnerName, message, isOpen, 
               </button>
             </div>
 
-            <p className="text-center text-white/40 text-xs mt-4">
+            {/* Create Your Own Link - Upsell */}
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="text-white font-bold text-center mb-1">
+                Want to see your crush blush like this? 🤭
+              </p>
+              <p className="text-white/60 text-xs text-center mb-3 leading-relaxed">
+                Create a proposal link and we'll <span className="text-rose-400 font-medium">secretly record their genuine reaction</span> as they read it!
+              </p>
+              
+              <button
+                onClick={() => window.location.href = '/'}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold text-sm shadow-lg hover:shadow-rose-500/20 transition-all flex items-center justify-center gap-2"
+              >
+                <span className="text-lg">📸</span> Create Your Proposal Link
+              </button>
+            </div>
+            
+            <p className="text-center text-white/40 text-[10px] mt-3">
               Tag @tachpae on Instagram & TikTok!
             </p>
           </motion.div>
