@@ -24,20 +24,39 @@ export const getPlanningData = unstable_cache(
 
         const categories = await Category.find({ event: event._id }).lean();
 
-        const products = await Product.find({ 
+        // IN-MEMORY FILTERING WORKAROUND
+        const allProducts = await Product.find({ 
             event: event._id, 
             isActive: true,
-            isBundle: { $ne: true }, // Exclude bundles from regular products
-            $or: [
-                { locations: { $exists: false } },
-                { locations: { $eq: null } },
-                { locations: { $size: 0 } }, // Available everywhere
-                { locations: city._id }      // Available in this city
-            ]
         }).populate('category').lean();
 
+        const products = allProducts.filter(p => {
+             // 1. Bundle check
+             if (p.isBundle === true) return false;
+
+             // 2. Location Check
+             // If locations is missing, null, or empty -> Global (Keep)
+             if (!p.locations || p.locations.length === 0) return true;
+
+             // If locations has entries, check if city._id is in it
+             // Use loose string comparison for safety
+             return p.locations.some((loc: any) => loc.toString() === city._id.toString());
+        });
+        
+        // Use the same logic for bundles
+        const allBundles = await Product.find({
+            event: event._id,
+            isBundle: true,
+            isActive: true
+        }).lean();
+
+        const bundles = allBundles.filter((b: any) => {
+             if (!b.locations || b.locations.length === 0) return true;
+             return b.locations.some((loc: any) => loc.toString() === city._id.toString());
+        });
+
         const services = await Service.find({ 
-            event: event._id, 
+            event: event._id,
             location: city._id,
             isActive: true
         }).lean();
@@ -45,19 +64,6 @@ export const getPlanningData = unstable_cache(
         const addons = await Addon.find({ 
             event: event._id, 
             isActive: true 
-        }).lean();
-
-        // Fetch bundles from Product model where isBundle = true
-        const bundles = await Product.find({ 
-            event: event._id, 
-            isBundle: true,
-            isActive: true,
-            $or: [
-                { locations: { $exists: false } },
-                { locations: { $eq: null } },
-                { locations: { $size: 0 } },
-                { locations: city._id }
-            ]
         }).lean();
 
         const allCities = await City.find({ 
