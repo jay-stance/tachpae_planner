@@ -314,7 +314,7 @@ export default function CreateProposal() {
                                       {upsellProducts.slice(0, 4).map((product: any) => (
                                         <Link 
                                           key={product._id}
-                                          href="/planning/abuja"
+                                          href="/planning/lagos"
                                           className="flex-shrink-0 w-28 rounded-xl overflow-hidden border border-gray-100 hover:border-rose-200 hover:shadow-lg transition-all bg-white"
                                         >
                                           <div className="aspect-square relative bg-gray-50">
@@ -342,7 +342,7 @@ export default function CreateProposal() {
                                       className="w-full mt-3 h-10 text-white text-sm font-bold rounded-xl"
                                       style={{ background: 'linear-gradient(135deg, var(--tachpae-primary), var(--tachpae-primary-light))' }}
                                     >
-                                      <Link href="/planning/abuja">
+                                      <Link href="/planning/lagos">
                                         Browse All Gifts <ArrowRight className="ml-2 w-4 h-4" />
                                       </Link>
                                     </Button>

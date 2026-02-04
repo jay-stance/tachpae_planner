@@ -34,7 +34,7 @@ interface UpsellProductsProps {
 
 export default function UpsellProducts({ 
   products, 
-  citySlug = 'abuja',
+  citySlug = 'lagos',
   title = "While you're here...",
   subtitle = "Why not treat yourself to something special?",
   ctaText = "Explore More Gifts"

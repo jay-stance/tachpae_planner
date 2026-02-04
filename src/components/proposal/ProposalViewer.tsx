@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { IProposal } from '@/models/Proposal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+import { Heart, Video, XCircle, Send, Sparkles, Mail, Loader2, Stars, Share2, Download, X, Volume2, VolumeX, Play, Pause, ArrowRight } from 'lucide-react';
 import { getPresignedUploadUrl, respondToProposal } from '@/actions/proposal';
 import { sendEvent } from '@/lib/analytics';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -230,6 +231,89 @@ const rejectionOptions = [
     }, 3000);
   };
 
+  // Typing animation state
+  const [typingMessage, setTypingMessage] = useState('');
+  const [rejectionStep, setRejectionStep] = useState(0); // 0 = normal, 1-3 = meme steps
+  const [celebrationIndex, setCelebrationIndex] = useState(0); // For slideshow
+
+  // Logical sequence of memes: Yes -> Excited -> Dance -> Love -> Date -> Forever
+  const CELEBRATION_MEMES = [
+    "https://media.tenor.com/iCmihp4DMDwAAAAM/pawpaw-osita-iheme.gif",     // 1. Pawpaw Happy Dance (Classic)
+    "https://media.tenor.com/pNeVD-RoagYAAAAM/money-love.gif",             // 2. Money Spraying (Celebration)
+    "https://media.tenor.com/pP6LotuJ5dkAAAAM/9ja-wedding-party.gif",      // 3. Nigerian Wedding Dance
+    "https://media.tenor.com/ziaxJDR68hwAAAAM/jaggydohwhift.gif",          // 4. Aki & Pawpaw Celebration
+    "https://media.tenor.com/ghCMajHdhIEAAAAM/osita-iheme.gif",            // 5. Osita Iheme Laughing/Joy
+    "https://media.tenor.com/Yvzf4w8-i8sAAAAM/owambe-dance.gif",           // 6. Traditional Owambe Dance
+    "https://media.tenor.com/__v13Q2_87AAAAAM/gbese-burna.gif",            // 7. Burna Boy Gbese
+    "https://media.tenor.com/zYsFSr7eRSsAAAAM/tiwa-savage-korobo.gif",     // 8. Tiwa Savage Dancing
+    "https://media.tenor.com/eGKO35m2zNAAAAAM/squad-goals.gif",            // 9. Wedding Squad Goals
+    "https://media.tenor.com/k1JiS6pnXGYAAAAM/toni-nigeria.gif",           // 10. General Vibe/Cheers
+  ];
+
+  const REJECTION_MEMES = [
+    {
+      id: 1,
+      image: "https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif", // Crying cat
+      text: "Do you really want to say no? After all we've been through? 🥺",
+      buttonText: "Yes, I'm sure 💔"
+    },
+    {
+      id: 2,
+      image: "https://media.giphy.com/media/d2lcHJTG5Tscg/giphy.gif", // Crying Dawson
+      text: "My heart... it's breaking! Please reconsider! 😭",
+      buttonText: "I'm heartless (Next)"
+    },
+    {
+      id: 3,
+      image: "https://media.giphy.com/media/3o6wrvdHFbwBrUFenu/giphy.gif", // Crying Kim K
+      text: "Last chance! Don't do this to me! 🚑",
+      buttonText: "It's over."
+    }
+  ];
+
+  // Slideshow effect for celebration memes
+  useEffect(() => {
+    if (stage === 'ACCEPTED') {
+      const interval = setInterval(() => {
+        setCelebrationIndex((prev) => (prev + 1) % CELEBRATION_MEMES.length);
+      }, 2500); // Change meme every 2.5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [stage]);
+
+  // Typing effect when stage becomes REVEALED
+  useEffect(() => {
+    if (stage === 'REVEALED' && proposal.message) {
+      let index = 0;
+      let timeoutId: NodeJS.Timeout;
+      setTypingMessage('');
+      
+      const typeNextChar = () => {
+        if (index < proposal.message.length) {
+          const char = proposal.message.charAt(index);
+          setTypingMessage(proposal.message.substring(0, index + 1));
+          index++;
+          
+          // Calculate delay based on character - faster but still natural
+          let delay = 70 + Math.random() * 80; // Base speed: 70-150ms per char
+          
+          if (char === ',') {
+            delay += 600; // 0.6s pause for comma
+          } else if (['.', '!', '?', '\n'].includes(char)) {
+            delay += 1200; // 1.2s pause for sentence end or paragraph break
+          }
+          
+          timeoutId = setTimeout(typeNextChar, delay);
+        }
+      };
+
+      // Start typing after a short initial delay
+      timeoutId = setTimeout(typeNextChar, 500);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [stage, proposal.message]);
+
   const handleAccept = () => {
     confetti({
         particleCount: 200,
@@ -254,13 +338,35 @@ const rejectionOptions = [
     });
   };
 
+  // Initial reject click - starts the meme flow
   const handleReject = () => {
+    setRejectionStep(1);
+  };
+
+  // Confirm rejection - advances flow or finalizes
+  const confirmReject = () => {
+    if (rejectionStep < 3) {
+      setRejectionStep(prev => prev + 1);
+    } else {
+      // Finalize rejection
+      finalizeReject();
+    }
+  };
+
+  // Reset rejection flow - back to proposal
+  const cancelReject = () => {
+    setRejectionStep(0);
+  };
+
+  // Actual rejection logic (final step)
+  const finalizeReject = () => {
     // Stop recording if active
     if (isCapturingReaction) {
       stopRecording();
       unlockOrientation(); // Exit fullscreen and unlock orientation
     }
     setStage('REJECTED');
+    setRejectionStep(0);
   };
 
   // Upload the recorded reaction video blob
@@ -403,31 +509,36 @@ const rejectionOptions = [
                    ? `${proposal.proposerName} will be thrilled! Your love story is just beginning...`
                    : 'Your response has been delivered.'}
                </p>
-             </div>
 
-             {/* Upsell Section */}
-             {upsellProducts.length > 0 && (
-               <div className="w-full max-w-lg">
-                 <UpsellProducts 
-                   products={upsellProducts}
-                   citySlug="abuja"
-                   title={isAccepted ? "Make this moment unforgettable" : "Treat yourself today"}
-                   subtitle={isAccepted 
-                     ? "10,000+ couples chose Tachpae to say 'I love you'. Your turn?"
-                     : "You deserve something special too."
-                   }
-                   ctaText="Explore More Gifts"
-                 />
-               </div>
-             )}
+             {/* Create Your Own Proposal CTA - Prominent Link */}
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.5 }}
+               className="w-full max-w-lg mt-8 mb-8 relative z-20 mx-auto text-center"
+             >
+                <Link href="/proposal/create" className="block w-full group">
+                    <Button 
+                        size="lg"
+                        className="w-full h-14 text-lg font-bold text-white rounded-xl shadow-lg transition-all hover:scale-[1.02] hover:brightness-110"
+                        style={{ background: 'var(--tachpae-primary)', boxShadow: '0 10px 25px -5px rgba(53, 20, 245, 0.4)' }}
+                    >
+                        <Sparkles className="w-5 h-5 text-yellow-300 fill-yellow-300 mr-2" />
+                         Create Your Own Proposal
+                        <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                    <p className="text-white/50 text-xs mt-2 font-medium">Make someone feel special today ✨</p>
+                </Link>
+             </motion.div>
+             </div>
 
              {/* Share Your Answer Section */}
              {(isAccepted || proposal.status === 'REJECTED' || stage === 'REJECTED') && (
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.8 }}
-                 className="w-full max-w-lg mt-8 relative z-20"
+                 transition={{ delay: 0.6 }}
+                 className="w-full max-w-lg mb-10 relative z-20"
                >
                  <div 
                    className="rounded-2xl p-5 text-center shadow-2xl"
@@ -466,6 +577,22 @@ const rejectionOptions = [
                </motion.div>
              )}
 
+             {/* Upsell Section */}
+             {upsellProducts.length > 0 && (
+               <div className="w-full max-w-lg mb-8">
+                 <UpsellProducts 
+                   products={upsellProducts}
+                   citySlug="lagos"
+                   title={isAccepted ? "Make this moment unforgettable" : "Treat yourself today"}
+                   subtitle={isAccepted 
+                     ? "10,000+ couples chose Tachpae to say 'I love you'. Your turn?"
+                     : "You deserve something special too."
+                   }
+                   ctaText="Explore More Gifts"
+                 />
+               </div>
+             )}
+
              {/* Share Card Modal */}
              <ShareCard
                proposerName={proposal.proposerName}
@@ -476,6 +603,8 @@ const rejectionOptions = [
                status={proposal.status === 'REJECTED' || stage === 'REJECTED' ? 'REJECTED' : 'ACCEPTED'}
                rejectionReason={proposal.rejectionReason || rejectionReason}
              />
+
+
 
              {/* Social Proof */}
              <motion.div 
@@ -664,8 +793,8 @@ const rejectionOptions = [
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.7 }}
                             >
-                                <p className="text-lg md:text-2xl font-medium text-white leading-relaxed">
-                                    "{proposal.message}"
+                                <p className="text-lg md:text-2xl font-medium text-white leading-relaxed min-h-[2em] whitespace-pre-wrap">
+                                    "{typingMessage}"<span className="animate-pulse text-rose-500">|</span>
                                 </p>
                             </motion.div>
                             
@@ -712,6 +841,56 @@ const rejectionOptions = [
                                 </Button>
                             </motion.div>
                         </div>
+                
+                        {/* Rejection Meme Modal Overlay */}
+                        <AnimatePresence>
+                        {rejectionStep > 0 && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+                                style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
+                            >
+                                <motion.div 
+                                    initial={{ scale: 0.9, y: 20 }}
+                                    animate={{ scale: 1, y: 0 }}
+                                    exit={{ scale: 0.9, y: 20 }}
+                                    className="w-full max-w-sm bg-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative"
+                                >
+                                    <div className="relative aspect-square w-full bg-black">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={REJECTION_MEMES[rejectionStep - 1].image}
+                                            alt="Reaction"
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                                        <div className="absolute bottom-0 left-0 right-0 p-6 pt-12">
+                                            <p className="text-white font-bold text-xl leading-tight text-center drop-shadow-md">
+                                                "{REJECTION_MEMES[rejectionStep - 1].text}"
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="p-6 space-y-3 bg-slate-900">
+                                        <button
+                                            onClick={cancelReject}
+                                            className="w-full py-4 rounded-xl font-bold bg-white text-slate-900 hover:bg-slate-200 transition-colors shadow-lg"
+                                        >
+                                            No, I made a mistake! (Go Back)
+                                        </button>
+                                        <button
+                                            onClick={confirmReject}
+                                            className="w-full py-3 rounded-xl font-medium text-white/40 hover:text-white hover:bg-white/5 transition-colors text-sm"
+                                        >
+                                            {REJECTION_MEMES[rejectionStep - 1].buttonText}
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                        </AnimatePresence>
                     </motion.div>
                 </Container>
             )}
@@ -749,6 +928,22 @@ const rejectionOptions = [
                             </button>
                             
                             <h2 className="text-3xl font-black text-white mb-3">You Said YES! 🎉</h2>
+                            
+                            {/* Celebration Meme Slideshow */}
+                            <div className="w-full max-w-[280px] mx-auto mb-6 aspect-video relative bg-black/20 rounded-2xl overflow-hidden">
+                                <AnimatePresence mode="popLayout">
+                                    <motion.img
+                                        key={celebrationIndex}
+                                        src={CELEBRATION_MEMES[celebrationIndex]}
+                                        alt="Celebration"
+                                        className="w-full h-full object-cover absolute inset-0"
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                    />
+                                </AnimatePresence>
+                            </div>
 
                             {/* Processing State: We were recording but URL isn't ready yet */}
                             {isCapturingReaction && !recordedVideoUrl ? (

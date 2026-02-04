@@ -50,12 +50,13 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     }
 
     try {
-      // Request camera with good quality settings
+      // Request camera with optimized mobile settings (480p is enough for reaction bubbles)
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'user',
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
+          width: { ideal: 640 }, // 480p is much lighter on CPU/Memory
+          height: { ideal: 480 },
+          frameRate: { ideal: 24, max: 30 } // 24fps is cinematic and lighter
         },
         audio: {
           echoCancellation: true,
@@ -98,8 +99,8 @@ export function useReactionRecorder(): UseReactionRecorderResult {
     // Set bitrate for better quality and smaller file size
     const recorderOptions: MediaRecorderOptions = {
       mimeType,
-      videoBitsPerSecond: 1000000, // 1 Mbps is enough for a face reaction
-      audioBitsPerSecond: 96000,   // 96 kbps audio
+      videoBitsPerSecond: 750000, // 750 kbps is lighter and sufficient for 480p
+      audioBitsPerSecond: 64000,   // 64 kbps audio is enough for speech
     };
 
     const recorder = new MediaRecorder(streamToUse, recorderOptions);
