@@ -1,7 +1,6 @@
 "use client";
 
 import { CheckoutLayout } from "@/components/checkout/CheckoutLayout";
-import { UrgencyTimer } from "@/components/checkout/UrgencyTimer";
 import { TrustBadges } from "@/components/checkout/TrustBadges";
 import { Testimonials } from "@/components/checkout/Testimonials";
 
@@ -41,15 +40,13 @@ function CheckoutInnerContent({ city }: { city: { name: string } }) {
 
   return (
     <CheckoutLayout>
-      <div className="max-w-3xl mx-auto space-y-8">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Finalize Your Plan</h1>
-              <p className="text-slate-500">Complete your details below to reserve your experience.</p>
+      <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900">Finalize Your Plan</h1>
+              <p className="text-sm text-slate-500 mt-1">Complete your details below to reserve your experience.</p>
             </div>
-
-            <UrgencyTimer />
             
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+            <div className="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-slate-200">
                 <CheckoutForm 
                     city={city}
                     onSuccess={() => {

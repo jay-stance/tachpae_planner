@@ -160,15 +160,55 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       setLoading(false);
     }
   };
+  // Timer state for cart reservation
+  const [timeLeft, setTimeLeft] = useState(600);
+  
+  useEffect(() => {
+    const storedTimestamp = sessionStorage.getItem("tachpae_checkout_timestamp");
+    let remaining = 600;
+    
+    if (storedTimestamp) {
+        const elapsed = Math.floor((Date.now() - parseInt(storedTimestamp)) / 1000);
+        remaining = 600 - elapsed;
+    }
+    
+    // If timer expired or no timestamp, reset to fresh 10 minutes
+    if (remaining <= 0 || !storedTimestamp) {
+        sessionStorage.setItem("tachpae_checkout_timestamp", Date.now().toString());
+        remaining = 600;
+    }
+    
+    setTimeLeft(remaining);
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev <= 0 ? 0 : prev - 1));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
   return (
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-right-4 duration-300">
-      {/* Compact Trust Header */}
-      <div className="bg-rose-50/70 p-3 rounded-lg border border-rose-100 mb-4 flex items-center gap-2">
-        <ShieldCheck className="w-4 h-4 text-rose-600 shrink-0" />
-        <p className="text-xs text-rose-700">
-          <span className="font-semibold">Secure & Verified</span> – Trusted by 10,000+ people
-        </p>
+      {/* Trust + Timer Header */}
+      <div className="bg-gradient-to-r from-rose-50 to-amber-50 p-3 rounded-lg border border-rose-100 mb-4">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-rose-600 shrink-0" />
+            <p className="text-xs text-rose-700">
+              <span className="font-semibold">Secure & Verified</span> <span className="hidden sm:inline">– Trusted by 10,000+</span>
+            </p>
+          </div>
+          {timeLeft > 0 && (
+            <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-md border border-amber-200 text-amber-700">
+              <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
+              <span className="text-[10px] font-medium">Reserved for</span>
+              <span className="text-xs font-bold tabular-nums">{formattedTime}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="flex-1 space-y-3">
