@@ -18,8 +18,9 @@ const AWS_REGION = process.env.AWS_REGION;
 const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 
-const UPLOAD_QUEUE_DIR = path.join(__dirname, '../upload_queue');
-const PROCESSED_DIR = path.join(__dirname, '../upload_processed');
+// UPLOAD_QUEUE is in the same folder as this script, or 'scripts/upload_queue' relative to root
+const UPLOAD_QUEUE_DIR = path.join(__dirname, 'upload_queue');
+const PROCESSED_DIR = path.join(__dirname, 'upload_processed');
 
 if (!MONGODB_URI) {
   console.error('Missing MONGODB_URI in .env');
@@ -99,16 +100,26 @@ const main = async () => {
 
       // 2. Read meta.json
       const metaPath = path.join(folderPath, 'meta.json');
-      let metaData: Partial<IProduct> = {
+      // Default IDs for Valentine Bundles
+      const DEFAULT_EVENT_ID = '696bb790aca35414ca4947fc'; // Valentine 2026
+      const DEFAULT_CATEGORY_ID = '6977b1747a295ce1a802c8f5'; // Valentine Bundles
+
+      let metaData: any = {
         name: folderName,
         basePrice: 0,
-        isActive: false, 
+        isActive: true, // Default to true now
+        event: DEFAULT_EVENT_ID,
+        category: DEFAULT_CATEGORY_ID
       };
 
       if (fs.existsSync(metaPath)) {
         try {
             const rawMeta = fs.readFileSync(metaPath, 'utf-8');
-            metaData = { ...metaData, ...JSON.parse(rawMeta) };
+            const parsed = JSON.parse(rawMeta);
+            // If parsed meta has event "val-2026", replace with ID
+            if (parsed.event === 'val-2026') parsed.event = DEFAULT_EVENT_ID;
+            
+            metaData = { ...metaData, ...parsed };
         } catch (e) {
             console.error(`❌ Error reading meta.json for ${folderName}:`, e);
             continue;
@@ -136,15 +147,22 @@ const main = async () => {
       }
 
       // 4. Create Product in DB
-      // Use folder name as description if not provided
-      const description = metaData.description?.trim() || folderName;
+      const productName = metaData.name || folderName;
+      const description = metaData.description || folderName;
       
-      const newProduct = new Product({
+      const productData = {
         ...metaData,
-        name: folderName, // Folder name overrides meta name to ensure consistency
-        description,     // Use folder name if description is empty
-        mediaGallery,
-      });
+        name: productName, 
+        description: description,
+        mediaGallery: [...(metaData.mediaGallery || []), ...mediaGallery], // Combine existing + new
+        // Ensure bundle fields are passed
+        isBundle: metaData.isBundle || false,
+        bundleCategory: metaData.bundleCategory,
+        microBenefits: metaData.microBenefits,
+        locations: metaData.locations
+      };
+
+      const newProduct = new Product(productData);
 
       await newProduct.save();
       console.log(`✅ Created Product: ${newProduct.name} (${newProduct._id})`);

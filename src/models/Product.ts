@@ -12,6 +12,7 @@ export interface IProduct extends Document {
   tags: string[]; // e.g., ['popular', 'romantic', 'luxury', 'for-her', 'for-him']
   tierLabel?: 'entry' | 'popular' | 'grandGesture';
   microBenefits?: string[]; // e.g., ["Fast Delivery", "Premium Quality"]
+  rank?: number; // Sorting rank (default 0)
   
   // Bundle fields
   isBundle?: boolean;
@@ -94,6 +95,9 @@ const ProductSchema: Schema = new Schema({
   
   // Location restrictions: empty array = available to all locations
   locations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
+  
+  // Sorting Rank (Higher shows first)
+  rank: { type: Number, default: 0 },
 }, { timestamps: true });
 
 const Product: Model<IProduct> = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);

@@ -1,0 +1,11 @@
+{
+    "name": "The Queen's Luxury Bundle",
+    "description": "The ultimate treat for her. Includes:\n• 4-in-1 Perfume\n• Customized Journal\n• Electric Hand Fan\n• Necklace\n• Love Letter\n• Sun Screen\n• Wine\n• Hair Accessories (Clip & Scrunchies)\n• Lip Gloss Set\n• Cover Mug\n• Wipes\n• Face Mask\n• Chocolate",
+    "basePrice": 65000,
+    "event": "val-2026",
+    "bundleCategory": "for-her",
+    "isBundle": true,
+    "locations": [],
+    "microBenefits": ["Luxury Edition", "Includes Tech & Skincare", "13 Items"],
+    "tags": ["for-her", "bundle", "luxury", "grand-gesture"]
+}

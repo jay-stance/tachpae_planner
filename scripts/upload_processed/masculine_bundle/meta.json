@@ -1,0 +1,11 @@
+{
+    "name": "The Gentleman's Valentine Bundle",
+    "description": "The perfect curation for him. Includes:\n• Box\n• Belt\n• Cotton Board\n• Customized Journal\n• Love Card\n• Wine\n• Hair Brush\n• Lip Balm\n• Cover Mug\n• Wipes\n• Face Mask\n• Chocolate",
+    "basePrice": 32000,
+    "event": "val-2026",
+    "bundleCategory": "for-him",
+    "isBundle": true,
+    "locations": [],
+    "microBenefits": ["Curated for Him", "12 Items included"],
+    "tags": ["for-him", "bundle", "gift-set"]
+}

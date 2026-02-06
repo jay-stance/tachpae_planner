@@ -1,0 +1,11 @@
+{
+    "name": "The Lady's Valentine Bundle",
+    "description": "A thoughtful collection for her. Includes:\n• 4-in-1 Perfume\n• Customized Journal\n• Necklace\n• Card\n• Wine\n• Scrunchies\n• Lip Gloss\n• Cover Mug\n• Wipes\n• Face Mask\n• Chocolate",
+    "basePrice": 37000,
+    "event": "val-2026",
+    "bundleCategory": "for-her",
+    "isBundle": true,
+    "locations": [],
+    "microBenefits": ["Curated for Her", "11 Items included"],
+    "tags": ["for-her", "bundle", "gift-set"]
+}

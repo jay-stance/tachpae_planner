@@ -28,7 +28,9 @@ export const getPlanningData = unstable_cache(
         const allProducts = await Product.find({ 
             event: event._id, 
             isActive: true,
-        }).populate('category').lean();
+        })
+        .sort({ rank: -1, createdAt: -1 })
+        .populate('category').lean();
 
         const products = allProducts.filter(p => {
              // 1. Bundle check
@@ -48,7 +50,9 @@ export const getPlanningData = unstable_cache(
             event: event._id,
             isBundle: true,
             isActive: true
-        }).lean();
+        })
+        .sort({ rank: -1, createdAt: -1 })
+        .lean();
 
         const bundles = allBundles.filter((b: any) => {
              if (!b.locations || b.locations.length === 0) return true;

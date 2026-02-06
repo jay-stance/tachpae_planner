@@ -1,0 +1,11 @@
+{
+    "name": "The King's Ultimate Bundle",
+    "description": "An upgraded experience for him. Includes:\n• Box\n• Jersey\n• Belt\n• Cotton Board\n• Customized Journal\n• Phone Stand\n• Love Card\n• Wine\n• Hair Brush\n• Lip Balm\n• Cover Mug\n• Wipes\n• Face Mask\n• Chocolate",
+    "basePrice": 60000,
+    "event": "val-2026",
+    "bundleCategory": "for-him",
+    "isBundle": true,
+    "locations": [],
+    "microBenefits": ["Ultimate Edition", "Jersey Included", "14 Items"],
+    "tags": ["for-him", "bundle", "luxury", "grand-gesture"]
+}

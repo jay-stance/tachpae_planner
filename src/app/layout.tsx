@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { getActiveEvent } from '@/actions/event';
 import { EventProvider } from '@/context/EventContext';
-import { CartProvider } from '@/context/CartContext';
+
 import { cn } from '@/lib/utils';
 import Footer from '@/components/layout/Footer';
 import { Analytics } from '@vercel/analytics/react';
@@ -104,17 +104,19 @@ export default async function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen bg-background text-foreground theme-tachpae")} suppressHydrationWarning>
         <EventProvider initialEvent={event}>
-          <main className="flex min-h-screen flex-col items-center justify-between">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppIcon />
-          <Toaster richColors position="top-center" />
-          <Analytics />
-          {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
-            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
-          )}
-          <MetaPixel />
+
+            <main className="flex min-h-screen flex-col items-center justify-between">
+              {children}
+            </main>
+            <Footer />
+            <WhatsAppIcon />
+            <Toaster richColors position="top-center" />
+            <Analytics />
+            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+              <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+            )}
+            <MetaPixel />
+
         </EventProvider>
       </body>
     </html>

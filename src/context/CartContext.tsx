@@ -24,6 +24,7 @@ interface CartContextType {
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   getShareableLink: () => string;
+  isHydrated: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -119,7 +120,8 @@ export function CartProvider({ children, cityId }: { children: React.ReactNode, 
       removeItem, 
       updateQuantity, 
       clearCart,
-      getShareableLink 
+      getShareableLink,
+      isHydrated
     }}>
       {children}
     </CartContext.Provider>

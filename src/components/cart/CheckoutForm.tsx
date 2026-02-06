@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { CheckCircle2, ShieldCheck, Truck, MessageSquare, ArrowRight, Loader2 } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Truck, MessageSquare, ArrowRight, Loader2, Tag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useEvent } from '@/context/EventContext';
 import { cn } from '@/lib/utils';
@@ -14,7 +14,7 @@ import { trackInitiateCheckout, trackPurchase, trackContact } from '@/lib/metaPi
 interface CheckoutFormProps {
   onBack: () => void;
   onSuccess: () => void;
-  city: any;
+  city: { name: string };
 }
 
 export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormProps) {
@@ -145,13 +145,14 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
       // Track Contact for WhatsApp redirect
       trackContact('whatsapp');
 
-      // 4. Clear Cart and Redirect
+      // 4. Redirect to WhatsApp FIRST (before clearing cart to avoid race condition with empty-cart redirect)
+      // Use location.href instead of window.open to avoid popup blockers
+      window.location.href = whatsappUrl;
+      
+      // 5. Clear Cart - This runs but user is already navigating away
+      // If somehow the redirect fails, cart will be cleared anyway
       clearCart();
       onSuccess();
-      
-      // Use location.href instead of window.open to avoid popup blockers
-      // This ensures the redirect works reliably across all devices
-      window.location.href = whatsappUrl;
       
     } catch (error: any) {
       alert(error.message || 'Something went wrong. Please try again.');
@@ -162,89 +163,102 @@ export default function CheckoutForm({ onBack, onSuccess, city }: CheckoutFormPr
 
   return (
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-right-4 duration-300">
-      {/* Trust Header */}
-      <div className="bg-rose-50 p-4 rounded-xl border border-rose-100 mb-6">
-        <div className="flex items-center gap-3 text-rose-700 font-bold text-sm mb-1">
-          <ShieldCheck className="w-5 h-5" />
-          Secure & Verified
-        </div>
-        <p className="text-xs text-rose-600/80">
-          Trusted by over 10,000+ people. You will be redirected to WhatsApp to finalize your payment securely, and stay connected with us for enquiries and updates.
+      {/* Compact Trust Header */}
+      <div className="bg-rose-50/70 p-3 rounded-lg border border-rose-100 mb-4 flex items-center gap-2">
+        <ShieldCheck className="w-4 h-4 text-rose-600 shrink-0" />
+        <p className="text-xs text-rose-700">
+          <span className="font-semibold">Secure & Verified</span> – Trusted by 10,000+ people
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex-1 space-y-4 pb-64">
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="name">Full Name</Label>
-              <Input id="name" name="name" required placeholder="John Doe" value={formData.name} onChange={handleInputChange} />
+      <form onSubmit={handleSubmit} className="flex-1 space-y-3">
+        {/* Form Fields - Tighter spacing */}
+        <div className="space-y-3">
+            <div className="space-y-1">
+              <Label htmlFor="name" className="text-xs">Full Name</Label>
+              <Input id="name" name="name" required placeholder="John Doe" value={formData.name} onChange={handleInputChange} className="h-10" />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="phone">Phone Number (WhatsApp)</Label>
-                <Input id="phone" name="phone" required placeholder="080..." value={formData.phone} onChange={handleInputChange} />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="phone" className="text-xs">Phone (WhatsApp)</Label>
+                <Input id="phone" name="phone" required placeholder="080..." value={formData.phone} onChange={handleInputChange} className="h-10" />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="secondaryPhone">Alternative Phone (Optional)</Label>
-                <Input id="secondaryPhone" name="secondaryPhone" placeholder="080..." value={formData.secondaryPhone} onChange={handleInputChange} />
+              <div className="space-y-1">
+                <Label htmlFor="secondaryPhone" className="text-xs">Alt. Phone <span className="text-gray-400">(Optional)</span></Label>
+                <Input id="secondaryPhone" name="secondaryPhone" placeholder="080..." value={formData.secondaryPhone} onChange={handleInputChange} className="h-10" />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="address">Delivery Address (within {city.name})</Label>
-              <Textarea className='placeholder:text-opacity-10' id="address" name="address" required placeholder="No 12, Example Street..." value={formData.address} onChange={handleInputChange} />
+            <div className="space-y-1">
+              <Label htmlFor="address" className="text-xs">Delivery Address (within {city.name})</Label>
+              <Textarea className='placeholder:text-opacity-10 min-h-[60px]' id="address" name="address" required placeholder="No 12, Example Street..." value={formData.address} onChange={handleInputChange} />
             </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="customMessage">Special Instructions / Custom Message</Label>
-              <Textarea className='placeholder:text-opacity-10' id="customMessage" name="customMessage" placeholder="Any special requests?" value={formData.customMessage} onChange={handleInputChange} />
+            <div className="space-y-1">
+              <Label htmlFor="customMessage" className="text-xs">Special Requests <span className="text-gray-400">(Optional)</span></Label>
+              <Textarea className='placeholder:text-opacity-10 min-h-[50px]' id="customMessage" name="customMessage" placeholder="Any special instructions?" value={formData.customMessage} onChange={handleInputChange} />
             </div>
+        </div>
+
+        {/* Compact Inline Bonuses */}
+        <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-50 rounded-full border border-emerald-100 text-[10px]">
+                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                <span className="text-emerald-700 font-medium">Free Proposal Guide</span>
+                <span className="text-slate-400 line-through">₦7.5k</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2 py-1 bg-purple-50 rounded-full border border-purple-100 text-[10px]">
+                <ShieldCheck className="w-3 h-3 text-purple-600" />
+                <span className="text-purple-700 font-medium">Priority Support</span>
+                <span className="text-slate-400 line-through">₦5k</span>
+            </div>
+        </div>
+
+        {/* Pricing Summary - Compact */}
+        <div className="pt-3 border-t space-y-2">
+          <div className="flex items-center justify-between text-xs text-gray-500">
+              <span>Subtotal</span>
+              <span>₦{totalAmount.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center gap-1 cursor-pointer" onClick={() => setShowFeeInfo(!showFeeInfo)}>
+                  <span>Service Fee</span>
+                  <div className="w-3 h-3 rounded-full border border-gray-400 flex items-center justify-center text-[8px] font-serif italic text-gray-500">i</div>
+              </div>
+              <span>₦{serviceFee.toLocaleString()}</span>
+          </div>
+          
+          {showFeeInfo && (
+              <div className="text-[10px] text-gray-400 bg-gray-50 p-2 rounded-lg leading-relaxed animate-in fade-in zoom-in-95">
+                  Small fee for handling, logistics, and coordination.
+              </div>
+          )}
+
+          <div className="flex items-center justify-between text-base font-bold pt-1.5 border-t border-dashed">
+              <span className="text-gray-900">Total</span>
+              <span className="text-rose-600">₦{finalTotal.toLocaleString()}</span>
           </div>
         </div>
 
-        {/* Floating Action Bar */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t space-y-3">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm text-gray-500">
-                <span>Subtotal</span>
-                <span>₦{totalAmount.toLocaleString()}</span>
+        {/* Savings Banner + CTA */}
+        <div className="space-y-3 pt-2">
+            <div className="bg-emerald-50 p-2 text-center rounded-lg border border-dashed border-emerald-200">
+                <p className="text-[10px] text-emerald-700 flex items-center justify-center gap-1 font-medium">
+                    <Tag className="w-3 h-3" />
+                    You're saving <span className="font-black text-emerald-600">₦12,500</span> on this order!
+                </p>
             </div>
-            <div className="flex items-center justify-between text-sm text-gray-500">
-                <div className="flex items-center gap-1 cursor-pointer" onClick={() => setShowFeeInfo(!showFeeInfo)}>
-                    <span>Service Fee</span>
-                    <div className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center text-[10px] font-serif italic text-gray-500">i</div>
-                </div>
-                <span>₦{serviceFee.toLocaleString()}</span>
-            </div>
-            
-            {showFeeInfo && (
-                <div className="text-[10px] text-gray-400 bg-gray-50 p-2 rounded-lg leading-relaxed animate-in fade-in zoom-in-95">
-                    To ensure a seamless experience, we charge a small service fee based on your order volume. This covers handling, logistics support, and dedicated coordination.
-                </div>
-            )}
 
-            <div className="flex items-center justify-between text-lg font-bold pt-2 border-t border-dashed">
-                <span className="text-gray-900">Total</span>
-                <span className="text-rose-600">₦{finalTotal.toLocaleString()}</span>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={onBack} disabled={loading} className="px-6 rounded-xl">
-              Back
-            </Button>
             <Button 
               type="submit" 
               disabled={loading}
-              className="flex-1 h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-lg shadow-rose-200"
+              className="w-full h-12 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-lg shadow-rose-200 text-base"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
-                <>Complete Order & Pay <ArrowRight className="ml-2 w-4 h-4" /></>
+                <>Complete Order & Pay <ArrowRight className="ml-2 w-5 h-5" /></>
               )}
             </Button>
-          </div>
         </div>
       </form>
     </div>
