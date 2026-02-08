@@ -778,7 +778,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                        <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5">
                          {bundle.mediaGallery?.slice(0, 4).map((img: string, idx: number) => (
                            <div key={idx} className={`relative overflow-hidden ${bundle.mediaGallery.length === 1 ? 'col-span-2 row-span-2' : bundle.mediaGallery.length === 2 ? 'row-span-2' : bundle.mediaGallery.length === 3 && idx === 0 ? 'row-span-2' : ''}`}>
-                             <Image src={img} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                             <Image src={decodeURIComponent(img)} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                            </div>
                          ))}
                          {(!bundle.mediaGallery || bundle.mediaGallery.length === 0) && (
@@ -818,7 +818,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                                {/* Show image if available in mediaGallery by index */}
                                <div className="w-6 h-6 rounded-full bg-rose-100 overflow-hidden flex items-center justify-center flex-shrink-0">
                                  {bundle.mediaGallery?.[idx] ? (
-                                   <Image src={bundle.mediaGallery[idx]} alt="" width={24} height={24} className="object-cover" />
+                                   <Image src={decodeURIComponent(bundle.mediaGallery[idx])} alt="" width={24} height={24} className="object-cover" />
                                  ) : (
                                    <span className="text-[10px]">🎁</span>
                                  )}
@@ -921,7 +921,7 @@ export default function PlannerDashboard({ data }: PlannerDashboardProps) {
                               if (firstImage) {
                                 mediaElement = (
                                   <Image 
-                                    src={firstImage} 
+                                    src={decodeURIComponent(firstImage)} 
                                     alt={product.name} 
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-700" 
